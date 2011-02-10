@@ -18,7 +18,7 @@ void prefetch_init(void)
 void prefetch_access(AccessStat stat)
 {
     /* pf_addr is now an address within the _next_ cache block */
-    Addr pf_addr = stat.mem_addr + BLOCK_SIZE;
+    Addr pf_addr = stat.mem_addr - BLOCK_SIZE;
 
     /*
      * Issue a prefetch request if a demand miss occured,
