@@ -5,7 +5,7 @@
  */
 
 #include "interface.hh"
-
+/* COMMENT */
 
 void prefetch_init(void)
 {
