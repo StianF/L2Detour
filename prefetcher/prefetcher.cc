@@ -31,7 +31,6 @@ bool second = false;
 
 void prefetch_access(AccessStat stat)
 {
-  /*
   Addr fetch = 0;
   bool found = false;
   int i = 0;
@@ -48,36 +47,7 @@ void prefetch_access(AccessStat stat)
       }
     }
   }
-  */
 
-  if (second) {
-    DPRINTF(Leif, "Retrieved: %i %i %i\n", rpttable[0].pc,
-            rpttable[0].mem_addr, rpttable[0].diff);
-    second = false;
-  }
-
-  if (first) {
-    DPRINTF(Leif, "Access:    %i %i\n", stat.pc, stat.mem_addr);
-
-    RPT rpt;
-    rpt.pc = stat.pc;
-    rpt.mem_addr = stat.mem_addr;
-    rpt.diff = 0; // If diff equal to zero than same element used twice,
-                  // probably no need for the prefetcher to do anything.
-                  // Use as guard value.
-    rpttable[0] = rpt;
-
-    length = 1;
-    far = 1;
-
-    DPRINTF(Leif, "Storing:   %i %i %i\n", rpttable[0].pc,
-            rpttable[0].mem_addr, rpttable[0].diff);
-
-    first = false;
-    second = true;
-  }
-
-  /*
   // Add non-existing entry to table.
   if (!found) {
     if (length < l-1) {
@@ -89,21 +59,17 @@ void prefetch_access(AccessStat stat)
       length = 0;
     }
 
-    // This won't work as expected since it's not put on heap (malloc), but
-    // only allocated on stack? Which means it can't possibly be found next
-    // time around. Verify this. TODO
-    RPT rpt;
-    rpt.pc = stat.pc;
-    rpt.mem_addr = stat.mem_addr;
-    rpt.diff = 0; // If diff equal to zero than same element used twice,
-                  // probably no need for the prefetcher to do anything.
-                  // Use as guard value.
-    rpttable[length] = rpt;
+    rpttable[length].pc = stat.pc;
+    rpttable[length].mem_addr = stat.mem_addr;
+    /* If diff equal to zero than same element used twice,
+       probably no need for the prefetcher to do anything.
+       Therefore can use it as the guard value. */
+    rpttable[length].diff = 0;
   } else if (fetch != 0 && MAX_PHYS_MEM_ADDR > fetch) {
     if (!in_cache(fetch)) {
       issue_prefetch(fetch);
     }
-  }*//*else
+  }/*else
      {
      int next = 4;
      while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
