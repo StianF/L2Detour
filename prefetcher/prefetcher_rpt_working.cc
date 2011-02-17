@@ -10,8 +10,7 @@ struct RPT {
 		Addr mem_addr; 
     int diff;      
 };
-const int l = 130;
-RPT rpttable[l];
+RPT rpttable[100];
 
 
 int length = 0;
@@ -41,9 +40,9 @@ void prefetch_access(AccessStat stat)
 			}
 		}
 		if(!found){
-			if(length < l-1){
+			if(length < 99){
 				length = length + 1;
-				if(far != l){
+				if(far != 100){
 					far = far +1;
 				}
 
@@ -63,14 +62,6 @@ void prefetch_access(AccessStat stat)
 
 				issue_prefetch(fetch);
 			}
-		}else
-		{
-			int next = 4;
-			while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
-			{
-				next = next +1;
-			}
-			issue_prefetch(stat.mem_addr + (BLOCK_SIZE * next));
 		}
 }
 

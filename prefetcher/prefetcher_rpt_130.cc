@@ -63,7 +63,7 @@ void prefetch_access(AccessStat stat)
 
 				issue_prefetch(fetch);
 			}
-		}else
+		}/*else
 		{
 			int next = 4;
 			while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
@@ -71,7 +71,7 @@ void prefetch_access(AccessStat stat)
 				next = next +1;
 			}
 			issue_prefetch(stat.mem_addr + (BLOCK_SIZE * next));
-		}
+		}*/
 }
 
 void prefetch_complete(Addr addr) {

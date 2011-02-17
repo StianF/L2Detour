@@ -43,7 +43,6 @@ struct AccessStat {
     int miss;       /* Was this demand access a cache hit (0) or miss (1)? */
 };
 
-
 /*
  * Functions that are called by the simulator, with implementation
  * provided by the user. The implementation may be an empty function.
