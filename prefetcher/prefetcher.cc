@@ -6,9 +6,10 @@
 
 #include "interface.hh"
 struct RPT {
-    Addr pc;        
-		Addr mem_addr; 
-    int diff;      
+    Addr pc;        // Program Counter, used to index(ish). 
+    Addr mem_addr;  // Last memory addr request. 
+    int diff;       // Difference between mem_addr in table and request addr. 
+    int priority;   // Priority for throw-out scheme. LRU
 };
 const int l = 130;
 RPT rpttable[l];
@@ -28,6 +29,10 @@ void prefetch_access(AccessStat stat)
 		Addr fetch = 0;
 		bool found = false;
 		int i = 0;
+
+        int lru_index = 0, lru_max = 0;
+ 
+        // Sequential search for PC in RPT-table.
 		for(i = 0; i < far; i++){
 			if(rpttable[i].pc == stat.pc){
 				found = true;
@@ -37,15 +42,23 @@ void prefetch_access(AccessStat stat)
 				}else{
 					fetch = stat.mem_addr+rpttable[i].diff;
 				}
+                rpttable[i].priority = 0;
 			}
+            // Increase priority of all other, and save max' index.
+            else {
+                rpttable[i].priority++;
+                if ( rpttable[i].priority > lru_max )
+                    lru_index = i;
+            }
 		}
+        // If it is not in the table, add PC to table
+        // LRU throw-out scheme.
 		if(!found){
 			if(length < l-1){
 				length = length + 1;
 				if(far != l){
 					far = far +1;
 				}
-
 
 			}else{
 				length = 0;
@@ -55,8 +68,9 @@ void prefetch_access(AccessStat stat)
 			rpt.pc = stat.pc;
 			rpt.mem_addr = stat.mem_addr;
 			rpt.diff = 99999;
-			rpttable[length] = rpt;
+			rpttable[lru_index] = rpt;
 		}
+        // If found, prefetch memory if needed.
 		else if(fetch != 0 && MAX_PHYS_MEM_ADDR > fetch){
 			if (!in_cache(fetch)) {
 
