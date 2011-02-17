@@ -10,7 +10,6 @@ struct RPT {
 		Addr mem_addr; 
     int diff;     
 		int diff2;
-		int priority;
 };
 const int l = 110;
 RPT rpttable[l];
@@ -31,7 +30,6 @@ void prefetch_access(AccessStat stat)
 		Addr fetch = 0;
 		bool found = false;
 		int i = 0;
- 		int lru_index = 0, lru_max = 0;
 		for(i = 0; i < far; i++){
 			if(rpttable[i].pc == stat.pc){
 				found = true;
@@ -48,17 +46,8 @@ void prefetch_access(AccessStat stat)
 						rpttable[i].diff2 = stat.mem_addr - rpttable[i].mem_addr;
 					}
 				}
-				rpttable[i].priority = 0;
 			}
-    // Increase priority of all other, and save max' index.
-			else {
-				rpttable[i].priority++;
-				if ( rpttable[i].priority > lru_max )
-					lru_index = i;
-			}
-	}
-			// If it is not in the table, add PC to table
-			// LRU throw-out scheme.
+		}
 		if(!found){
 			if(length < l-1){
 				length = length + 1;
@@ -76,8 +65,7 @@ void prefetch_access(AccessStat stat)
 			rpt.mem_addr = stat.mem_addr;
 			rpt.diff = 99999;
 			rpt.diff2 = 99999;
-			rpt.priority = 0;
-			rpttable[lru_index] = rpt;
+			rpttable[length] = rpt;
 		}
 		else if(fetch != 0 && MAX_PHYS_MEM_ADDR > fetch){
 			if (!in_cache(fetch)) {
