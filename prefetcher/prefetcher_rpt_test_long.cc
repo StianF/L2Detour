@@ -10,8 +10,8 @@ struct RPT {
 		Addr mem_addr; 
     int diff;      
 };
-const int l = 130;
-RPT rpttable[l];
+RPT rpttable[1000];
+
 
 int length = 0;
 int far = 0;
@@ -20,7 +20,7 @@ void prefetch_init(void)
     /* Called before any calls to prefetch_access. */
     /* This is the place to initialize data structures. */
 
-    DPRINTF(HWPrefetch, "Initialized sequential-on-happy prefetcher\n");
+    DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
 }
 
 void prefetch_access(AccessStat stat)
@@ -40,9 +40,9 @@ void prefetch_access(AccessStat stat)
 			}
 		}
 		if(!found){
-			if(length < l-1){
+			if(length < 999){
 				length = length + 1;
-				if(far != l){
+				if(far != 1000){
 					far = far +1;
 				}
 
@@ -64,12 +64,12 @@ void prefetch_access(AccessStat stat)
 			}
 		}else
 		{
-			int next = 4;
+/*			int next = 1;
 			while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
 			{
 				next = next +1;
 			}
-			issue_prefetch(stat.mem_addr + (BLOCK_SIZE * next));
+			issue_prefetch(stat.mem_addr + (BLOCK_SIZE*next));*/
 		}
 }
 
