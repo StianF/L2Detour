@@ -10,7 +10,7 @@
 struct RPT {
   Addr pc;         /* 8 bytes */
   Addr mem_addr;   /* 8 bytes */
-  int diff;        /* 4 bytes? */
+  int diff;        /* 4 bytes on this arch? */
 };                 /* = 20 bytes */
 
 const int l = 130; /* times */
@@ -23,7 +23,7 @@ void prefetch_init(void)
   /* Called before any calls to prefetch_access. */
   /* This is the place to initialize data structures. */
 
-  DPRINTF(HWPrefetch, "Initialized sequential-on-happy prefetcher\n");
+  DPRINTF(Leif, "Initialized sequential-on-happy prefetcher\n");
 }
 
 void prefetch_access(AccessStat stat)
