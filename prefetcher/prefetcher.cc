@@ -26,58 +26,14 @@ void prefetch_init(void)
   DPRINTF(Leif, "Initialized sequential-on-happy prefetcher\n");
 }
 
+// Debug steps
 bool first = true;
 bool second = false;
+bool third = false;
 bool fourth = false;
 
 void prefetch_access(AccessStat stat)
 {
-  if (second) {
-    DPRINTF(Leif, "Second access\n");
-    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
-    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
-    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
-    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
-    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
-    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
-    second = false;
-  }
-
-  if (first) { // Testing shit out.
-    DPRINTF(Leif, "First access\n");
-    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
-    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
-    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
-    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
-    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
-    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
-    DPRINTF(Leif, "Issuing prefetch of addr 100!\n");
-    issue_prefetch(100);
-    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
-    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
-    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
-    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
-    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
-    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
-
-    first = false;
-    second = true;
-  }
-
-  if (fourth) {
-    DPRINTF(Leif, "First access after completed prefetch\n");
-    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
-    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
-    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
-    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
-    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
-    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
-    fourth = false;
-  }
-
-  DPRINTF(Leif, "Current queue size: %i\n", current_queue_size());
-
-  #if 0
   Addr fetch = 0;
   bool found = false;
   int i = 0;
@@ -126,23 +82,7 @@ void prefetch_access(AccessStat stat)
     // On access, a distance of four cache blocks gave good performance in
     // the shortest loop-test (accumulate).
   }
-  #endif
-
 }
 
-bool third = true;
-
 void prefetch_complete(Addr addr) {
-  if (third) { // Testing shit out.
-    DPRINTF(Leif, "Completed prefetch!\n");
-    DPRINTF(Leif, "Current queue size: %i\n", current_queue_size());
-    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
-    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
-    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
-    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
-    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
-    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
-    third = false;
-    fourth = true;
-  }
 }
