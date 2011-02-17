@@ -28,9 +28,56 @@ void prefetch_init(void)
 
 bool first = true;
 bool second = false;
+bool fourth = false;
 
 void prefetch_access(AccessStat stat)
 {
+  if (second) {
+    DPRINTF(Leif, "Second access\n");
+    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
+    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
+    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
+    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
+    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
+    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
+    second = false;
+  }
+
+  if (first) { // Testing shit out.
+    DPRINTF(Leif, "First access\n");
+    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
+    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
+    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
+    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
+    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
+    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
+    DPRINTF(Leif, "Issuing prefetch of addr 100!\n");
+    issue_prefetch(100);
+    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
+    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
+    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
+    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
+    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
+    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
+
+    first = false;
+    second = true;
+  }
+
+  if (fourth) {
+    DPRINTF(Leif, "First access after completed prefetch\n");
+    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
+    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
+    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
+    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
+    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
+    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
+    fourth = false;
+  }
+
+  DPRINTF(Leif, "Current queue size: %i\n", current_queue_size());
+
+  #if 0
   Addr fetch = 0;
   bool found = false;
   int i = 0;
@@ -65,23 +112,37 @@ void prefetch_access(AccessStat stat)
        probably no need for the prefetcher to do anything.
        Therefore can use it as the guard value. */
     rpttable[length].diff = 0;
-  } else if (fetch != 0 && MAX_PHYS_MEM_ADDR > fetch) {
+  }
+
+  if (fetch != 0 && MAX_PHYS_MEM_ADDR > fetch) {
     if (!in_cache(fetch)) {
       issue_prefetch(fetch);
     }
-  }/*else
-     {
-     int next = 4;
-     while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
-     {
-     next = next +1;
-     }
-     issue_prefetch(stat.mem_addr + (BLOCK_SIZE * next));
-     }*/
+  } else if (stat.miss) {
+    // On miss and not in table, make sure that some following blocks
+    // are being prefetched.
+    
+  } else {
+    // On access, a distance of four cache blocks gave good performance in
+    // the shortest loop-test (accumulate).
+  }
+  #endif
+
 }
 
+bool third = true;
+
 void prefetch_complete(Addr addr) {
-  /*
-   * Called when a block requested by the prefetcher has been loaded.
-   */
+  if (third) { // Testing shit out.
+    DPRINTF(Leif, "Completed prefetch!\n");
+    DPRINTF(Leif, "Current queue size: %i\n", current_queue_size());
+    DPRINTF(Leif, "Is addr 100 in cache? %i\n", in_cache(100));
+    DPRINTF(Leif, "Is addr 100 in mshr? %i\n", in_mshr_queue(100));
+    DPRINTF(Leif, "Is addr 101 in cache? %i\n", in_cache(101));
+    DPRINTF(Leif, "Is addr 101 in mshr? %i\n", in_mshr_queue(101));
+    DPRINTF(Leif, "Is addr 102 in cache? %i\n", in_cache(102));
+    DPRINTF(Leif, "Is addr 102 in mshr? %i\n", in_mshr_queue(102));
+    third = false;
+    fourth = true;
+  }
 }
