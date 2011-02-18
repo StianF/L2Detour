@@ -70,26 +70,20 @@ void prefetch_access(AccessStat stat)
         !(in_cache(fetch) || in_mshr_queue(fetch))) {
       issue_prefetch(fetch);
     }
-  } else if (stat.miss) {
-    // On miss and not in table, make sure that some following blocks
+  } else {
+    // If not in table, make sure that some following blocks
     // are either being prefetched, fetched or is available.
+
+    // A distance of four cache blocks gave good performance in
+    // the shortest loop-test (accumulate).
     int i;
     fetch = stat.mem_addr;
-    for (i = 1; i < 4; i++) {
+    for (i = 1; i <= 4; i++) {
       fetch += BLOCK_SIZE;
       if (MAX_PHYS_MEM_ADDR >= fetch &&
           !(in_cache(fetch) || in_mshr_queue(fetch))) {
         issue_prefetch(fetch);
       }
-    }
-  } else {
-    // On access, a distance of four cache blocks gave good performance in
-    // the shortest loop-test (accumulate).
-    fetch = stat.mem_addr + BLOCK_SIZE * 4;
-
-    if (MAX_PHYS_MEM_ADDR >= fetch &&
-        !(in_cache(fetch) || in_mshr_queue(fetch))) {
-      issue_prefetch(fetch);
     }
   }
 }
