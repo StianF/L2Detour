@@ -28,7 +28,7 @@ void prefetch_init(void)
 
 void prefetch_access(AccessStat stat)
 {
-  Addr fetch = 0;
+  int stride = 0;
   bool found = false;
   int i = 0;
 
@@ -40,7 +40,8 @@ void prefetch_access(AccessStat stat)
         rpttable[i].diff = stat.mem_addr - rpttable[i].mem_addr;
         rpttable[i].mem_addr = stat.mem_addr;
       } else {
-        fetch = stat.mem_addr+rpttable[i].diff;
+        stride = rpttable[i].diff;
+        break; // Break out of loop, saving the index i.
       }
     }
   }
@@ -64,16 +65,25 @@ void prefetch_access(AccessStat stat)
     rpttable[length].diff = 0;
   }
 
-  // TODO try prefetching the next four cache blocks.
-  if (fetch) {
-    // Fetch the strided address if block not in cache, if in cache
-    // fetch next block.
-    if (MAX_PHYS_MEM_ADDR >= fetch &&
-        !(in_cache(fetch) || in_mshr_queue(fetch))) {
-      issue_prefetch(fetch);
-    } else if (MAX_PHYS_MEM_ADDR >= fetch + BLOCK_SIZE &&
-        !(in_cache(fetch + BLOCK_SIZE) || in_mshr_queue(fetch + BLOCK_SIZE))) {
-      issue_prefetch(fetch + BLOCK_SIZE);
+  Addr fetch;
+  if (stride) {
+    // Fetch up to the four next blocks.
+    // FIXME this disregards situations where stride > BLOCK_SIZE.
+
+    fetch = stat.mem_addr + stride;
+
+    int offset = 0;
+    // Test if stride moves outside cache block
+    if ((stat.mem_addr % BLOCK_SIZE) > (fetch % BLOCK_SIZE)) offset = 1;
+      
+
+    int j;
+    for (j = offset; j < 4 + offset; j++) {
+      fetch = stat.mem_addr + stride + j*BLOCK_SIZE;
+      if (MAX_PHYS_MEM_ADDR >= fetch &&
+          !(in_cache(fetch) || in_mshr_queue(fetch))) {
+        issue_prefetch(fetch);
+      }
     }
   } else if (stat.miss) {
     // On miss and not in table, make sure that some following blocks
