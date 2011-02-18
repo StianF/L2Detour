@@ -23,14 +23,8 @@ void prefetch_init(void)
   /* Called before any calls to prefetch_access. */
   /* This is the place to initialize data structures. */
 
-  DPRINTF(Leif, "Initialized sequential-on-happy prefetcher\n");
+  //DPRINTF(Leif, "Initialized sequential-on-happy prefetcher\n");
 }
-
-// Debug steps
-bool first = true;
-bool second = false;
-bool third = false;
-bool fourth = false;
 
 void prefetch_access(AccessStat stat)
 {
@@ -38,7 +32,7 @@ void prefetch_access(AccessStat stat)
   bool found = false;
   int i = 0;
 
-  // Traverse table for matching entry.
+  // Traverse table for matching entry and if match calculate next fetch.
   for (i = 0; i < far; i++) {
     if (rpttable[i].pc == stat.pc) {
       found = true;
@@ -70,27 +64,33 @@ void prefetch_access(AccessStat stat)
     rpttable[length].diff = 0;
   }
 
-  if (fetch != 0 && MAX_PHYS_MEM_ADDR > fetch) {
-    if (!in_cache(fetch)) {
+  // TODO (1) get next cache block and (2) get the next four cache blocks.
+  if (fetch) {
+    if (MAX_PHYS_MEM_ADDR >= fetch &&
+        !(in_cache(fetch) || in_mshr_queue(fetch))) {
       issue_prefetch(fetch);
     }
   } else if (stat.miss) {
     // On miss and not in table, make sure that some following blocks
-    // are either being prefetched or is available.
+    // are either being prefetched, fetched or is available.
     int i;
     fetch = stat.mem_addr;
     for (i = 1; i < 4; i++) {
       fetch += BLOCK_SIZE;
-      if (!in_cache(fetch) && MAX_PHYS_MEM_ADDR >= fetch)
+      if (MAX_PHYS_MEM_ADDR >= fetch &&
+          !(in_cache(fetch) || in_mshr_queue(fetch))) {
         issue_prefetch(fetch);
+      }
     }
   } else {
     // On access, a distance of four cache blocks gave good performance in
     // the shortest loop-test (accumulate).
     fetch = stat.mem_addr + BLOCK_SIZE * 4;
 
-    if (!in_cache(fetch) && MAX_PHYS_MEM_ADDR >= fetch)
+    if (MAX_PHYS_MEM_ADDR >= fetch &&
+        !(in_cache(fetch) || in_mshr_queue(fetch))) {
       issue_prefetch(fetch);
+    }
   }
 }
 
