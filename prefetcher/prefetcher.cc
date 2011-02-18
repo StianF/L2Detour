@@ -64,11 +64,16 @@ void prefetch_access(AccessStat stat)
     rpttable[length].diff = 0;
   }
 
-  // TODO (1) get next cache block and (2) get the next four cache blocks.
+  // TODO try prefetching the next four cache blocks.
   if (fetch) {
+    // Fetch the strided address if block not in cache, if in cache
+    // fetch next block.
     if (MAX_PHYS_MEM_ADDR >= fetch &&
         !(in_cache(fetch) || in_mshr_queue(fetch))) {
       issue_prefetch(fetch);
+    } else if (MAX_PHYS_MEM_ADDR >= fetch + BLOCK_SIZE &&
+        !(in_cache(fetch + BLOCK_SIZE) || in_mshr_queue(fetch + BLOCK_SIZE))) {
+      issue_prefetch(fetch + BLOCK_SIZE);
     }
   } else if (stat.miss) {
     // On miss and not in table, make sure that some following blocks
