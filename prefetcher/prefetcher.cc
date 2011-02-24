@@ -45,10 +45,8 @@ void prefetch_access(AccessStat stat)
         if (rpttable[i].diff2 == rpttable[i].diff) {
           fetch = stat.mem_addr+rpttable[i].diff;
         } else if(rpttable[i].diff2 != 0) {
-          // This causes the prefetcher to
-          // remember what diff2 was last time around and continues
-          // to try to match that. FIXME?
           rpttable[i].diff = 0;
+          rpttable[i].diff2 = 0;
           rpttable[i].mem_addr = stat.mem_addr;
         } else {
           rpttable[i].diff2 = stat.mem_addr - rpttable[i].mem_addr;
