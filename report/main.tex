@@ -1,0 +1,100 @@
+
+
+\documentclass[a4paper,11pt]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{float}
+\restylefloat{figure} 
+\usepackage{subfig}
+\usepackage{style}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\usepackage{fancyvrb}
+%\usepackage{pstcol}
+\usepackage{pstricks}
+\usepackage[pdftex]{hyperref}
+\usepackage{alltt}
+\usepackage{listings}
+\usepackage{url}
+\usepackage{SIunits}
+\usepackage{subfig}
+\usepackage{supertabular}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{geometry}
+
+\newboolean{includeSrc}
+\setboolean{includeSrc}{true}
+
+\definecolor{Gray} {rgb}{0.8, 0.8, 0.8}
+
+
+\begin{document}
+
+\hypersetup{
+    pdftitle={L2Detour prefetcher},
+    pdfauthor={L2Detour},
+    pdfsubject={TDT4260 Computer Architecture, Prefetcher project 2011},
+    pdfkeywords={Computer architecture} {NTNU},
+    colorlinks=false,
+    pdfborder={0 0 0 0}
+}
+
+%-----------------------------------------------------------
+\begin{titlepage}
+ 
+\begin{center}
+
+%\includegraphics[scale=0.6]{graphics/logo}\\[1cm]
+
+\textsc{\LARGE TDT4260 Computer Architecture, Project Work}\\[1.5cm]
+ 
+\HRule \\[0.4cm]
+{ \huge \bfseries \textit{a}Mac}\\a Manchester architecture computer\\[0.4cm]
+\HRule \\[1.5cm] 
+
+Fredrikstad, Stian\\
+K\aa sli, Vegar\\
+Rusten, Leif Tore\\
+
+\vfill
+ 
+% Bottom of the page
+{\large \today}
+ 
+\end{center}
+ 
+\end{titlepage}
+
+%-----------------------------------------------------------
+\cleardoublepage
+\pagenumbering{Roman}
+\input{abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+\pagenumbering{arabic}
+%-----------------------------------------------------------
+% This is the structure suggested by Magnus Jahre.
+\input{introduction}
+\input{background}
+\input{related_work}
+\input{the_scheme}
+\input{methodology}
+\input{results}
+\input{discussion}
+\input{conclusion}
+\input{further_work}
+
+%-----------------------------------------------------------
+\clearpage
+\bibliographystyle{plain}
+\bibliography{bibl} 
+%-----------------------------------------------------------
+%Appendixes
+\appendix
+\input{appendix}
+
+\end{document}

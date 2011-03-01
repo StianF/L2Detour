@@ -1,0 +1,112 @@
+\begin{thebibliography}{10}
+
+\bibitem{dm-2009}
+Amigo64.
+\newblock Project Report for TDT4295: Computer Design, 2009, November 2009.
+
+\bibitem{mit}
+Arvind and Rishiyur~S. Nikhil.
+\newblock Executing a program on the mit tagged-token dataflow architecture.
+\newblock {\em IEEE Transactions on Computers}, March 1990.
+
+\bibitem{evk1100}
+Atmel.
+\newblock {\em Schematics: EVK 1100}, August.
+\newblock Atmel AVR Development Board.
+
+\bibitem{lcd}
+Batron.
+\newblock {\em Datasheet: BTHQ128064AVD-COG-FSTF-LED05 WHITE}, August.
+\newblock LCD.
+
+\bibitem{elprint}
+Elprint.
+\newblock Elprint - capabilities.
+\newblock \url{http://webben.elprint.no/index.php/pages/59}.
+\newblock Web-page outlining Elprints capabilites. Accessed September 2010.
+
+\bibitem{epson-datasheet}
+Epson.
+\newblock {\em S1D10605 Series datasheet}.
+\newblock More deailed datasheet for the controller chip in the LCD.
+
+\bibitem{pcb-standard}
+The~Institute for Interconnecting and Packaging~Electronic Circuits.
+\newblock Standard: Ipc-2221, February 1998.
+\newblock Generic Standard on Printed Board Design.
+
+\bibitem{net-schematic}
+tuxgraphics.org Guido~Socher.
+\newblock Schematic: Ethernet remote device controller/sensor.
+\newblock
+  \url{http://www.tuxgraphics.org/common/src2/article06061/eth-remotedevice.pd%
+f}, 2007.
+
+\bibitem{manchester}
+C.~C.~Kirkham J.~R.~Gurd and L.~Watson.
+\newblock The manchester prototype dataflow computer.
+\newblock {\em Communications of the ACM}, January 1985.
+
+\bibitem{pcb-tutorial}
+David~L. Jones.
+\newblock Pcb design tutorial.
+\newblock
+  \url{http://www.alternatezone.com/electronics/files/PCBDesignTutorialRevA.pd%
+f}, June 2004.
+
+\bibitem{macaos}
+Macaos.
+\newblock Homepage.
+\newblock \url{http://www.macaos.com}.
+\newblock Web-tool for submitting Gerber files to Elprint.
+
+\bibitem{graph-mode-parallel-computation}
+J.~E. Rodriguex.
+\newblock Report tr-64 , project mac, September 1969.
+
+\bibitem{comp-memory}
+Alliance Semiconductor.
+\newblock Datasheet: As7c3256a.
+\newblock \url{www.alliancememory.com/pdf/sram/fa/as7c3256av.2.0.pdf}, April
+  2004.
+\newblock 3.3V 32K X 8 CMOS SRAM (Common I/O).
+
+\bibitem{comp-latch}
+ON~Semiconductor.
+\newblock Datasheet: Mc74lcx16373.
+\newblock \url{http://www.onsemi.com/pub/Collateral/MC74LCX16373-D.PDF}, August
+  2005.
+\newblock Low-Voltage CMOS 16-Bit Transparent Latch.
+
+\bibitem{dataflow-computers}
+Benjamin Wah.
+\newblock Dataflow computers: Their history and future.
+\newblock {\em Wiley Encyclopedia of Computer Science and Engineering}, 2008.
+
+\bibitem{route-np}
+Wikipedia.
+\newblock Article: Routing (electronic design automation).
+\newblock
+  \url{http://en.wikipedia.org/wiki/Routing_(electronic_design_automation)}.
+\newblock Accessed 22.11.2010.
+
+\bibitem{fpga-wiki}
+Wikipedia.org.
+\newblock Fpga - field-programmable gate array.
+\newblock \url{http://en.wikipedia.org/wiki/Field-programmable_gate_array},
+  November 2010.
+\newblock Summery of what FPGA is.
+
+\bibitem{spi-wiki}
+Wikipedia.org.
+\newblock Spi - serial peripheral interface bus.
+\newblock \url{http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus},
+  November 2010.
+\newblock Summery of what SPI is.
+
+\bibitem{ugg322}
+Xilinx.
+\newblock {\em Spartan-3 Generation Configuration User Guide}, October 2009.
+\newblock Extended Spartan-3A, Spartan-3E, and Spartan-3 FPGA Families.
+
+\end{thebibliography}
