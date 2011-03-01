@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.19)  1 MAR 2011 12:41
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.19)  1 MAR 2011 21:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -474,7 +474,14 @@ Non-PDF special ignored!
 (./abstract.tex) [1
 
 
-] (./main.toc)
+] (./main.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 6.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 6.
+)
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
@@ -548,23 +555,24 @@ Appendix A.
 
 ] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9605 strings out of 495061
- 136238 string characters out of 1182620
+ 9634 strings out of 495061
+ 136560 string characters out of 1182620
  238117 words of memory out of 3000000
- 12589 multiletter control sequences out of 15000+50000
- 11404 words of font info for 25 fonts, out of 3000000 for 9000
+ 12606 multiletter control sequences out of 15000+50000
+ 16235 words of font info for 38 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  44i,5n,42p,267b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.6
-00pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </hom
-e/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/stian/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/stian/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfou
-r/jknappen/ec/ecbi2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/
-ec/eccc1728.600pk>
-Output written on main.pdf (16 pages, 90038 bytes).
+ </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.6
+00pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </hom
+e/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/stian/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/stian/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/stian/.texmf-var/fonts/pk/ljfou
+r/jknappen/ec/ecbx2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/
+ec/ecbi2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1728
+.600pk>
+Output written on main.pdf (16 pages, 99808 bytes).
 PDF statistics:
- 341 PDF objects out of 1000 (max. 8388607)
- 31 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 373 PDF objects out of 1000 (max. 8388607)
+ 32 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
