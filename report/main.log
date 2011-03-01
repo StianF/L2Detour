@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.11.17)  1 MAR 2011 11:31
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.19)  1 MAR 2011 12:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -68,7 +68,7 @@ File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
 \Gread@gobject=\count89
 ))
 \Gin@req@height=\dimen104
@@ -347,25 +347,6 @@ File: amsgen.sty 1999/11/30 v2.0
 \ex@=\dimen138
 ))
 (/usr/share/texmf-texlive/tex/latex/SIunits/SIunits.cfg))
-(/usr/share/texmf-texlive/tex/latex/supertabular/supertabular.sty
-Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count126
-\ST@wd=\dimen139
-\ST@rightskip=\skip49
-\ST@leftskip=\skip50
-\ST@parfillskip=\skip51
-\ST@pageleft=\dimen140
-\ST@headht=\dimen141
-\ST@tailht=\dimen142
-\ST@pagesofar=\dimen143
-\ST@pboxht=\dimen144
-\ST@lineht=\dimen145
-\ST@stretchht=\dimen146
-\ST@prevht=\dimen147
-\ST@toadd=\dimen148
-\ST@dimen=\dimen149
-\ST@pbox=\box34
-)
 (/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 ) (./main.aux)
@@ -395,15 +376,15 @@ LaTeX Font Info:    ... okay on input line 33.
 
 (/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count127
-\scratchdimen=\dimen150
-\scratchbox=\box35
-\nofMPsegments=\count128
-\nofMParguments=\count129
+\scratchcounter=\count126
+\scratchdimen=\dimen139
+\scratchbox=\box34
+\nofMPsegments=\count127
+\nofMParguments=\count128
 \everyMPshowfont=\toks25
-\MPscratchCnt=\count130
-\MPscratchDim=\dimen151
-\MPnumerator=\count131
+\MPscratchCnt=\count129
+\MPscratchDim=\dimen140
+\MPnumerator=\count130
 \everyMPtoPDFconversion=\toks26
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -411,9 +392,8 @@ Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
 LaTeX Info: Redefining \subref on input line 33.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
-Package caption Info: supertabular package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count132
+\c@lstlisting=\count131
 
 *geometry auto-detecting driver*
 *geometry detected driver: pdftex*
@@ -463,7 +443,7 @@ Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 (/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count133
+\c@section@level=\count132
 )
 LaTeX Info: Redefining \ref on input line 33.
 LaTeX Info: Redefining \pageref on input line 33.
@@ -472,7 +452,7 @@ LaTeX Info: Redefining \pageref on input line 33.
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-\AtBeginShipoutBox=\box36
+\AtBeginShipoutBox=\box35
 
 
 Package SIunits Warning: The command \gray was already defined.
@@ -568,23 +548,23 @@ Appendix A.
 
 ] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 9691 strings out of 495061
- 137394 string characters out of 1182620
- 237890 words of memory out of 3000000
- 12671 multiletter control sequences out of 15000+50000
+ 9605 strings out of 495061
+ 136238 string characters out of 1182620
+ 238117 words of memory out of 3000000
+ 12589 multiletter control sequences out of 15000+50000
  11404 words of font info for 25 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
  44i,5n,42p,267b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/vgr/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600
-pk> </home/vgr/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/vg
-r/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/vgr/.texmf-var/
-fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/vgr/.texmf-var/fonts/pk/ljfo
-ur/jknappen/ec/ecbx2074.600pk> </home/vgr/.texmf-var/fonts/pk/ljfour/jknappen/e
-c/ecbi2074.600pk> </home/vgr/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1728.60
-0pk>
-Output written on main.pdf (16 pages, 90361 bytes).
+ </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.6
+00pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </hom
+e/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/stian/.te
+xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/stian/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfou
+r/jknappen/ec/ecbi2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/
+ec/eccc1728.600pk>
+Output written on main.pdf (16 pages, 90038 bytes).
 PDF statistics:
- 342 PDF objects out of 1000 (max. 8388607)
+ 341 PDF objects out of 1000 (max. 8388607)
  31 named destinations out of 1000 (max. 500000)
  81 words of extra memory for PDF output out of 10000 (max. 10000000)
 
