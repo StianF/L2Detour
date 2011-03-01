@@ -68,6 +68,7 @@ void prefetch_access(AccessStat stat)
 			rpt.pc = stat.pc;
 			rpt.mem_addr = stat.mem_addr;
 			rpt.diff = 99999;
+            rpt.priority = 0;
 			rpttable[lru_index] = rpt;
 		}
         // If found, prefetch memory if needed.
