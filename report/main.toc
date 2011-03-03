@@ -6,6 +6,7 @@
 \contentsline {section}{\numberline {4.1}Delta Correlating Prediction Table}{4}{section.4.1}
 \contentsline {chapter}{\numberline {5}Methodology}{5}{chapter.5}
 \contentsline {chapter}{\numberline {6}Results}{6}{chapter.6}
+\contentsline {section}{\numberline {6.1}Delta Correlation Prediction Table}{6}{section.6.1}
 \contentsline {chapter}{\numberline {7}Discussion}{7}{chapter.7}
 \contentsline {chapter}{\numberline {8}Conclusion}{8}{chapter.8}
 \contentsline {chapter}{\numberline {9}Further work}{9}{chapter.9}
