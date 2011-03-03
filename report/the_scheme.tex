@@ -1,5 +1,26 @@
 \chapter{The scheme}
-\section{Delta Correlating Prediction Table}
+% A short description of what we will present --- what we have done.
+
+\section{Sequential (seq)}
+The framework contained a sequential prefetcher as a starting point.
+Modifications related to the prefetch distance and degree where tried.
+% An example?
+Also the criteria for starting prefetching sequential where tried modified.
+% Or was it? I seem to think so at least, find the change and document it.
+
+% Also add the result and try to explain them.
+
+Created a trivial test program (accumulate.c) that accessed a large sequential
+chunk of memory in a tight loop body to assess the optimal prefetch distance
+for this type of code structure. This estimates the best possible performance
+gain for sequential prefetching for shortest possible loop body and the
+measured optimum acts therefore as an upper bound for how many elements should
+be present in cache to overlap the time it takes to prefetch enough new
+elements to refill the consumption of elements from cache.
+
+\section{Reference Prediction Table (RPT)}
+
+\section{Delta Correlating Prediction Table (DCPT)}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from (link to paper).
 The implementation is very near RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.

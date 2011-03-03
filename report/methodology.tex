@@ -1,3 +1,36 @@
 \chapter{Methodology}
+%This section should describe how we attempt to solve our problems.
 
-This section should describe how we attempt to solve our problems.
+The methodology used in the beginning was to start with a sequential
+prefetcher and briefly progress through prior art, i.e. an RPT implementation
+and finally a DCPT implementation. During development the performance was
+measured by running a M5-simulator testbench framework and the obtained test
+results where evaluated against previous versions' results for
+empirically determining the usefulness of the modification.
+
+The prefetcher development has been driven by ideas from the group and it
+has been a low barrier for implementing ideas. The ideas proposed have been
+thought to be improvements mostly because of personal or group reflection over
+the current prefetching mechanism and the memory hierarchy. Testing of
+many different modifications and following performance evaluations have been
+done rapidly.
+
+So far the development can be seen as searching somewhat blindly for a good
+solution. The proposed modifications have often been based on an insight
+about the currently implemented prefetcher's (seq, RPT or DCPT) functionality.
+Other modifications are mere tweaks of parameters for the different prefetcher
+strategies for fine-tuning the performance metrics. Since the main focus of
+our research is on the DCPT prefetcher and the development methodology
+outlined above (basicly the group using its creativity) will probably only
+give a noteworthy performance increase by chance. And even though such
+modifications could have been based on a justified/rational idea spurred by
+creativity, it would have been better if they where based on measurements and
+novel memory access patterns derived from an analytical method.
+
+This means that a shift of methodology probably is required to make truly
+interesting discoveries academically and make it more likely to find and
+exploit prefetching opportunities. For the remaining work the use of valgrind
+and the inspection of which code snippets give cache misses and trying to
+analyse these to find potential underlying factors/mechanisms for these
+will become a more important tool as we run out of good a priori
+insights/ideas.
