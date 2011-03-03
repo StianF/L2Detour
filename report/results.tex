@@ -2,4 +2,7 @@
 \section{Delta Correlation Prediction Table}
 This implementation get a 8.6\% speedup with a table of 100 entries and 10 delta per entry.
 
-This section will give a structural overview of the results.
+The attempts to tweak this with other values have not been successful, but it gives around 8\% speedup.
+
+Attempts to add a check to issue less prefetches does also lead to less speedup.
+
