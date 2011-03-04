@@ -27,6 +27,10 @@ When the it gets a request, it saves the (PC) program counter, and the stride in
 If it finds a pattern in the list, it saves all the adresses that possibly should be prefetched in another list with candidates for prefetch.
 Then it runs through the list and checks if the adresses is not in the cache, in the mshr or that the adress is out of memory. If all the requirements are met, it issues a prefetch for it.
 
+The first implementation done, did something wrong according to \cite{dcptpaper}, it did not use the deltas like they should. It prefetched all adresses that came after the matching sequence, but all the adresses used the same adress as base, so if there was a array of deltas like 1,2,3,4,1,2,5,1,2 and the last memory adress was 10, it would prefetch: 10+3, 10+4, 10+1, 10+2, 10+5.
+
+The second implemenation should do it right according to \cite{dcptpaper}, it would with the same sequence as the last example prefetch: 10+5, 15+1, 16+2, 18+1, 19+2, 21+3, 24+4.
+
 Attempts to tweak this implementation:
 - Make a copy of the queue to keep track of which adresses that still aren't fetched, to avoid "double fetching".
 - Make a lru which prevents the prefetcher from throwing out recently used history from the list.
