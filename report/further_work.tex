@@ -1,3 +1,32 @@
 \chapter{Further Work}
+This section is optional, but might become large.
 
-This is section is optional, but will likely be the largest.
+\section{Stuff we will look into before delivery (i.e. our plan forward)}
+Continuing to tweak and implement the modified regular DCPT. The plan is
+to work with this in March and cut off the gathering of results 1. April
+and start focusing on writing the report and presentation.
+
+Look into the generalization of DCPT as a tree-structure. If this gives
+ok speedup then we will change the focus of the report into comparing this
+approach with our version of DCPT. If performance is low, only mention the
+design and do not analyse it further, instead focus on analysing our
+DCPT version.
+
+The tree-generalization of DCPT is outlined somewhat as follows. Each new PC
+causing an access gets a tree-root-node and two tree-pointers allocated.
+As this access is the first access for the PC, no history is available.
+Therefore add a child node to the PC's root and associate the stride 1 with it.
+Move one of the tree-pointers, cur_prefetch to this child, and leave the other
+pointer, true_access, alone. At next access for this PC verify if this access
+has been correctly prefetched by traversing from cur_prefetch and up to the
+root, checking if any node correspond to the access. If this is the case,
+move true_access to that node. If no such node is found, search the children
+of true_access and check for a stride giving this access. If child found, move
+true_access to this and start prefetching from this nodes subtree and move
+cur_prefetch accordingly. If no child found create a new child node and set
+its stride to 1 as in the starting case. These starting or learning cases
+are such that if the stride 1 is guessed wrong, correct the stride in the node
+instead of creating a new child node, but after this set the node as no longer
+learning.
+
+\section{Stuff we won't have time to, but that might be good ideas}
