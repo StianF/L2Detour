@@ -16,14 +16,14 @@ The tree-generalization of DCPT is outlined somewhat as follows. Each new PC
 causing an access gets a tree-root-node and two tree-pointers allocated.
 As this access is the first access for the PC, no history is available.
 Therefore add a child node to the PC's root and associate the stride 1 with it.
-Move one of the tree-pointers, cur_prefetch to this child, and leave the other
-pointer, true_access, alone. At next access for this PC verify if this access
-has been correctly prefetched by traversing from cur_prefetch and up to the
+Move one of the tree-pointers, cur\_prefetch to this child, and leave the other
+pointer, true\_access, alone. At next access for this PC verify if this access
+has been correctly prefetched by traversing from cur\_prefetch and up to the
 root, checking if any node correspond to the access. If this is the case,
-move true_access to that node. If no such node is found, search the children
-of true_access and check for a stride giving this access. If child found, move
-true_access to this and start prefetching from this nodes subtree and move
-cur_prefetch accordingly. If no child found create a new child node and set
+move true\_access to that node. If no such node is found, search the children
+of true\_access and check for a stride giving this access. If child found, move
+true\_access to this and start prefetching from this nodes subtree and move
+cur\_prefetch accordingly. If no child found create a new child node and set
 its stride to 1 as in the starting case. These starting or learning cases
 are such that if the stride 1 is guessed wrong, correct the stride in the node
 instead of creating a new child node, but after this set the node as no longer

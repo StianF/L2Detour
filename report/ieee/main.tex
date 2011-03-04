@@ -107,28 +107,34 @@ will become a more important tool as we run out of good a priori
 insights/ideas.
 
 \section{"The Scheme"}
-% A short description of what we will present --- what we have done.
-
-\subsection{Sequential (seq)}
+\section{Sequential (seq)}
 The framework contained a sequential prefetcher as a starting point.
-Modifications related to the prefetch distance and degree where tried.
-% An example?
-Also the criteria for starting prefetching sequential where tried modified.
-% Or was it? I seem to think so at least, find the change and document it.
-
-% Also add the result and try to explain them.
-
-Created a trivial test program (accumulate.c) that accessed a large sequential
-chunk of memory in a tight loop body to assess the optimal prefetch distance
-for this type of code structure. This estimates the best possible performance
-gain for sequential prefetching for shortest possible loop body and the
-measured optimum acts therefore as an upper bound for how many elements should
+Using this we created a trivial test program (accumulate.c) that accessed
+a large sequential chunk of memory in a tight loop body to assess the
+optimal prefetch distance for this type of code structure.
+This estimates the best possible performance gain for sequential
+prefetching for the shortest possible loop body and this
+measured optimum also acts as an upper bound for how many elements should
 be present in cache to overlap the time it takes to prefetch enough new
-elements to refill the consumption of elements from cache.
+elements to refill the consumption of elements from cache. The optimal
+prefetch distance was found to be 4. % TODO Verify this.
+% Did we test for optimal degree also?
 
-\subsection{Reference Prediction Table (RPT)}
+\section{Reference Prediction Table (RPT)}
+Modifications related to the prefetch distance and degree where tried.
+% An example? Maybe it was with the sequential failback these parameters
+% where relevant? TODO check the repo history for modifications to RPT.
 
-\subsection{Delta Correlating Prediction Table}
+Fine-tuning regarding table size and replacement policy.
+% Table of the different speedups and which parameters used?
+
+Also different criteria for sequential prefetching failback where tried.
+% Or was it? I seem to think so at least. Find the change and document it.
+
+% Also add results to the different modifications/versions and try to explain
+% them.
+
+\section{Delta Correlating Prediction Table (DCPT)}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
 The implementation is very near RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
@@ -152,8 +158,42 @@ Attempts to add a check to issue less prefetches does also lead to less speedup.
 
 The next implementation, which should be right according to the pseudocode in \cite{dcptpaper} did not do as well, a maximum of 7.3\% speedup with the same specification as the first implementation was accomplished.
 \section{Conclusion}
-\appendices
-\section{}
+
+\section{Further Work}
+This section is optional, but might become large.
+
+\subsection{Stuff we will look into before delivery (i.e. our plan forward)}
+Continuing to tweak and implement the modified regular DCPT. The plan is
+to work with this in March and cut off the gathering of results 1. April
+and start focusing on writing the report and presentation.
+
+Look into the generalization of DCPT as a tree-structure. If this gives
+ok speedup then we will change the focus of the report into comparing this
+approach with our version of DCPT. If performance is low, only mention the
+design and do not analyse it further, instead focus on analysing our
+DCPT version.
+
+The tree-generalization of DCPT is outlined somewhat as follows. Each new PC
+causing an access gets a tree-root-node and two tree-pointers allocated.
+As this access is the first access for the PC, no history is available.
+Therefore add a child node to the PC's root and associate the stride 1 with it.
+Move one of the tree-pointers, cur\_prefetch to this child, and leave the other
+pointer, true\_access, alone. At next access for this PC verify if this access
+has been correctly prefetched by traversing from cur\_prefetch and up to the
+root, checking if any node correspond to the access. If this is the case,
+move true\_access to that node. If no such node is found, search the children
+of true\_access and check for a stride giving this access. If child found, move
+true\_access to this and start prefetching from this nodes subtree and move
+cur\_prefetch accordingly. If no child found create a new child node and set
+its stride to 1 as in the starting case. These starting or learning cases
+are such that if the stride 1 is guessed wrong, correct the stride in the node
+instead of creating a new child node, but after this set the node as no longer
+learning.
+
+\subsection{Stuff we won't have time to, but that might be good ideas}
+
+%\appendices
+%\section{}
 %Appendix one text goes here.
 
 % you can choose not to have a title for an appendix
