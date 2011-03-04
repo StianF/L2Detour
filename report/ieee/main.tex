@@ -69,7 +69,63 @@ DCPT, RPT, prefetcher
 
 \section{Introduction}
 
+\section{Methodology}
+%This section should describe how we attempt to solve our problems.
+
+The methodology used in the beginning was to start with a sequential
+prefetcher and briefly progress through prior art, i.e. an RPT implementation
+and finally a DCPT implementation. During development the performance was
+measured by running a M5-simulator testbench framework and the obtained test
+results where evaluated against previous versions' results for
+empirically determining the usefulness of the modification.
+
+The prefetcher development has been driven by ideas from the group and it
+has been a low barrier for implementing ideas. The ideas proposed have been
+thought to be improvements mostly because of personal or group reflection over
+the current prefetching mechanism and the memory hierarchy. Testing of
+many different modifications and following performance evaluations have been
+done rapidly.
+
+So far the development can be seen as searching somewhat blindly for a good
+solution. The proposed modifications have often been based on an insight
+about the currently implemented prefetcher's (seq, RPT or DCPT) functionality.
+Other modifications are mere tweaks of parameters for the different prefetcher
+strategies for fine-tuning the performance metrics. Since the main focus of
+our research is on the DCPT prefetcher and the development methodology
+outlined above (basicly the group using its creativity) will probably only
+give a noteworthy performance increase by chance. And even though such
+modifications could have been based on a justified/rational idea spurred by
+creativity, it would have been better if they where based on measurements and
+novel memory access patterns derived from an analytical method.
+
+This means that a shift of methodology probably is required to make truly
+interesting discoveries academically and make it more likely to find and
+exploit prefetching opportunities. For the remaining work the use of valgrind
+and the inspection of which code snippets give cache misses and trying to
+analyse these to find potential underlying factors/mechanisms for these
+will become a more important tool as we run out of good a priori
+insights/ideas.
+
 \section{"The Scheme"}
+\subsection{Sequential (seq)}
+The framework contained a sequential prefetcher as a starting point.
+Modifications related to the prefetch distance and degree where tried.
+% An example?
+Also the criteria for starting prefetching sequential where tried modified.
+% Or was it? I seem to think so at least, find the change and document it.
+
+% Also add the result and try to explain them.
+
+Created a trivial test program (accumulate.c) that accessed a large sequential
+chunk of memory in a tight loop body to assess the optimal prefetch distance
+for this type of code structure. This estimates the best possible performance
+gain for sequential prefetching for shortest possible loop body and the
+measured optimum acts therefore as an upper bound for how many elements should
+be present in cache to overlap the time it takes to prefetch enough new
+elements to refill the consumption of elements from cache.
+
+\subsection{Reference Prediction Table (RPT)}
+
 \subsection{Delta Correlating Prediction Table}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
 The implementation is very near RPT, but the difference is that it looks for a pattern instead of one stride.
@@ -83,7 +139,7 @@ Attempts to tweak this implementation:
 - Adjustments to the size of the list, and size of the delta list
 
 \section{Results}
-\section{Delta Correlation Prediction Table}
+\subsection{Delta Correlation Prediction Table}
 This implementation get a 8.6\% speedup with a table of 100 entries and 10 delta per entry.
 
 The attempts to tweak this with other values have not been successful, but it gives around 8\% speedup.
@@ -125,46 +181,6 @@ Attempts to add a check to issue less prefetches does also lead to less speedup.
 M.~Grann\ae s, M.~Jahre and L.~Natvig, \emph{Storage Efficient Hardware Prefetching using Delta Correlating Prediction Tables}, 2009.
 
 \end{thebibliography}
-
-% biography section
-% 
-% If you have an EPS/PDF photo (graphicx package needed) extra braces are
-% needed around the contents of the optional argument to biography to prevent
-% the LaTeX parser from getting confused when it sees the complicated
-% \includegraphics command within an optional argument. (You could create
-% your own custom macro containing the \includegraphics command to make things
-% simpler here.)
-%\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
-% or if you just want to reserve a space for a photo:
-
-\begin{IEEEbiographynophoto}{Leif Tore Rusten}
-Bastard
-\end{IEEEbiographynophoto}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{Stian Fredrikstad}
-Retard
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Vegar Kaasli}
-Wasted
-\end{IEEEbiographynophoto}
-
-% You can push biographies down or up by placing
-% a \vfill before or after them. The appropriate
-% use of \vfill depends on what kind of text is
-% on the last page and whether or not the columns
-% are being equalized.
-
-%\vfill
-
-% Can be used to pull up biographies so that the bottom of the last one
-% is flush with the other column.
-%\enlargethispage{-5in}
 
 
 
