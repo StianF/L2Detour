@@ -2,142 +2,175 @@
  * A sample prefetcher which does sequential one-block lookahead.
  * This means that the prefetcher fetches the next block _after_ the one that
  * was just accessed. It also ignores requests to blocks already in the cache.
- */
+*/
 
 #include "interface.hh"
-struct MU {	
-	int diff;
-	int times_used;
-};	
-
 struct RPT {
-    Addr pc;        
-		Addr mem_addr; 
-    int diff;     
-		int diff2;
-		MU stats[3];
+	Addr pc;        
+	Addr last_mem_addr; 
+	uint16_t* deltas;
+	int deltai;
+	int fill;
+	Addr last_prefetch;
 };
-
-const int l = 100;
+const int l = 110;
+const int deltal = 10;
 RPT rpttable[l];
 
+Addr* DC(int i);
+void PF(int i, Addr* cand);
 
-int length = 0;
+int length = -1;
 int far = 0;
+int n_cand = 0;
+bool begindelete = false;
+
 void prefetch_init(void)
 {
-    /* Called before any calls to prefetch_access. */
-    /* This is the place to initialize data structures. */
-
-    DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
+	/* Called before any calls to prefetch_access. */
+	/* This is the place to initialize data structures. */
+	DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
 }
-
 void prefetch_access(AccessStat stat)
 {
-		Addr fetch = 0;
-		bool found = false;
-		int i = 0;
-		int found_index = 0;
-		for(i = 0; i < far; i++){
-			if(rpttable[i].pc == stat.pc){
-				found = true;
-				if(rpttable[i].diff == 99999){
-					rpttable[i].diff = stat.mem_addr - rpttable[i].mem_addr;
-					rpttable[i].mem_addr = stat.mem_addr;
-				}else if(rpttable[i].diff2 == 99999){
-						rpttable[i].diff2 = stat.mem_addr - rpttable[i].mem_addr;
-						rpttable[i].mem_addr = stat.mem_addr;
-				}else if(rpttable[i].diff2 != rpttable[i].diff && rpttable[i].diff != 99999){
-						rpttable[i].diff = rpttable[i].diff2;
-						rpttable[i].diff2 = 99999;
-						rpttable[i].mem_addr = stat.mem_addr;
-				}
-				if(rpttable[i].diff != 99999){
-					int j = 0;
-					int diff_least_used = 0;
-					int time_count = 9999999;
-					bool mu_found = false;
-					for(j = 0; j < 3; j++){
-						if(rpttable[i].stats[j].diff == rpttable[i].diff){
-							rpttable[i].stats[j].times_used++;
-							mu_found = true;
-						}
-						if(rpttable[i].stats[j].times_used < time_count){
-							time_count = rpttable[i].stats[j].times_used;
-							diff_least_used = j;
-						}
+	bool found = false;
+	int foundi = 0;
+	int i = 0;
+	for(i = 0; i < far; i++){
+		if(rpttable[i].pc == stat.pc){
+			found = true;
+			foundi = i;
+			if(stat.mem_addr - rpttable[i].last_mem_addr != 0){
+				if(rpttable[i].deltai < deltal-1){
+					rpttable[i].deltas[rpttable[i].deltai++] = stat.mem_addr - rpttable[i].last_mem_addr;
+					if(rpttable[i].fill != deltal-1){
+						rpttable[i].fill++;
 					}
-					if(!mu_found){
-						rpttable[i].stats[diff_least_used].diff = rpttable[i].diff;
-						rpttable[i].stats[diff_least_used].times_used = 1;
-					}
+				}else{
+					rpttable[i].deltas[rpttable[i].deltai] = stat.mem_addr - rpttable[i].last_mem_addr;
+					rpttable[i].deltai = 0;
+					rpttable[i].fill = deltal-1;
 				}
-				if(rpttable[i].diff2 == rpttable[i].diff && rpttable[i].diff != 99999){
-					fetch = stat.mem_addr+rpttable[i].diff;
-				}
+				rpttable[i].last_mem_addr = stat.mem_addr;
 			}
 		}
-		if(!found){
-			if(length < l-1){
-				length = length + 1;
-				if(far != l){
-					far = far +1;
+	}
+	if(!found){
+		if(length < l-1){																																																																																																																length++;
+			if(far != l){
+				far++;
+			}
+		}else{
+			begindelete = true;	
+			length = 0;
+		}
+		if(begindelete){
+			uint16_t* deltas = rpttable[length].deltas;
+			delete[] deltas;
+		}
+		RPT rpt;
+		rpt.pc = stat.pc;
+		rpt.deltai = 0;
+		rpt.fill = 0;
+		rpt.last_mem_addr = stat.mem_addr;
+		rpt.last_prefetch = 0;
+		rpt.deltas = new uint16_t[deltal];
+		rpttable[length] = rpt;
+	}else if(rpttable[foundi].fill > 2) {
+		Addr* candidates = DC(foundi);
+		PF(foundi, candidates);
+		delete[] candidates;
+	}
+}
+
+Addr* DC(int i){
+	Addr* candidates = new Addr[deltal];
+	int patterns[deltal];
+	int n_patterns = 0;
+	n_cand = 0;
+	uint16_t d1 = rpttable[i].deltas[rpttable[i].deltai];
+	uint16_t d2 = 0;
+	int delta = 0;
+	if(rpttable[i].deltai == 0){
+		delta = deltal-1;
+	}else{
+		delta = rpttable[i].deltai-1;
+	}
+	d2 = rpttable[i].deltas[delta];
+	int u = delta-1;
+	if(rpttable[i].deltai == 0){
+		u = deltal-2;
+	}else if(rpttable[i].deltai == 1){
+		u = deltal-1;
+	}else{
+		u = rpttable[i].deltai-2;
+	}
+	while(u != delta && u <= rpttable[i].fill){
+		int v = u + 1;
+		if(u == rpttable[i].fill){
+			v = 0;	
+		}
+		if(u <= rpttable[i].fill && v <= rpttable[i].fill && v != rpttable[i].deltai){
+			if(rpttable[i].deltas[u] == d2 && rpttable[i].deltas[v] == d1){
+				patterns[n_patterns++] = (v < rpttable[i].fill)?v+1:0;
+			}
+		}
+		if(u == 0){
+			u = rpttable[i].fill;
+		}else{
+			u--;
+		}
+	}
+	int j = 0;
+	for(j = 0; j < n_patterns; j++){
+		Addr addr = rpttable[i].last_mem_addr;
+		int w = patterns[j];
+		int next = (j+1 < n_patterns)?patterns[j+1]:patterns[0];
+		bool stop = false;
+		while(w != next && !stop){
+			
+			if(w <= rpttable[i].fill){
+				addr = addr + rpttable[i].deltas[w];
+				if(addr > 0){
+					int x = 0;
+					bool found = false;
+					for(x = 0; x < n_cand; x++){
+						if(candidates[x] == addr){
+							found = true;
+						}
+					}
+					if(!found && n_cand < deltal){
+						candidates[n_cand++] = addr;
+					}
+				}else{
+					//Gaar negativ, stop this shit
+					stop = true;
 				}
-
-
+			}
+			if(w < rpttable[i].fill){
+				w++;
 			}else{
-				length = 0;
+				w = 0;
 			}
-				
-			RPT rpt;
-			rpt.pc = stat.pc;
-			rpt.mem_addr = stat.mem_addr;
-			rpt.diff = 99999;
-			rpt.diff2 = 99999;
-			i = 0;
-			for(i = 0; i < 3; i++){
-				MU m;
-				m.diff = 0;
-				m.times_used = 0;
-				rpt.stats[i] = m;
-			}
-			rpttable[length] = rpt;
 		}
-		else if(fetch != 0 && MAX_PHYS_MEM_ADDR > fetch){
-			if (!in_cache(fetch)) {
+	}
+	return candidates;
+}
 
-				issue_prefetch(fetch);
-			}
-		}else if(found){
-			i = 0;
-			int possible_diff = 0;
-			int times_used = 0;
-			for(i = 0; i < 3; i++){
-				if(rpttable[found_index].stats[i].times_used > times_used){
-					times_used = rpttable[found_index].stats[i].times_used;
-					possible_diff = rpttable[found_index].stats[i].diff;
-				}
-			}
-			fetch = stat.mem_addr + possible_diff;
-			if(!in_cache(fetch) && MAX_PHYS_MEM_ADDR > fetch){
-				issue_prefetch(fetch);
-			}
+
+void PF(int i, Addr* cand){
+
+	int j = 0;
+	for(j = 0; j < n_cand; j++){
+		if(!in_cache(cand[j]) && !in_mshr_queue(cand[j]) && cand[j] <= MAX_PHYS_MEM_ADDR && cand[j] != rpttable[i].last_prefetch && current_queue_size() < MAX_QUEUE_SIZE){
+			issue_prefetch(cand[j]);
+			rpttable[i].last_prefetch = cand[j];
 		}
-		
-		/*else
-		{
-			int next = 50;
-			while(in_cache(stat.mem_addr + (BLOCK_SIZE * next)))
-			{
-				next = next +1;
-			}
-			issue_prefetch(stat.mem_addr + (BLOCK_SIZE * next));
-		}*/
+	}
 }
 
 void prefetch_complete(Addr addr) {
-    /*
-     * Called when a block requested by the prefetcher has been loaded.
-     */
+	/*
+	 * Called when a block requested by the prefetcher has been loaded.
+	 */
 }
-

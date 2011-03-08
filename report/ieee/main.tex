@@ -68,7 +68,7 @@ DCPT, RPT, prefetcher
 
 
 \section{Introduction}
-
+Prefetcher has been a hot topic the last years since the memory gap has become so big.
 \section{Methodology}
 %This section should describe how we attempt to solve our problems.
 
@@ -107,7 +107,7 @@ will become a more important tool as we run out of good a priori
 insights/ideas.
 
 \section{"The Scheme"}
-\section{Sequential (seq)}
+\subsection{Sequential (seq)}
 The framework contained a sequential prefetcher as a starting point.
 Using this we created a trivial test program (accumulate.c) that accessed
 a large sequential chunk of memory in a tight loop body to assess the
@@ -120,7 +120,7 @@ elements to refill the consumption of elements from cache. The optimal
 prefetch distance was found to be 4. % TODO Verify this.
 % Did we test for optimal degree also?
 
-\section{Reference Prediction Table (RPT)}
+\subsection{Reference Prediction Table (RPT)}
 Modifications related to the prefetch distance and degree where tried.
 % An example? Maybe it was with the sequential failback these parameters
 % where relevant? TODO check the repo history for modifications to RPT.
@@ -134,7 +134,7 @@ Also different criteria for sequential prefetching failback where tried.
 % Also add results to the different modifications/versions and try to explain
 % them.
 
-\section{Delta Correlating Prediction Table (DCPT)}
+\subsection{Delta Correlating Prediction Table (DCPT)}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
 The implementation is very near RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
