@@ -6,19 +6,15 @@
 
 #include "interface.hh"
 
-void prefetch_init(void)
-{
-  /* Called before any calls to prefetch_access. */
-  /* This is the place to initialize data structures. */
-  DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
-}
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct node {
   Addr delta;
   int count;
-  node_t *parent;
-  node_t *child;
-  node_t *sibling;
+  struct node *parent;
+  struct node *child;
+  struct node *sibling;
 } node_t;
 
 typedef struct root {
@@ -40,16 +36,28 @@ typedef struct root {
 #define DEFAULT_COUNT 4
 
 #define NUM_ROOTS 100
-root_t roots[NUM_ROOTS + 1];
-roots[NUM_ROOTS] = 0;
+root_t *roots[NUM_ROOTS + 1];
 int rr_count = 0;
+
+void prefetch_init(void)
+{
+  /* Called before any calls to prefetch_access. */
+  /* This is the place to initialize data structures. */
+  //DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
+
+  roots[NUM_ROOTS] = 0; // Guard value, think C string. Should be constant.
+  int f;
+  for (f = 0; f < NUM_ROOTS; f++)
+    roots[f] = (root_t *)malloc(sizeof(root_t));
+}
 
 void prefetch_access(AccessStat stat) {
   // Search for matching root.
-  node_t *root = roots;
+  root_t **rootp = roots;
+  root_t *root = *rootp;
   while (root) {
     if (root->pc == stat.pc) break; // Found a match.
-    root++;
+    root = *++rootp;
   }
 
   // Didn't find a match, add one.
@@ -65,13 +73,15 @@ void prefetch_access(AccessStat stat) {
       // Need to cleanup the root before reuse? FIXME
     }
 
-    root->child = malloc(sizeof(node));
+    root->child = (node_t *)malloc(sizeof(node_t));
     root->child->delta = 1;
     root->child->count = DEFAULT_COUNT;
     root->cur = root->child;
     root->pf_node = root->child;
     root->pf_learning = 1; // TRUE
     root->pf_count = 0;
+
+    root->last -= root->cur->delta; // Faking this since first access.
   }
 
   // Check if on valid path
@@ -101,9 +111,9 @@ void prefetch_access(AccessStat stat) {
 
       // If the startup nodes stride is wrong (i.e. stride = 1 gives no counts)
       // reuse the node instead of storing a zero count node.
-      int stride = stat.addr - root->last;
+      int stride = stat.mem_addr - root->last;
       if (!root->cur->count) {
-        root->cur->stride = stride;
+        root->cur->delta = stride;
       } else {
         // Add a child and give it the stride as in true-case.
 
@@ -112,7 +122,7 @@ void prefetch_access(AccessStat stat) {
         // allow for some slack in the requirement for splitting).
 
         // FIXME nonchalently overwrites any child already present.
-        root->cur->child = malloc(sizeof(node));
+        root->cur->child = (node_t *)malloc(sizeof(node_t));
         root->cur->child->parent = root->cur;
         root->cur = root->cur->child;
         root->cur_count = 1;
@@ -139,8 +149,8 @@ void prefetch_access(AccessStat stat) {
 
   while (ahead < 4) { // FIXME Magic number.
     if (root->pf_count < root->pf_node->count) {
-      // FIXME only prefetches addresses equal to the stride.
-      issue_prefetch(addr);
+      // FIXME only prefetches stride as addresses.
+      issue_prefetch(root->pf_node->delta);
       ahead++;
       root->pf_count++;
     } else if (root->pf_node->child) {

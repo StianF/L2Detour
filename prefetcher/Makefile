@@ -1,0 +1,1 @@
+test_prefetcher: prefetcher.o

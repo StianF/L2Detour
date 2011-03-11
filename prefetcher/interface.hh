@@ -16,7 +16,7 @@
  * DPRINTF(HWPrefetch, "Address %#x was accessed\n", stat.mem_addr)
  *
  */
-#include "base/trace.hh"
+//include "base/trace.hh"
 
 /* Size of cache blocks (cache lines) in bytes. */
 #define BLOCK_SIZE 64
