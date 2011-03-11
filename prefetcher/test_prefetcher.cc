@@ -7,6 +7,12 @@ int main(void) {
   prefetch_access(s);
   s.mem_addr += 1;
   prefetch_access(s);
+  s.mem_addr += 2;
+  prefetch_access(s);
+  s.mem_addr += 3;
+  prefetch_access(s);
+  s.mem_addr += 1;
+  prefetch_access(s);
 }
 
 void issue_prefetch(Addr addr) {

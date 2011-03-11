@@ -34,6 +34,7 @@ typedef struct root {
 
 // Maybe a bit large penalty in case of wrong guessing in learning phase.
 #define DEFAULT_COUNT 4
+#define MAX_STRIDE 1024
 
 #define NUM_ROOTS 100
 root_t *roots[NUM_ROOTS + 1];
@@ -52,6 +53,7 @@ void prefetch_init(void)
 }
 
 void prefetch_access(AccessStat stat) {
+  printf("Mem addr: %i\n", stat.mem_addr);
   // Search for matching root.
   root_t **rootp = roots;
   root_t *root = *rootp;
@@ -73,16 +75,21 @@ void prefetch_access(AccessStat stat) {
       // Need to cleanup the root before reuse? FIXME
     }
 
+    root->pc = stat.pc;
     root->child = (node_t *)malloc(sizeof(node_t));
     root->child->delta = 1;
     root->child->count = DEFAULT_COUNT;
     root->cur = root->child;
-    root->pf_node = root->child;
+    root->pf_node = root->cur;
     root->pf_learning = 1; // TRUE
     root->pf_count = 0;
 
-    root->last -= root->cur->delta; // Faking this since first access.
+    // Faking this since first access is a special case of always valid path.
+    root->last -= root->cur->delta;
+    root->cur_count = -1;
   }
+
+  printf("root: %p, cur: %p\n", root, root->cur);
 
   // Check if on valid path
   if (stat.mem_addr == root->last + root->cur->delta) {
@@ -99,9 +106,22 @@ void prefetch_access(AccessStat stat) {
         if (!(root->cur)) root->cur = root->child;
       }
     }
+
+    if (root->pf_learning && root->pf_count == root->cur->count)
+      root->cur->count += DEFAULT_COUNT; // FIXME use different consts?
   } else {
     // Have not guessed correctly.
+
     if (root->pf_learning) {
+      // Reset the counting, since prefetching now could be off.
+      // TODO, check if any of the prefetched candidates already in
+      // effect just happens to fulfilled the new stride (e.g. four
+      // one-strided prefetches would by chance prefetch two two-strided,
+      // one three-strided or one four-strided element).
+      //
+      // TODO Try to flush the queue so no old and wrong guesses is tried?
+      root->pf_count = 1; // One since the miss will cause it to be brought in.
+
       // The current count is the seen number of times access has been
       // with this stride. Set the node to this value for future guessing.
       root->cur->count = root->cur_count; 
@@ -125,11 +145,15 @@ void prefetch_access(AccessStat stat) {
         root->cur->child = (node_t *)malloc(sizeof(node_t));
         root->cur->child->parent = root->cur;
         root->cur = root->cur->child;
+        root->pf_node = root->cur;
         root->cur_count = 1;
 
         root->cur->delta = stride;
         root->cur->count = DEFAULT_COUNT;
       }
+    } else {
+      // Reset the count since no longer on a prefetch trail.
+      root->cur_count = 0;
     }
   }
 
@@ -139,13 +163,19 @@ void prefetch_access(AccessStat stat) {
 
   // Find the count of locations the prefetcher is ahead of the
   // verified current data access.
-  int ahead = root->pf_count;
+  int ahead = root->pf_count - root->cur_count;
   node *aheadp = root->pf_node;
   while (aheadp != root->cur) {
     aheadp = aheadp->parent;
     if (!aheadp) break;
     ahead += aheadp->count;
   }
+
+  /*
+  printf("pf_count: %i\n", root->pf_count);
+  printf("cur_count: %i\n", root->cur_count);
+  printf("ahead: %i\n", ahead);
+  */
 
   while (ahead < 4) { // FIXME Magic number.
     if (root->pf_count < root->pf_node->count) {
@@ -167,6 +197,8 @@ void prefetch_access(AccessStat stat) {
       */
     }
   }
+
+  printf("\n");
 }
 
 void prefetch_complete(Addr addr) {
