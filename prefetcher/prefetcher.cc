@@ -30,6 +30,7 @@ typedef struct root {
   node_t *pf_node;
   int pf_count;
   char pf_learning;
+  int ahead; // The number of addresses ahead of validated.
 } root_t;
 
 // Maybe a bit large penalty in case of wrong guessing in learning phase.
@@ -87,48 +88,84 @@ void prefetch_access(AccessStat stat) {
     // Faking this since first access is a special case of always valid path.
     root->last -= root->cur->delta;
     root->cur_count = -1;
+    root->ahead = 1;
   }
 
-  printf("root: %p, cur: %p\n", root, root->cur);
+  printf("cur_count: %i\n", root->cur_count);
+  printf("mem_addr: %i, last: %i, delta: %i\n",
+         (int)stat.mem_addr, (int)root->last, root->cur->delta);
 
   // Check if on valid path
   if (stat.mem_addr == root->last + root->cur->delta) {
+    root->ahead--;
     if (root->cur_count++ == root->cur->count) {
       if (root->pf_learning) {
         // While learning, assume the current stride is still a good guess.
         root->cur->count++;
       } else {
-        root->cur_count = 0;
+        root->cur_count = 1;
         root->cur = root->cur->child;
 
         // If current node is leaf, go to root.
         // TODO choose the most likely root child.
-        if (!(root->cur)) root->cur = root->child;
+        // FIXME, doesn't count the correct number of times for first.
+        if (!(root->cur)) {
+          if (root->child->child)
+            root->cur = root->child->child;
+          else
+            root->cur = root->child;
+        }
       }
     }
 
+    // Increase the node count guess if still learning.
     if (root->pf_learning && root->pf_count == root->cur->count)
       root->cur->count += DEFAULT_COUNT; // FIXME use different consts?
   } else {
     // Have not guessed correctly.
+    root->ahead = 0;
 
     if (root->pf_learning) {
       // Reset the counting, since prefetching now could be off.
+      root->pf_count = 0;
+
       // TODO, check if any of the prefetched candidates already in
       // effect just happens to fulfilled the new stride (e.g. four
       // one-strided prefetches would by chance prefetch two two-strided,
       // one three-strided or one four-strided element).
-      //
+
       // TODO Try to flush the queue so no old and wrong guesses is tried?
-      root->pf_count = 1; // One since the miss will cause it to be brought in.
 
       // The current count is the seen number of times access has been
       // with this stride. Set the node to this value for future guessing.
       root->cur->count = root->cur_count; 
+    }
 
-      // FIXME the new stride should be used as a criteria for branching
-      // back to root and perhaps enable learning?
+    // If learning and we are guessing too large addresses, stop the
+    // learning mode and try to prefetch from root. This makes it so
+    // that only increasing patterns are stored in a path. FIXME make
+    // an adjustment so the path knows if it's increasing or decreasing
+    // -- the prefetcher should be able to accommodate both prefetch
+    // directions.
+    if (root->pf_learning && stat.mem_addr < root->last + root->cur->delta) {
+      root->pf_learning = 0;
+      printf("cur_count: %i, stride: %i\n", root->cur_count, root->cur->delta);
 
+      // TODO Guess correct path/start learning.
+
+      // Have allready verified the first by guessing path
+      // (or begun learning)
+      if (root->child->child)
+        root->cur = root->child->child;
+      else
+        root->cur = root->child;
+      root->cur_count = 0;
+
+      root->pf_node = root->cur;
+      root->pf_count = 0;
+    }
+
+    if (root->pf_learning) {
       // If the startup nodes stride is wrong (i.e. stride = 1 gives no counts)
       // reuse the node instead of storing a zero count node.
       int stride = stat.mem_addr - root->last;
@@ -161,40 +198,24 @@ void prefetch_access(AccessStat stat) {
 
   // Prefetch
 
-  // Find the count of locations the prefetcher is ahead of the
-  // verified current data access.
-  int ahead = root->pf_count - root->cur_count;
-  node *aheadp = root->pf_node;
-  while (aheadp != root->cur) {
-    aheadp = aheadp->parent;
-    if (!aheadp) break;
-    ahead += aheadp->count;
-  }
-
   /*
   printf("pf_count: %i\n", root->pf_count);
   printf("cur_count: %i\n", root->cur_count);
   printf("ahead: %i\n", ahead);
   */
 
-  while (ahead < 4) { // FIXME Magic number.
+  while (root->ahead < 4) { // FIXME Magic number.
     if (root->pf_count < root->pf_node->count) {
       // FIXME only prefetches stride as addresses.
       issue_prefetch(root->pf_node->delta);
-      ahead++;
+      root->ahead++;
       root->pf_count++;
     } else if (root->pf_node->child) {
       root->pf_node = root->pf_node->child;
       root->pf_count = 0;
     } else {
-      break;
-      /*
-       * Would make it impossible to parent my way up to the cur-node as
-       * needed in the logic-paragraph above. FIXME
-       *
       root->pf_node = root->child;
       root->pf_count = 0;
-      */
     }
   }
 
