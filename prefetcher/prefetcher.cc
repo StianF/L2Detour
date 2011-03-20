@@ -11,7 +11,6 @@
 
 typedef struct node {
   Addr delta;
-  int count;
   struct node *parent;
   struct node *child;
   struct node *sibling;
@@ -24,11 +23,9 @@ typedef struct root {
   // The node in the current prefetch path known to be good.
   Addr last;
   node_t *cur;
-  int cur_count;
 
   // The node upto which we have prefetched. 
   node_t *pf_node;
-  int pf_count;
   char pf_learning;
   int ahead; // The number of addresses ahead of validated.
 } root_t;
@@ -51,6 +48,17 @@ void prefetch_init(void)
   int f;
   for (f = 0; f < NUM_ROOTS; f++)
     roots[f] = (root_t *)malloc(sizeof(root_t));
+}
+
+void print_child_path(node_t *r, node_t *cur, node_t *pf) {
+  while (r) {
+    if (r == pf) printf("p");
+    if (r == cur) printf("c");
+    printf("%i ", r->delta);
+    if (r->child && r->child->parent != r) printf("!");
+    r = r->child;
+  }
+  printf("\n");
 }
 
 void prefetch_access(AccessStat stat) {
@@ -77,69 +85,44 @@ void prefetch_access(AccessStat stat) {
     }
 
     root->pc = stat.pc;
+    root->pf_learning = 1; // TRUE
+    printf("learning\n");
+
+    /*
     root->child = (node_t *)malloc(sizeof(node_t));
     root->child->delta = 1;
-    root->child->count = DEFAULT_COUNT;
     root->cur = root->child;
     root->pf_node = root->cur;
-    root->pf_learning = 1; // TRUE
-    root->pf_count = 0;
 
     // Faking this since first access is a special case of always valid path.
     root->last -= root->cur->delta;
-    root->cur_count = -1;
     root->ahead = 1;
+    */
   }
 
-  printf("cur_count: %i\n", root->cur_count);
-  printf("mem_addr: %i, last: %i, delta: %i\n",
-         (int)stat.mem_addr, (int)root->last, root->cur->delta);
+  print_child_path(root->child, root->cur, root->pf_node);
 
+  printf("mem_addr: %i, last: %i, cur->delta: %i\n",
+         (int)stat.mem_addr, (int)root->last, root->cur?root->cur->delta:0);
+
+  int stride = stat.mem_addr - root->last;
   // Check if on valid path
-  if (stat.mem_addr == root->last + root->cur->delta) {
+  if (root->cur && stride == root->cur->delta) {
+    printf("correct\n");
     root->ahead--;
-    if (root->cur_count++ == root->cur->count) {
-      if (root->pf_learning) {
-        // While learning, assume the current stride is still a good guess.
-        root->cur->count++;
-      } else {
-        root->cur_count = 1;
-        root->cur = root->cur->child;
+    if (!root->pf_learning) {
+      root->cur = root->cur->child;
 
-        // If current node is leaf, go to root.
-        // TODO choose the most likely root child.
-        // FIXME, doesn't count the correct number of times for first.
-        if (!(root->cur)) {
-          if (root->child->child)
-            root->cur = root->child->child;
-          else
-            root->cur = root->child;
-        }
-      }
+      // If current node is leaf, go to root.
+      // TODO choose the most likely root child.
+      // FIXME, doesn't count the correct number of times for first.
+      if (!(root->cur)) root->cur = root->child;
     }
-
-    // Increase the node count guess if still learning.
-    if (root->pf_learning && root->pf_count == root->cur->count)
-      root->cur->count += DEFAULT_COUNT; // FIXME use different consts?
   } else {
     // Have not guessed correctly.
+    printf("wrong\n");
+
     root->ahead = 0;
-
-    if (root->pf_learning) {
-      // Reset the counting, since prefetching now could be off.
-      root->pf_count = 0;
-
-      // TODO, check if any of the prefetched candidates already in
-      // effect just happens to fulfilled the new stride (e.g. four
-      // one-strided prefetches would by chance prefetch two two-strided,
-      // one three-strided or one four-strided element).
-
-      // TODO Try to flush the queue so no old and wrong guesses is tried?
-
-      // The current count is the seen number of times access has been
-      // with this stride. Set the node to this value for future guessing.
-      root->cur->count = root->cur_count; 
-    }
 
     // If learning and we are guessing too large addresses, stop the
     // learning mode and try to prefetch from root. This makes it so
@@ -147,50 +130,43 @@ void prefetch_access(AccessStat stat) {
     // an adjustment so the path knows if it's increasing or decreasing
     // -- the prefetcher should be able to accommodate both prefetch
     // directions.
-    if (root->pf_learning && stat.mem_addr < root->last + root->cur->delta) {
+    if (root->pf_learning && root->cur && stride < root->cur->delta) {
       root->pf_learning = 0;
-      printf("cur_count: %i, stride: %i\n", root->cur_count, root->cur->delta);
+      printf("traversing\n");
 
-      // TODO Guess correct path/start learning.
+      // Parent could be avoided here, just traverse until match found.
+      root->pf_node->parent->child = NULL;
 
-      // Have allready verified the first by guessing path
+      // TODO Guess correct path/restart learning if matching branch found.
+
+      // Have already verified the first by guessing path
       // (or begun learning)
-      if (root->child->child)
-        root->cur = root->child->child;
-      else
-        root->cur = root->child;
-      root->cur_count = 0;
-
+      if (root->child->child) root->cur = root->child->child;
+      else root->cur = root->child;
       root->pf_node = root->cur;
-      root->pf_count = 0;
     }
+  }
 
-    if (root->pf_learning) {
-      // If the startup nodes stride is wrong (i.e. stride = 1 gives no counts)
-      // reuse the node instead of storing a zero count node.
-      int stride = stat.mem_addr - root->last;
-      if (!root->cur->count) {
-        root->cur->delta = stride;
-      } else {
-        // Add a child and give it the stride as in true-case.
-
-        // TODO: Check if child has the stride, in which case traverse this
-        // first and potentially split it if count not the same (perhaps
-        // allow for some slack in the requirement for splitting).
-
-        // FIXME nonchalently overwrites any child already present.
-        root->cur->child = (node_t *)malloc(sizeof(node_t));
-        root->cur->child->parent = root->cur;
-        root->cur = root->cur->child;
-        root->pf_node = root->cur;
-        root->cur_count = 1;
-
-        root->cur->delta = stride;
-        root->cur->count = DEFAULT_COUNT;
-      }
+  if (root->pf_learning) {
+    if (!root->cur) {
+      root->cur = (node_t *)malloc(sizeof(node_t));
+      root->child = root->cur;
+      root->pf_node = root->cur;
+      root->cur->delta = 1;
     } else {
-      // Reset the count since no longer on a prefetch trail.
-      root->cur_count = 0;
+      root->cur->delta = stride;
+      // Add a child and give it the stride as in true-case.
+
+      // TODO: Check if child has the stride, in which case traverse this
+      // first and potentially split it if count not the same (perhaps
+      // allow for some slack in the requirement for splitting).
+
+      // FIXME nonchalently overwrites any child already present.
+      root->cur->child = (node_t *)malloc(sizeof(node_t));
+      root->cur->child->parent = root->cur;
+      root->cur = root->cur->child;
+      root->pf_node = root->cur;
+      root->cur->delta = stride;
     }
   }
 
@@ -204,19 +180,15 @@ void prefetch_access(AccessStat stat) {
   printf("ahead: %i\n", ahead);
   */
 
+  print_child_path(root->child, root->cur, root->pf_node);
+
   while (root->ahead < 4) { // FIXME Magic number.
-    if (root->pf_count < root->pf_node->count) {
-      // FIXME only prefetches stride as addresses.
-      issue_prefetch(root->pf_node->delta);
-      root->ahead++;
-      root->pf_count++;
-    } else if (root->pf_node->child) {
-      root->pf_node = root->pf_node->child;
-      root->pf_count = 0;
-    } else {
-      root->pf_node = root->child;
-      root->pf_count = 0;
-    }
+    // FIXME only prefetches stride as addresses.
+    issue_prefetch(root->pf_node->delta);
+    root->ahead++;
+
+    root->pf_node = root->pf_node->child;
+    if (!root->pf_node) root->pf_node = root->child;
   }
 
   printf("\n");
