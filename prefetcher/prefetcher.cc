@@ -4,39 +4,20 @@
  * was just accessed. It also ignores requests to blocks already in the cache.
 */
 
-#include "interface.hh"
-
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
-  Addr delta;
-  struct node *parent;
-  struct node *child;
-  struct node *sibling;
-} node_t;
-
-typedef struct root {
-  Addr pc;
-  node_t *child;
-
-  // The node in the current prefetch path known to be good.
-  Addr last;
-  node_t *cur;
-
-  // The node upto which we have prefetched. 
-  node_t *pf_node;
-  char pf_learning;
-  int ahead; // The number of addresses ahead of validated.
-} root_t;
+#include "prefetcher.hh"
 
 // Maybe a bit large penalty in case of wrong guessing in learning phase.
 #define DEFAULT_COUNT 4
 #define MAX_STRIDE 1024
 
-#define NUM_ROOTS 100
+#define NUM_ROOTS 64
 root_t *roots[NUM_ROOTS + 1];
 int rr_count = 0;
+
+#define NUM_NODES 16
 
 void prefetch_init(void)
 {
@@ -50,15 +31,36 @@ void prefetch_init(void)
     roots[f] = (root_t *)malloc(sizeof(root_t));
 }
 
+// Print out a nicely formated overview of the tree.
 void print_child_path(node_t *r, node_t *cur, node_t *pf) {
+  node_t *branch[NUM_NODES];
+  int num_branches = 0;
+
+  node_t *t = r;
+
   while (r) {
     if (r == pf) printf("p");
     if (r == cur) printf("c");
     printf("%i ", r->delta);
+
+    if (r->child && r->child->sibling) branch[num_branches++] = r;
+
     if (r->child && r->child->parent != r) printf("!");
     r = r->child;
   }
   printf("\n");
+
+  while (num_branches--) {
+    r = t;
+
+    while (r != branch[num_branches]) {
+      // FIXME use log-10 to find the correct padding.
+      printf("  ");
+      r = r->child;
+    }
+
+    print_child_path(r->child->sibling, cur, pf);
+  }
 }
 
 void prefetch_access(AccessStat stat) {
@@ -101,7 +103,6 @@ void prefetch_access(AccessStat stat) {
   }
 
   print_child_path(root->child, root->cur, root->pf_node);
-
   printf("mem_addr: %i, last: %i, cur->delta: %i\n",
          (int)stat.mem_addr, (int)root->last, root->cur?root->cur->delta:0);
 
@@ -135,9 +136,10 @@ void prefetch_access(AccessStat stat) {
       printf("traversing\n");
 
       // Parent could be avoided here, just traverse until match found.
-      root->pf_node->parent->child = NULL;
+      root->cur->parent->child = NULL;
 
-      // TODO Guess correct path/restart learning if matching branch found.
+      // TODO Guess correct path, if not found this will
+      // restart learning later in the logic.
 
       // Have already verified the first by guessing path
       // (or begun learning)
@@ -151,23 +153,50 @@ void prefetch_access(AccessStat stat) {
     if (!root->cur) {
       root->cur = (node_t *)malloc(sizeof(node_t));
       root->child = root->cur;
+      root->num_nodes = 1;
+
       root->pf_node = root->cur;
       root->cur->delta = 1;
     } else {
+      // Current node's value was only an estimate, update using the
+      // observed value.
       root->cur->delta = stride;
-      // Add a child and give it the stride as in true-case.
+
+      // Add a child and guess uniform stride.
 
       // TODO: Check if child has the stride, in which case traverse this
-      // first and potentially split it if count not the same (perhaps
+      // first? and potentially split it if count not the same (perhaps
       // allow for some slack in the requirement for splitting).
 
-      // FIXME nonchalently overwrites any child already present.
+      root->num_nodes++;
       root->cur->child = (node_t *)malloc(sizeof(node_t));
       root->cur->child->parent = root->cur;
       root->cur = root->cur->child;
       root->pf_node = root->cur;
       root->cur->delta = stride;
     }
+  }
+
+  // Restart learning if stride seen is larger then current delta.
+  if (!root->pf_learning && stride > root->cur->delta) {
+    root->pf_learning = 1;
+    printf("learning\n");
+
+    node_t *n;
+    root->num_nodes++;
+    n = (node_t *)malloc(sizeof(node_t));
+    n->parent = root->cur->parent;
+    root->cur->sibling = n;
+    root->cur = n;
+    root->cur->delta = stride;
+
+    root->num_nodes++;
+    n = (node_t *)malloc(sizeof(node_t));
+    n->parent = root->cur;
+    root->cur->child = n;
+    root->cur = n;
+    root->pf_node = root->cur;
+    root->cur->delta = stride;
   }
 
   root->last = stat.mem_addr;

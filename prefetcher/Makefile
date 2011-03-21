@@ -1,1 +1,5 @@
-test_prefetcher: prefetcher.o
+test_prefetcher_sequential: prefetcher.o
+test_prefetcher_strided: prefetcher.o
+test_prefetcher_one_pattern: prefetcher.o
+test_prefetcher_branch_pattern: prefetcher.o
+test_print_path: prefetcher.o
