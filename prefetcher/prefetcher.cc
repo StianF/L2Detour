@@ -24,7 +24,7 @@ void prefetch_access(AccessStat stat)
   for (i = 0; i < N_VAL; i++) {
     pf_addr += BLOCK_SIZE;
   
-    if (!in_cache(pf_addr)) && !in_mshr_queue(pf_addr))
+    if (!in_cache(pf_addr) && !in_mshr_queue(pf_addr))
       issue_prefetch(pf_addr);
   }
 }
