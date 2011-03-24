@@ -6,6 +6,7 @@
 
 #include "interface.hh"
 
+#include "nval.h"
 
 void prefetch_init(void)
 {
@@ -17,16 +18,15 @@ void prefetch_init(void)
 
 void prefetch_access(AccessStat stat)
 {
-    /* pf_addr is now an address within the _next_ cache block */
-    Addr pf_addr = stat.mem_addr + BLOCK_SIZE;
+  Addr pf_addr = stat.mem_addr;
 
-    /*
-     * Issue a prefetch request if a demand miss occured,
-     * and the block is not already in cache.
-     */
-    if (stat.miss && !in_cache(pf_addr)) {
-        issue_prefetch(pf_addr);
-    }
+  int i;
+  for (i = 0; i < N_VAL; i++) {
+    pf_addr += BLOCK_SIZE;
+  
+    if (!in_cache(pf_addr)) && !in_mshr_queue(pf_addr))
+      issue_prefetch(pf_addr);
+  }
 }
 
 void prefetch_complete(Addr addr) {
