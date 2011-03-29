@@ -10,10 +10,7 @@
 
 void prefetch_init(void)
 {
-    /* Called before any calls to prefetch_access. */
-    /* This is the place to initialize data structures. */
-
-    DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
+  DPRINTF(Leif, "Initialized sequential-on-happy-%i prefetcher\n", N_VAL);
 }
 
 void prefetch_access(AccessStat stat)
