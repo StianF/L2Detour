@@ -59,12 +59,21 @@ where created which iterates over the parameter space and runs the heavy
 version of the benchmarks, i.e. the same as on kongull. The command line
 for M5 execution looks as follows:
 
-M5_CPU2000=lib/cpu2000 ./m5/build/ALPHA_SE/m5.opt --remote-gdb-port=0 -re \
-  --outdir output/${bench} m5/configs/example/se.py --detailed \
-  --checkpoint-dir=lib/cp --checkpoint-restore=1000000000 --at-instruction \
-  --caches --l2cache --standard-switch --warmup-insts=10000000 \
-  --max-inst=1000000000 --l2size=1MB --membus-width=8 --membus-clock=400MHz \
-  --mem-latency=30ns --bench=${bench} --prefetcher=on_access=true:policy=proxy
+\begin{verbatim}                   *
+M5_CPU2000=lib/cpu2000
+./m5/build/ALPHA_SE/m5.opt
+--remote-gdb-port=0 -re --outdir
+output/${b} m5/configs/example/se.py
+--detailed --checkpoint-dir=lib/cp
+--checkpoint-restore=1000000000
+--at-instruction --caches --l2cache
+--standard-switch --membus-width=8
+--warmup-insts=10000000
+--max-inst=1000000000 --l2size=1MB
+--membus-clock=400MHz
+--mem-latency=30ns --bench=${b}
+--prefetcher=on_access=true:policy=proxy
+\end{verbatim}
 
 The methodology used in the beginning was to start with a sequential
 prefetcher and briefly progress through prior art, i.e. an RPT implementation
