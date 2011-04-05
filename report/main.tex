@@ -218,6 +218,8 @@ informative text will have to wait until I have caught some zzz.
 \subsection{Using LRU to preserve history}
 Since there are a 8kB memory limit it was looked into modifying the table in DCPT to use LRU. This was implemented by always storing the Tick that was given with the argument to prefetch\_access and use this to determine which pc that should be replaced by a new. Unfortunately this reduced the total speedup, this is possibly because there are more often hits in the table and that could give more hits in the deltas table, and this leads in some cases to more misses and less sequential prefetching, specifically the twolf which uses some have use of sequential prefetch had reduced speedup.
 
+\subsection{Too aggressive prefetching}
+The prefetcher implemented here is very aggressive and gives a lot of identified block, but only issues some percent of these. The reason why a block is identified but not issued is in some cases that the block is already in the queue, because of that a copy of the cache queue was implemented and checked before every prefetch, this helped a little, but there are still too many identified compared to issued. Some of the problem can also be that the prefetcher matches patterns with a large number of deltas between, this leads to that the prefetches identifies too many blocks every time prefetch\_access is called and since the queue is limited, some of the blocks that are actually needed are pushed out of the queue. %\TODO add discussion with results from pfjudge whats up? with real limit
 \section{Conclusion}
 
 \section{Further Work}
