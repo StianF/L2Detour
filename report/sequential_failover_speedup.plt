@@ -1,7 +1,6 @@
 set xr [0:5.5]
 set xtic 1 nomirror
 set ytic nomirror
-set title "Relative speedup for sequential failover"
 set xlabel "Prefetch degree"
 set ylabel "Speedup"
 set border 3
