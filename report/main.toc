@@ -10,6 +10,7 @@
 \contentsline {chapter}{\numberline {6}Methodology}{6}{chapter.6}
 \contentsline {chapter}{\numberline {7}Results}{7}{chapter.7}
 \contentsline {section}{\numberline {7.1}Delta Correlation Prediction Table}{7}{section.7.1}
+\contentsline {section}{\numberline {7.2}Sequential failover}{7}{section.7.2}
 \contentsline {chapter}{\numberline {8}Discussion}{8}{chapter.8}
 \contentsline {chapter}{\numberline {9}Conclusion}{9}{chapter.9}
 \contentsline {chapter}{\numberline {10}Further Work}{10}{chapter.10}

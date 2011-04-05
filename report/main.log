@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7) (format=pdflatex 2011.3.21)  5 APR 2011 00:36
+This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7) (format=pdflatex 2011.3.21)  5 APR 2011 01:08
 entering extended mode
  %&-line parsing enabled.
 **main.tex
@@ -453,9 +453,12 @@ LaTeX Warning: Citation `dcptpaper' on page 7 undefined on input line 3.
 
 LaTeX Warning: Citation `dcptpaper' on page 7 undefined on input line 7.
 
-) (./discussion.tex [7
+<sequential_failover_speedup_plt.pdf, id=153, 361.35pt x 252.945pt>
+File: sequential_failover_speedup_plt.pdf Graphic file (type pdf)
 
-]
+<use sequential_failover_speedup_plt.pdf>) (./discussion.tex [7
+
+ <./sequential_failover_speedup_plt.pdf>]
 Chapter 8.
 ) (./conclusion.tex [8
 
@@ -484,10 +487,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7320 strings out of 495069
- 107690 string characters out of 1183033
+ 7328 strings out of 495069
+ 107912 string characters out of 1183033
  191176 words of memory out of 3000000
- 10327 multiletter control sequences out of 10000+50000
+ 10332 multiletter control sequences out of 10000+50000
  15386 words of font info for 35 fonts, out of 3000000 for 5000
  28 hyphenation exceptions out of 8191
  44i,6n,42p,431b,299s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -499,9 +502,9 @@ m-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx207
 re/texmf-dist/fonts/type1/public/cm-super/sfcc1728.pfb></usr/share/texmf-dist/f
 onts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/publ
 ic/cm-super/sfrm1200.pfb>
-Output written on main.pdf (17 pages, 165036 bytes).
+Output written on main.pdf (17 pages, 167344 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 38 named destinations out of 1000 (max. 131072)
- 153 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 131072)
+ 166 words of extra memory for PDF output out of 10000 (max. 10000000)
 
