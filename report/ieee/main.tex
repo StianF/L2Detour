@@ -1,5 +1,6 @@
 \documentclass[12pt,journal,compsoc]{IEEEtran}
 \providecommand{\PSforPDF}[1]{#1}
+\usepackage{algorithm2e}
 \newcommand\MYhyperrefoptions{bookmarks=true,bookmarksnumbered=true,
 pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
 colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
@@ -134,21 +135,94 @@ Also different criteria for sequential prefetching failback where tried.
 % Also add results to the different modifications/versions and try to explain
 % them.
 
-\subsection{Delta Correlating Prediction Table (DCPT)}
+\section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
-The implementation is very near RPT, but the difference is that it looks for a pattern instead of one stride.
+The algorithm is related to RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
 If it finds a pattern in the list, it saves all the adresses that possibly should be prefetched in another list with candidates for prefetch.
 Then it runs through the list and checks if the adresses is not in the cache, in the mshr or that the adress is out of memory. If all the requirements are met, it issues a prefetch for it.
 
-The first implementation done, did something wrong according to \cite{dcptpaper}, it did not use the deltas like they should. It prefetched all adresses that came after the matching sequence, but all the adresses used the same adress as base, so if there was a array of deltas like 1,2,3,4,1,2,5,1,2 and the last memory adress was 10, it would prefetch: 10+3, 10+4, 10+1, 10+2, 10+5.
-
-The second implemenation should do it right according to \cite{dcptpaper}, it would with the same sequence as the last example prefetch: 10+5, 15+1, 16+2, 18+1, 19+2, 21+3, 24+4.
+If it has less than two deltas in the list or if it cant find a pattern, it starts prefetching the next block.
 
 Attempts to tweak this implementation:
-- Make a copy of the queue to keep track of which adresses that still aren't fetched, to avoid "double fetching".
-- Make a lru which prevents the prefetcher from throwing out recently used history from the list.
-- Adjustments to the size of the list, and size of the delta list
+\begin{itemize}
+\item Make a copy of the queue to keep track of which adresses that still aren't fetched, to avoid "double fetching".
+\item Make a lru which prevents the prefetcher from throwing out recently used history from the list.
+\item Adjustments to the size of the list, and size of the delta list
+\end{itemize}
+
+\begin{algorithm}[H]
+\dontprintsemicolon
+\KwIn{stat}
+
+\Begin{
+ $i \leftarrow TABLE[stat.pc]$\;
+ \If{$i \neq 0$}{
+  $DELTA \leftarrow stat.mem\_addr - i.last\_mem\_addr$\;
+  $i.deltas[ ] \leftarrow DELTA$\;
+ }
+ $i.last\_mem\_addr \leftarrow stat.mem\_addr$\;
+ $TABLE[stat.pc] \leftarrow i$\;
+ $candidates \leftarrow []$\;
+ \If{$size(I.deltas) > 1$}{
+   $candidates \leftarrow DCPT(i)$\;
+   $prefetch(candidates)$\;
+ }
+ \If{$size(candidates) == 0$ {\bf and} $canPrefetch(NEXT\_BLOCK)$}{
+  $issue\_prefetch(NEXT\_BLOCK)$\;
+ }
+}
+\caption{prefetch\_access\label{pa}}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\dontprintsemicolon
+\KwIn{addr}
+
+\Begin{
+ ${\bf return}$ $addr < MAX\_PHYS\_ADDR$ \\
+	{\bf and} $!in\_mshr\_queue(addr)$ \\
+	{\bf and} $!in\_cache(addr)$ \\
+	{\bf and} $!in\_cache\_queue(addr)$\;
+}
+\caption{canPrefetch\label{cp}}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\dontprintsemicolon
+\KwIn{i}
+
+\Begin{
+ $last\_delta\_i \leftarrow i.deltas.last$\;
+ \ForEach{$U, V \in reversed(i.deltas)$}{
+  \If{$U == i.deltas[last\_delta\_i]$ {\bf and} $V == i.deltas[last\_delta\_i - 1]$}{
+   $match\_i \leftarrow indexof(U)$\;	
+   ${\bf break}$\;
+  }
+ }
+ $candidates \leftarrow []$\;
+ \While{$match\_i < size(i.deltas)$}{
+  $candidates \leftarrow i.last\_mem\_addr$ + $i.deltas[++match\_i]$\;
+ }
+ ${\bf return}$ $candidates$\;
+}
+\caption{DCPT\label{dcpt}}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\dontprintsemicolon
+\KwIn{candidates}
+
+\Begin{
+ \ForEach{$I \in candidates$}{
+  \If{$canPrefetch(I)$}{
+   $issuePrefetch(I)$\; 
+  }
+ }
+}
+\caption{prefetch\label{pre}}
+\end{algorithm}
+
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
