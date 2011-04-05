@@ -69,7 +69,7 @@ output/${b} m5/configs/example/se.py
 --at-instruction --caches --l2cache
 --standard-switch --membus-width=8
 --warmup-insts=10000000
---max-inst=1000000000 --l2size=1MB
+--max-inst=100000000 --l2size=1MB
 --membus-clock=400MHz
 --mem-latency=30ns --bench=${b}
 --prefetcher=on_access=true:policy=proxy
