@@ -1,16 +1,15 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.19)  3 MAR 2011 16:16
+This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7) (format=pdflatex 2011.3.21)  5 APR 2011 01:08
 entering extended mode
- restricted \write18 enabled.
  %&-line parsing enabled.
 **main.tex
 (./main.tex
-LaTeX2e <2009/09/24>
+LaTeX2e <2005/12/01>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
 yphenation, loaded.
-(/usr/share/texmf-texlive/tex/latex/base/report.cls
-Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texmf-texlive/tex/latex/base/size11.clo
-File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/share/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/share/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -25,20 +24,20 @@ File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/share/texmf-texlive/tex/latex/base/fontenc.sty
+(/usr/share/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/share/texmf-texlive/tex/latex/base/t1enc.def
+(/usr/share/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
 ))
-(/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+(/usr/share/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
 
-(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+(/usr/share/texmf-dist/tex/generic/babel/english.ldf
 Language: english 2005/03/30 v3.3o English support from the babel system
 
-(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+(/usr/share/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count88
 \U@D=\dimen103
@@ -49,32 +48,32 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
-(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+(/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+(/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+(/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+(/usr/share/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/etc/texmf/tex/latex/config/graphics.cfg
-File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 90.
 
-(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+(/usr/share/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2008/07/16 v0.04k Graphics/color for pdfTeX
 \Gread@gobject=\count89
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
 )
-(/usr/share/texmf-texlive/tex/latex/float/float.sty
+(/usr/share/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count90
 \float@exts=\toks15
@@ -84,14 +83,14 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 )
 \@float@every@figure=\toks17
 
-(/usr/share/texmf-texlive/tex/latex/subfig/subfig.sty
+(/usr/share/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 
-(/usr/share/texmf-texlive/tex/latex/caption/caption.sty
-Package: caption 2009/10/09 v3.1k Customizing captions (AR)
+(/usr/share/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2008/04/01 v3.1h Customizing captions (AR)
 
-(/usr/share/texmf-texlive/tex/latex/caption/caption3.sty
-Package: caption3 2009/10/09 v3.1k caption3 kernel (AR)
+(/usr/share/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2008/03/20 v3.1h caption3 kernel (AR)
 \captionmargin=\dimen106
 \captionmargin@=\dimen107
 \captionwidth=\dimen108
@@ -116,7 +115,7 @@ Package caption Info: float package is loaded.
 \sf@top=\skip46
 \sf@bottom=\skip47
 ) (./style.sty
-(/usr/share/texmf-texlive/tex/latex/listings/listings.sty
+(/usr/share/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count99
 \lst@gtempboxa=\box28
 \lst@token=\toks18
@@ -130,28 +129,19 @@ Package caption Info: float package is loaded.
 \lst@lineno=\count104
 \lst@maxwidth=\dimen116
 
-(/usr/share/texmf-texlive/tex/latex/listings/lstmisc.sty
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
 \c@lstnumber=\count105
 \lst@skipnumbers=\count106
 \lst@framebox=\box29
 )
-(/usr/share/texmf-texlive/tex/latex/listings/listings.cfg
+(/usr/share/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
-Package: geometry 2008/12/21 v4.2 Page Geometry
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in pdf mode detected.
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
-Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
-Package ifvtex Info: VTeX not detected.
-)
+(/usr/share/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2002/07/08 v3.2 Page Geometry
 \Gm@cnth=\count107
 \Gm@cntv=\count108
 \c@Gm@tempcnt=\count109
@@ -161,7 +151,7 @@ Package ifvtex Info: VTeX not detected.
 \Gm@even@mp=\dimen120
 \Gm@dimlist=\toks19
 ))
-(/usr/share/texmf-texlive/tex/latex/fancyvrb/fancyvrb.sty
+(/usr/share/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
@@ -172,82 +162,46 @@ Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix
 \c@FancyVerbLine=\count111
 \FV@StepNumber=\count112
 \FV@OutFile=\write3
-) (/usr/share/texmf-texlive/tex/latex/pstricks/pstricks.sty
-Package: pstricks 2008/11/26 v0.40 LaTeX wrapper for `PSTricks' (RN,HV)
-
-(/usr/share/texmf-texlive/tex/generic/pstricks/pstricks.tex
-`PSTricks' v1.29  <2009/05/19> (tvz)
-\pst@dima=\dimen121
-\pst@dimb=\dimen122
-\pst@dimc=\dimen123
-\pst@dimd=\dimen124
-\pst@dimg=\dimen125
-\pst@dimh=\dimen126
-\pst@hbox=\box31
-\pst@boxg=\box32
-\pst@cnta=\count113
-\pst@cntb=\count114
-\pst@cntc=\count115
-\pst@cntd=\count116
-\pst@cntg=\count117
-\pst@cnth=\count118
-\pst@toks=\toks20
-(/usr/share/texmf-texlive/tex/generic/pstricks/pstricks.con)
-\psunit=\dimen127
-\psxunit=\dimen128
-\psyunit=\dimen129
-\pslinewidth=\dimen130
-\pst@customdefs=\toks21
-\pslinearc=\dimen131
-\everypsbox=\toks22
-\psframesep=\dimen132
-\pslabelsep=\dimen133
-\pst@shift=\dimen134
-\theoverlaybox=\box33
 )
-File: pstricks.tex 2009/05/19 v1.29 `PSTricks' (tvz,hv)
 
-(/usr/share/texmf/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+! LaTeX Error: File `pstricks.sty' not found.
 
-(/etc/texmf/tex/latex/config/color.cfg
-File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+(/usr/share/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2008/08/14 v6.78f Hypertext links for LaTeX
+
+(/usr/share/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2007/12/12 v1.6 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
 )
-Package xcolor Info: Driver file: pdftex.def on input line 225.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
-Package xcolor Info: Model `RGB' extended on input line 1353.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
-))
-(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2009/10/09 v6.79a Hypertext links for LaTeX
-
-(/usr/share/texmf-texlive/tex/generic/ifxetex/ifxetex.sty
-Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
+(/usr/share/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2007/09/09 v1.3 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
 )
-(/usr/share/texmf-texlive/tex/latex/oberdiek/hycolor.sty
-Package: hycolor 2009/10/02 v1.5 Code for color options of hyperref/bookmark (H
+(/usr/share/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2006/08/21 v0.3 Provides ifxetex conditional
+)
+(/usr/share/texmf-dist/tex/latex/oberdiek/hycolor.sty
+Package: hycolor 2008/08/01 v1.3 Code for color options of hyperref/bookmark (H
 O)
 
-(/usr/share/texmf-texlive/tex/latex/oberdiek/xcolor-patch.sty
-Package: xcolor-patch 2009/10/02 xcolor patch
+(/usr/share/texmf-dist/tex/latex/oberdiek/xcolor-patch.sty
+Package: xcolor-patch 2008/08/01 xcolor patch
 ))
-\@linkdim=\dimen135
-\Hy@linkcounter=\count119
-\Hy@pagecounter=\count120
+\@linkdim=\dimen121
+\Hy@linkcounter=\count113
+\Hy@pagecounter=\count114
 
-(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2009/10/09 v6.79a Hyperref: PDFDocEncoding definition (HO)
+(/usr/share/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2008/08/14 v6.78f Hyperref: PDFDocEncoding definition (HO)
 )
-(/usr/share/texmf-texlive/tex/generic/oberdiek/etexcmds.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2007/12/12 v1.2 Prefix for e-TeX command names (HO)
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/infwarerr.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2007/09/09 v1.2 Providing info/warning/message (HO)
 )
 Package etexcmds Info: Could not find \expanded.
@@ -255,99 +209,87 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
 )
-(/usr/share/texmf-texlive/tex/latex/latexconfig/hyperref.cfg
+(/usr/share/texmf/tex/latex/config/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2009/08/13 v3.4 Keyval support for LaTeX options (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2009/07/30 v1.5 Key value parser with default handler suppor
-t (HO)
-))
-Package hyperref Info: Hyper figures OFF on input line 2975.
-Package hyperref Info: Link nesting OFF on input line 2980.
-Package hyperref Info: Hyper index ON on input line 2983.
-Package hyperref Info: Plain pages OFF on input line 2990.
-Package hyperref Info: Backreferencing OFF on input line 2995.
+(/usr/share/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2007/10/18 v3.0 Keyval support for LaTeX options (HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 2876.
+Package hyperref Info: Link nesting OFF on input line 2881.
+Package hyperref Info: Hyper index ON on input line 2884.
+Package hyperref Info: Plain pages OFF on input line 2891.
+Package hyperref Info: Backreferencing OFF on input line 2896.
 
 Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks ON on input line 3191.
-(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+Package hyperref Info: Bookmarks ON on input line 3086.
+(/usr/share/texmf-dist/tex/latex/ltxmisc/url.sty
 \Urlmuskip=\muskip10
 Package: url 2006/04/12  ver 3.3  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 3428.
+LaTeX Info: Redefining \url on input line 3272.
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/bitset.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/bitset.sty
 Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/intcalc.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/intcalc.sty
 Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
 )
-(/usr/share/texmf-texlive/tex/generic/oberdiek/bigintcalc.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/bigintcalc.sty
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2009/09/23 v0.6 LuaTeX support for pdfTeX utility functions
+(/usr/share/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2007/12/12 v0.3 LuaTeX support for pdfTeX utility functions
  (HO)
-
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2009/04/17 v1.2 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-)
-(/usr/share/texmf-texlive/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2009/08/05 v1.0 Some LaTeX kernel commands for general use (HO
-)
-)
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: LuaTeX not detected on input line 139.
 )))
-\Fld@menulength=\count121
-\Field@Width=\dimen136
-\Fld@charsize=\dimen137
-\Field@toks=\toks23
-Package hyperref Info: Hyper figures OFF on input line 4377.
-Package hyperref Info: Link nesting OFF on input line 4382.
-Package hyperref Info: Hyper index ON on input line 4385.
-Package hyperref Info: backreferencing OFF on input line 4392.
-Package hyperref Info: Link coloring OFF on input line 4397.
-Package hyperref Info: Link coloring with OCG OFF on input line 4402.
-Package hyperref Info: PDF/A mode OFF on input line 4407.
+(/usr/share/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2007/09/29 v1.3 Key value parser with default handler suppor
+t (HO)
+)
+\Fld@menulength=\count115
+\Field@Width=\dimen122
+\Fld@charsize=\dimen123
+\Field@toks=\toks20
+Package hyperref Info: Hyper figures OFF on input line 4189.
+Package hyperref Info: Link nesting OFF on input line 4194.
+Package hyperref Info: Hyper index ON on input line 4197.
+Package hyperref Info: backreferencing OFF on input line 4204.
+Package hyperref Info: Link coloring OFF on input line 4209.
+Package hyperref Info: Link coloring with OCG OFF on input line 4214.
+Package hyperref Info: PDF/A mode OFF on input line 4219.
 
-(/usr/share/texmf-texlive/tex/generic/oberdiek/atbegshi.sty
+(/usr/share/texmf-dist/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2008/07/31 v1.9 At begin shipout hook (HO)
 )
-\Hy@abspage=\count122
-\c@Item=\count123
-\c@Hfootnote=\count124
+\Hy@abspage=\count116
+\c@Item=\count117
+\c@Hfootnote=\count118
 )
 *hyperref using driver hpdftex*
-(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2009/10/09 v6.79a Hyperref driver for pdfTeX
-\Fld@listcount=\count125
+(/usr/share/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2008/08/14 v6.78f Hyperref driver for pdfTeX
+\Fld@listcount=\count119
 )
-(/usr/share/texmf-texlive/tex/latex/base/alltt.sty
+(/usr/share/texmf-dist/tex/latex/base/alltt.sty
 Package: alltt 1997/06/16 v2.0g defines alltt environment
 )
-(/usr/share/texmf-texlive/tex/latex/SIunits/SIunits.sty
-Package: SIunits 2007/12/02 v1.36 Support for the International System of units
- (MH)
 
+! LaTeX Error: File `SIunits.sty' not found.
 
-\@qskwidth=\skip48
-\symgreek=\mathgroup4
-(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
-Package: amstext 2000/06/29 v2.01
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
 
-(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
-File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks24
-\ex@=\dimen138
-))
-(/usr/share/texmf-texlive/tex/latex/SIunits/SIunits.cfg))
-(/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Enter file name: 
+(/usr/share/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/usr/share/texmf/tex/latex/config/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+(/usr/share/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 ) (./main.aux)
 \openout1 = `main.aux'.
@@ -366,37 +308,13 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 33.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 33.
-
-(/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
-File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    ... okay on input line 33.
-
-(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count126
-\scratchdimen=\dimen139
-\scratchbox=\box34
-\nofMPsegments=\count127
-\nofMParguments=\count128
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count129
-\MPscratchDim=\dimen140
-\MPnumerator=\count130
-\everyMPtoPDFconversion=\toks26
-)
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
 LaTeX Info: Redefining \subref on input line 33.
 Package caption Info: hyperref package is loaded.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\c@lstlisting=\count131
-
-*geometry auto-detecting driver*
-*geometry detected driver: pdftex*
+\c@lstlisting=\count120
 -------------------- Geometry parameters
 paper: a4paper
 landscape: --
@@ -437,13 +355,14 @@ driver: pdftex
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
 Package hyperref Info: Link coloring OFF on input line 33.
-(/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+
+(/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
-(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+(/usr/share/texmf-dist/tex/latex/oberdiek/refcount.sty
 Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
-\c@section@level=\count132
+\c@section@level=\count121
 )
 LaTeX Info: Redefining \ref on input line 33.
 LaTeX Info: Redefining \pageref on input line 33.
@@ -452,35 +371,26 @@ LaTeX Info: Redefining \pageref on input line 33.
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-\AtBeginShipoutBox=\box35
-
-
-Package SIunits Warning: The command \gray was already defined.
-(SIunits)                Possibly due to the pstricks package.
-
-Hint: use option `pstricks' or `Gray' with SIunits package.
-See SIunits.dvi or readme.txt section: Known problems and limitations.
+\AtBeginShipoutBox=\box31
 
 
 Package hyperref Warning: Option `colorlinks' has already been used,
 (hyperref)                setting the option has no effect on input line 42.
 
 [1
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(./abstract.tex) [1
+{//var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./abstract.tex
+Chapter 1.
+) [1
 
 
 ] (./main.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 6.
+(Font)              <10.95> on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 6.
+(Font)              <8> on input line 7.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 6.
+(Font)              <6> on input line 7.
 )
 \tf@toc=\write5
 \openout5 = `main.toc'.
@@ -499,9 +409,8 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
  [4
 
-]
-(./introduction.tex
-Chapter 1.
+] (./introduction.tex
+Chapter 2.
 ) (./background.texpdfTeX warning (ext4): destination with the same identifier 
 (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
@@ -511,68 +420,91 @@ l.1 \chapter
 
 
 ]
-Chapter 2.
+Chapter 3.
 ) (./related_work.tex [2
 
 ]
-Chapter 3.
+Chapter 4.
 ) (./the_scheme.tex [3
 
 ]
-Chapter 4.
-) (./methodology.tex [4
-
-]
 Chapter 5.
-) (./results.tex [5
+
+LaTeX Warning: Citation `dcptpaper' on page 4 undefined on input line 32.
+
+
+LaTeX Warning: Citation `dcptpaper' on page 4 undefined on input line 38.
+
+[4
 
 ]
+
+LaTeX Warning: Citation `dcptpaper' on page 5 undefined on input line 40.
+
+) (./methodology.tex [5]
 Chapter 6.
-) (./discussion.tex [6
+) (./results.tex [6
 
 ]
 Chapter 7.
-) (./conclusion.tex [7
 
-]
+LaTeX Warning: Citation `dcptpaper' on page 7 undefined on input line 3.
+
+
+LaTeX Warning: Citation `dcptpaper' on page 7 undefined on input line 7.
+
+<sequential_failover_speedup_plt.pdf, id=153, 361.35pt x 252.945pt>
+File: sequential_failover_speedup_plt.pdf Graphic file (type pdf)
+
+<use sequential_failover_speedup_plt.pdf>) (./discussion.tex [7
+
+ <./sequential_failover_speedup_plt.pdf>]
 Chapter 8.
-) (./further_work.tex [8
+) (./conclusion.tex [8
 
 ]
 Chapter 9.
-) [9
+) (./further_work.tex [9
+
+]
+Chapter 10.
+) [10
 
 ] (./main.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-) (./appendix.tex [10
+) (./appendix.tex [11
 
 
 ]
 Appendix A.
-) [11
+) [12
 
-] (./main.aux) ) 
+] (./main.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 9636 strings out of 495061
- 136584 string characters out of 1182620
- 239117 words of memory out of 3000000
- 12607 multiletter control sequences out of 15000+50000
- 16235 words of font info for 38 fonts, out of 3000000 for 9000
+ 7328 strings out of 495069
+ 107912 string characters out of 1183033
+ 191176 words of memory out of 3000000
+ 10332 multiletter control sequences out of 10000+50000
+ 15386 words of font info for 35 fonts, out of 3000000 for 5000
  28 hyphenation exceptions out of 8191
- 44i,5n,42p,267b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.6
-00pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </hom
-e/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </home/stian/.te
-xmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/stian/.texmf-var/fon
-ts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/stian/.texmf-var/fonts/pk/ljfou
-r/jknappen/ec/ecbx2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/
-ec/ecbi2074.600pk> </home/stian/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1728
-.600pk>
-Output written on main.pdf (16 pages, 101881 bytes).
+ 44i,6n,42p,431b,299s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/t
+exmf-dist/fonts/type1/public/cm-super/sfbi2074.pfb></usr/share/texmf-dist/fonts
+/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf-dist/fonts/type1/public/c
+m-super/sfbx1440.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx207
+4.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/sha
+re/texmf-dist/fonts/type1/public/cm-super/sfcc1728.pfb></usr/share/texmf-dist/f
+onts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf-dist/fonts/type1/publ
+ic/cm-super/sfrm1200.pfb>
+Output written on main.pdf (17 pages, 167344 bytes).
 PDF statistics:
- 381 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
- 97 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 131072)
+ 166 words of extra memory for PDF output out of 10000 (max. 10000000)
 

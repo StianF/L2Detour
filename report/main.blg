@@ -1,11 +1,11 @@
-This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+This is BibTeX, Version 0.99c (Web2C 7.5.7)
 The top-level auxiliary file: main.aux
 The style file: plain.bst
-I found no \citation commands---while reading file main.aux
 Database file #1: bibl.bib
+Warning--I didn't find a database entry for "dcptpaper"
 You've used 0 entries,
             2118 wiz_defined-function locations,
-            497 strings with 3985 characters,
+            498 strings with 3994 characters,
 and the built_in function-call counts, 18 in all, are:
 = -- 0
 > -- 0
@@ -44,4 +44,4 @@ warning$ -- 0
 while$ -- 0
 width$ -- 0
 write$ -- 2
-(There was 1 error message)
+(There was 1 warning)
