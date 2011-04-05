@@ -108,35 +108,8 @@ analyse these to find potential underlying factors/mechanisms for these
 will become a more important tool as we run out of good a priori
 insights/ideas.
 
-\section{"The Scheme"}
-\subsection{Sequential (seq)}
-The framework contained a sequential prefetcher as a starting point.
-Using this we created a trivial test program (accumulate.c) that accessed
-a large sequential chunk of memory in a tight loop body to assess the
-optimal prefetch distance for this type of code structure.
-This estimates the best possible performance gain for sequential
-prefetching for the shortest possible loop body and this
-measured optimum also acts as an upper bound for how many elements should
-be present in cache to overlap the time it takes to prefetch enough new
-elements to refill the consumption of elements from cache. The optimal
-prefetch distance was found to be 4. % TODO Verify this.
-% Did we test for optimal degree also?
+\section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 
-\subsection{Reference Prediction Table (RPT)}
-Modifications related to the prefetch distance and degree where tried.
-% An example? Maybe it was with the sequential failback these parameters
-% where relevant? TODO check the repo history for modifications to RPT.
-
-Fine-tuning regarding table size and replacement policy.
-% Table of the different speedups and which parameters used?
-
-Also different criteria for sequential prefetching failback where tried.
-% Or was it? I seem to think so at least. Find the change and document it.
-
-% Also add results to the different modifications/versions and try to explain
-% them.
-
-\subsection{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
 The algorithm is related to RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
@@ -151,6 +124,8 @@ Attempts to tweak this implementation:
 \item Make a lru which prevents the prefetcher from throwing out recently used history from the list.
 \item Adjustments to the size of the list, and size of the delta list
 \end{itemize}
+
+\subsection{Pseudocode}
 
 \begin{algorithm}[H]
 \dontprintsemicolon
@@ -238,6 +213,10 @@ Look at the pretty plot! This took all to long to generate so the accompanying
 informative text will have to wait until I have caught some zzz.
 
 \includegraphics[width=0.45\textwidth]{sequential_failover_speedup_plt}
+
+\section{Discussion}
+\subsection{Using LRU to preserve history}
+Since there are a 8kB memory limit it was looked into modifying the table in DCPT to use LRU. This was implemented by always storing the Tick that was given with the argument to prefetch\_access and use this to determine which pc that should be replaced by a new. Unfortunately this reduced the total speedup, this is possibly because there are more often hits in the table and that could give more hits in the deltas table, and this leads in some cases to more misses and less sequential prefetching, specifically the twolf which uses some have use of sequential prefetch had reduced speedup.
 
 \section{Conclusion}
 

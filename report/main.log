@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.27)  5 APR 2011 14:02
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2010.10.27)  5 APR 2011 15:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -205,123 +205,87 @@ LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <14> not available
 (Font)              Font shape `OT1/phv/b/n' tried instead on input line 72.
 LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <14> not available
 (Font)              Font shape `OT1/phv/b/sc' tried instead on input line 72.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 112.
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 The frame-work con-tained a se-quen-tial
- []
-
-
-Underfull \hbox (badness 2080) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 that ac-cessed a large se-quen-tial chunk of
- []
-
-
-Underfull \hbox (badness 2556) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 struc-ture. This es-ti-mates the best pos-si-ble
- []
-
-
-Underfull \hbox (badness 1603) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 mea-sured op-ti-mum also acts as an up-per
- []
-
-
-Underfull \hbox (badness 1490) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 bound for how many el-e-ments should be
- []
-
-
-Underfull \hbox (badness 2150) in paragraph at lines 113--124
-\OT1/ppl/m/n/12 con-sump-tion of el-e-ments from cache. The
+Underfull \hbox (badness 1852) in paragraph at lines 111--111
+ \OT1/phv/b/sc/14 3 Delta Cor-re-lat-ing Pre-dic-tion
  []
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 139--139
- \OT1/phv/b/n/12 3.3 Delta Cor-re-lat-ing Pre-dic-tion Ta-ble
- []
-
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 150.
+(Font)              <12> on input line 123.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 150.
+(Font)              <8> on input line 123.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 150.
+(Font)              <6> on input line 123.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <12> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 128.
 
-Underfull \hbox (badness 10000) detected at line 177
+Underfull \hbox (badness 10000) detected at line 152
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--178
+Underfull \hbox (badness 10000) in paragraph at lines 130--153
 
  []
 
 
-Underfull \vbox (badness 1902) has occurred while \output is active []
-
-
-Underfull \hbox (badness 10000) detected at line 190
+Underfull \hbox (badness 10000) detected at line 165
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 179--191
+Underfull \hbox (badness 10000) in paragraph at lines 154--166
 
  []
 
 
-Underfull \hbox (badness 10000) detected at line 211
+Underfull \hbox (badness 10000) detected at line 186
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 192--212
+Underfull \hbox (badness 10000) in paragraph at lines 167--187
 
  []
 
 
-Underfull \hbox (badness 10000) detected at line 225
+Underfull \hbox (badness 10000) detected at line 200
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 213--226
+Underfull \hbox (badness 10000) in paragraph at lines 188--201
 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
-<sequential_failover_speedup_plt.pdf, id=18, 361.35pt x 252.945pt>
+<sequential_failover_speedup_plt.pdf, id=9, 361.35pt x 252.945pt>
 File: sequential_failover_speedup_plt.pdf Graphic file (type pdf)
 
-<use sequential_failover_speedup_plt.pdf> [3 <./sequential_failover_speedup_plt
-.pdf>] (./main.aux) ) 
+<use sequential_failover_speedup_plt.pdf> [2] [3 <./sequential_failover_speedup
+_plt.pdf>] (./main.aux) ) 
 Here is how much of TeX's memory you used:
  2709 strings out of 493848
  38721 string characters out of 1152822
- 120196 words of memory out of 3000000
+ 119196 words of memory out of 3000000
  5992 multiletter control sequences out of 15000+50000
  40292 words of font info for 87 fonts, out of 3000000 for 9000
  717 hyphenation exceptions out of 8191
- 28i,19n,21p,238b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</us
-r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/tex
-mf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texlive/
-fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/
-public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
-></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texm
-f-texlive/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-texlive/fonts/t
-ype1/urw/palatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/palatino
-/uplri8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on main.pdf (3 pages, 142961 bytes).
+ 28i,19n,21p,623b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share
+/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-texl
+ive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-texlive/fonts/type1/public/
+amsfonts/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a
+.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/
+texmf-texlive/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texmf-texlive/fon
+ts/type1/urw/palatino/uplr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/pala
+tino/uplri8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on main.pdf (3 pages, 143260 bytes).
 PDF statistics:
  63 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
