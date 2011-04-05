@@ -54,10 +54,10 @@ The M5 simulator supplied had been modified by the course responsible such
 that the programming interface had been abstracted into a simplified framework
 allowing for an minimal learning curve and fast prefetcher development. The
 framework also contained python scripts to run a lighter version of the
-benchmarks on kongull. For tuning the different parameters shell scripts
-where created which iterates over the parameter space and runs the heavy
-version of the benchmarks, i.e. the same as on kongull. The command line
-for M5 execution looks as follows:
+benchmarks which run on kongull. For tuning the different parameters shell
+scripts where created which iterates over the parameter space and runs the
+heavy version of the benchmarks, i.e. the same as on kongull. The command line
+for an M5 execution looks as follows:
 
 \begin{verbatim}
 M5_CPU2000=lib/cpu2000
@@ -80,7 +80,21 @@ subset of CPU2000. This subset was given by the supplied framework and consists
 of the following benchmarks: ammp, art110, art470, wupwise, swim, applu,
 galgel, apsi, bzip2\_source, bzip2\_graphic, bzip2\_program, twolf.
 
+The statistical output from each benchmark is parsed to give the corresponding
+IPC before using this to calculate speedup by comparing to the result
+of no prefetcher. The collective speedup is presented as a harmonic mean of
+the individual results. This is done by the framework, but a similar
+functionality was developed in shell scripts for use as previously mentioned
+and for custom cross-compiled programs. The shell scripts generates
+speedups relative to a given entry, but if this entry is the case of no
+prefetcher then the results are the same as for the framework.
 
+The chosen benchmarks are a subset of CPU2000 which seems to be hard to
+get good speedup ``for free'', making it especially worthwhile for academic
+exploration since these workloads constitues a large potential for performance
+gains.
+
+\begin{comment}
 The methodology used in the beginning was to start with a sequential
 prefetcher and briefly progress through prior art, i.e. an RPT implementation
 and finally a DCPT implementation. During development the performance was
@@ -114,6 +128,7 @@ and the inspection of which code snippets give cache misses and trying to
 analyse these to find potential underlying factors/mechanisms for these
 will become a more important tool as we run out of good a priori
 insights/ideas.
+\end{comment}
 
 \section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
