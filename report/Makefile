@@ -2,7 +2,7 @@ PICFILES=$(wildcard graphics/*.pic)
 PICPDFS=$(PICFILES:.pic=_pic.pdf)
 
 PLOTFILES=$(wildcard *.plt)
-PLOTPDFS=$(PLOTFILES:.plot=_plt.pdf)
+PLOTPDFS=$(PLOTFILES:.plt=_plt.pdf)
 
 TEXFILES=$(shell find . -type f -name '*.tex')
 
@@ -10,10 +10,7 @@ TEXFILES=$(shell find . -type f -name '*.tex')
 
 all: main.pdf
 
-main.pdf: bibl.bib $(PICPDFS) $(PLOTPDFS) $(TEXFILES)
-	pdflatex main.tex
-	bibtex main
-	pdflatex main.tex
+main.pdf: $(PICPDFS) $(PLOTPDFS) $(TEXFILES)
 	pdflatex main.tex
 
 %_plt.pdf: %_plt.eps

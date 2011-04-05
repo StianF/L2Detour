@@ -135,7 +135,7 @@ Also different criteria for sequential prefetching failback where tried.
 % Also add results to the different modifications/versions and try to explain
 % them.
 
-\section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
+\subsection{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
 The algorithm is related to RPT, but the difference is that it looks for a pattern instead of one stride.
 When the it gets a request, it saves the (PC) program counter, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
@@ -224,14 +224,19 @@ Attempts to tweak this implementation:
 \end{algorithm}
 
 
-\section{Results}
-\subsection{Delta Correlation Prediction Table}
+\chapter{Results}
+\section{Delta Correlation Prediction Table}
 The first implementation of DCPT was not right according to the pseudocode in \cite{dcptpaper}, but it accomplish a 8.6\% speedup with a table of 100 entries and 10 delta per entry.
 The attempts to tweak this with other values have not been successful, but it gives around 8\% speedup.
 Attempts to add a check to issue less prefetches does also lead to less speedup.
 
 The next implementation, which should be right according to the pseudocode in \cite{dcptpaper} did not do as well, a maximum of 7.3\% speedup with the same specification as the first implementation was accomplished.
-\section{Conclusion}
+
+\section{Sequential failover}
+Look at the pretty plot! This took all to long to generate so the accompanying
+informative text will have to wait until I have caught some zzz.
+
+\includegraphics{sequential_failover_speedup_plt}\section{Conclusion}
 
 \section{Further Work}
 This section is optional, but might become large.
