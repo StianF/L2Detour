@@ -75,6 +75,12 @@ output/${b} m5/configs/example/se.py
 --prefetcher=on_access=true:policy=proxy
 \end{verbatim}
 
+In the command line above, \${b} is one of the benchmarks in the selected
+subset of CPU2000. This subset was given by the supplied framework and consists
+of the following benchmarks: ammp, art110, art470, wupwise, swim, applu,
+galgel, apsi, bzip2_source, bzip2_graphic, bzip2_program, twolf.
+
+
 The methodology used in the beginning was to start with a sequential
 prefetcher and briefly progress through prior art, i.e. an RPT implementation
 and finally a DCPT implementation. During development the performance was
