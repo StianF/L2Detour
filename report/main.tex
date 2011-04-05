@@ -6,7 +6,7 @@
 pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
 colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
 urlcolor={black},
-pdftitle={DCPT tweaks},
+pdftitle={DCPT with fallback},
 pdfsubject={Prefetcher},
 pdfauthor={Leif Tore Rusten, Stian Fredrikstad, Vegar K\aa sli},
 pdfkeywords={dcpt,rpt,prefetcher}}
@@ -14,7 +14,7 @@ pdfkeywords={dcpt,rpt,prefetcher}}
 
 
 \begin{document}
-\title{DCPT tweaks \\ Working title}
+\title{DCPT with fallback}
 \author{Leif Tore Rusten,
         Stian Fredrikstad,
         and Vegar K\aa sli}
@@ -24,55 +24,49 @@ pdfkeywords={dcpt,rpt,prefetcher}}
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-%\boldmath
-This paper will explain some tweaks to the DCPT algorithm and compare speedups to the "original" DCPT
+This paper will explain some tweaks to the DCPT algorithm and compare speedups
+to the original DCPT
 \end{abstract}
-% IEEEtran.cls defaults to using nonbold math in the Abstract.
-% This preserves the distinction between vectors and scalars. However,
-% if the journal you are submitting to favors bold math in the abstract,
-% then you can use LaTeX's standard command \boldmath at the very start
-% of the abstract to achieve this. Many IEEE journals frown on math
-% in the abstract anyway. In particular, the Computer Society does
-% not want either math or citations to appear in the abstract.
 
-% Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-DCPT, RPT, prefetcher
+DCPT, sequential, prefetcher
 \end{IEEEkeywords}}
 
-
-% make the title area
 \maketitle
-
-
-% To allow for easy dual compilation without having to reenter the
-% abstract/keywords data, the \IEEEcompsoctitleabstractindextext text will
-% not be used in maketitle, but will appear (i.e., to be "transported")
-% here as \IEEEdisplaynotcompsoctitleabstractindextext when compsoc mode
-% is not selected <OR> if conference mode is selected - because compsoc
-% conference papers position the abstract like regular (non-compsoc)
-% papers do!
 \IEEEdisplaynotcompsoctitleabstractindextext
-% \IEEEdisplaynotcompsoctitleabstractindextext has no effect when using
-% compsoc under a non-conference mode.
-
-
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
-
-
 
 \section{Introduction}
 Prefetcher has been a hot topic the last years since the memory gap has become so big.
+
 \section{Methodology}
-%This section should describe how we attempt to solve our problems.
+The test setup consist of the M5 simulator running on NTNU's computer
+cluster kongull. M5 is setup to simulate the Alpha 21264 microarchitecture
+plus the prefetcher described in this paper. A subset of the SPEC CPU2000
+benchmarks where used for measuring speedup. These SPEC benchmarks are assumed
+to be representative for real world workloads, making the generated speedup
+results relevant for real world applications. This test setup is given
+as part of the project work in the course TDT4260 at NTNU. In addition,
+shell scripts for brute force search for optimal prefetcher parameters
+where created.
+
+The M5 simulator supplied had been modified by the course responsible such
+that the programming interface had been abstracted into a simplified framework
+allowing for an minimal learning curve and fast prefetcher development. The
+framework also contained python scripts to run a lighter version of the
+benchmarks on kongull. For tuning the different parameters shell scripts
+where created which iterates over the parameter space and runs the heavy
+version of the benchmarks, i.e. the same as on kongull. The command line
+for M5 execution looks as follows:
+
+\begin{verbatim}
+M5_CPU2000=lib/cpu2000 ./m5/build/ALPHA_SE/m5.opt --remote-gdb-port=0 -re \
+  --outdir output/${bench} m5/configs/example/se.py --detailed \
+  --checkpoint-dir=lib/cp --checkpoint-restore=1000000000 --at-instruction \
+  --caches --l2cache --standard-switch --warmup-insts=10000000 \
+  --max-inst=1000000000 --l2size=1MB --membus-width=8 --membus-clock=400MHz \
+  --mem-latency=30ns --bench=${bench} --prefetcher=on_access=true:policy=proxy
+\end{verbatim}
 
 The methodology used in the beginning was to start with a sequential
 prefetcher and briefly progress through prior art, i.e. an RPT implementation
@@ -108,7 +102,7 @@ analyse these to find potential underlying factors/mechanisms for these
 will become a more important tool as we run out of good a priori
 insights/ideas.
 
-\section{"The Scheme"}
+\section{DCPT fallback}
 \subsection{Sequential (seq)}
 The framework contained a sequential prefetcher as a starting point.
 Using this we created a trivial test program (accumulate.c) that accessed
