@@ -6,6 +6,7 @@ set xlabel "Prefetch degree"
 set ylabel "Speedup"
 set border 3
 set key off
+set size .5,.5
 
 set terminal postscript eps enhanced
 set output "sequential_failover_speedup_plt.eps"
