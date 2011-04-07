@@ -336,10 +336,12 @@ as the directed graph in figure \ref{fig:DG}a).
 \begin{figure}
 \begin{center}
 \includegraphics{tree_representation_pic}
+
 a)
 \end{center}
 \begin{center}
 \includegraphics{tree_representation2_pic}
+
 b)
 \end{center}
 \caption{\label{fig:DG} Tree-based representation}
@@ -348,27 +350,15 @@ b)
 Aside from possible node space savings, this representation makes it
 possible to easily accumulate new kinds of statistics, e.g. in the
 current case it could be that a pattern in the pattern could be
-detected.
+detected as shown in figure \ref{fig:DG}b). Other possibilities this
+representation could give is the ability to prefetch from multiple
+paths on node forks or the possibility for comparing/merging/crossing
+multiple PCs' trees.
 
-\subsection{Stuff we will look into before delivery (i.e. our plan forward)}
-The tree-generalization of DCPT is outlined somewhat as follows.
-
-Each new PC
-causing an access gets a tree-root-node and two tree-pointers allocated.
-As this access is the first access for the PC, no history is available.
-Therefore add a child node to the PC's root and associate the stride 1 with it.
-Move one of the tree-pointers, cur\_prefetch to this child, and leave the other
-pointer, true\_access, alone. At next access for this PC verify if this access
-has been correctly prefetched by traversing from cur\_prefetch and up to the
-root, checking if any node correspond to the access. If this is the case,
-move true\_access to that node. If no such node is found, search the children
-of true\_access and check for a stride giving this access. If child found, move
-true\_access to this and start prefetching from this nodes subtree and move
-cur\_prefetch accordingly. If no child found create a new child node and set
-its stride to 1 as in the starting case. These starting or learning cases
-are such that if the stride 1 is guessed wrong, correct the stride in the node
-instead of creating a new child node, but after this set the node as no longer
-learning.
+The report does not go any more into details and results from the
+exploration of this representation as the realization suffer from
+delays and bugs until only trivial FIFO-like behaviour were realistic 
+to implement correctly in the available remaining time.
 
 \ifCLASSOPTIONcompsoc
   % The Computer Society usually uses the plural form
