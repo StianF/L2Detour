@@ -113,7 +113,7 @@ Attempts to tweak this implementation:
 
 \subsection{Pseudocode}
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \dontprintsemicolon
 \KwIn{candidates}
 
@@ -127,7 +127,7 @@ Attempts to tweak this implementation:
 \caption{prefetch\label{pre}}
 \end{algorithm}
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \dontprintsemicolon
 \KwIn{stat}
 
@@ -151,7 +151,7 @@ Attempts to tweak this implementation:
 \caption{prefetch\_access\label{pa}}
 \end{algorithm}
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \dontprintsemicolon
 \KwIn{addr}
 
@@ -164,7 +164,7 @@ Attempts to tweak this implementation:
 \caption{canPrefetch\label{cp}}
 \end{algorithm}
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \dontprintsemicolon
 \KwIn{i}
 
@@ -191,7 +191,7 @@ Attempts to tweak this implementation:
 \subsection{Delta Correlation Prediction Table}
 The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching.
 
-\begin{figure}[H]
+\begin{figure}
 \begin{center}
 \includegraphics[width=0.45\textwidth]{dcpt_speedup_plt}
 \end{center}
@@ -252,7 +252,7 @@ multiprocessor setting would add to the amount of coherency
 misses endured, which would further diminish any positive
 effects gained from the fallback scheme.
 
-Even though the above paragraphs raises some doubt about
+Even though the above paragraphs raise some doubt about
 the usefulness of the scheme in contemporary computer systems,
 there is still a possible application in the heterogenous
 multiprocessor area where a super-core is set aside for the
