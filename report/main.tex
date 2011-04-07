@@ -24,7 +24,7 @@ pdfkeywords={dcpt,prefetcher}}
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-By repimplementing DCPT and tweaking its parameters for the ALPHA 21264 processor the prefetcher got a speedup of 9.2\% on a subset of the SPEC CPU2000 running on the M5 simulator. A key observation of DCPT is that it does not do anything when it does not find a match, this leads to no speedup in programs that has a random pattern. By adding a sequential prefetch fallback mechanism the speedup was increased to 10.1\% compared to no prefetcher.
+By repimplementing DCPT and tweaking its parameters for the ALPHA 21264 processor the prefetcher got a speedup of 9.2\% on a subset of the SPEC CPU2000 running on the M5 simulator. A key observation of DCPT is that it does not do anything when it does not find a match. By adding a sequential prefetch fallback mechanism the speedup was increased to 10.1\% compared to no prefetcher.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -35,23 +35,23 @@ DCPT, sequential, prefetcher
 \IEEEdisplaynotcompsoctitleabstractindextext
 \IEEEpeerreviewmaketitle
 
-\section{Introduction}
-Prefetching is one of the aspects of computer architecture that is meant to
-combat the ever-growing gap between execution speed and memory latencies, also
-known as the memory wall. \ref{berkleypaper} The idea is recognize data access
-patterns and store future data closer to central processing unit, such that when
-the data is needed, it can be found in the cache instead of in main memory.
+\section{Introduction} Prefetching is one of the aspects of computer
+architecture that is meant to combat the ever-growing gap between execution
+speed and memory latencies, also known as the memory wall \cite{memwallpaper}.
+The idea is recognize data access patterns and store future data closer to
+central processing unit, such that when the data is needed, it can be found in
+the cache instead of in main memory.
 
-Prefetching is commonly subdivided into software- and hardware prefetching.
-In addition to the obvious distinction of where they are implemented,
-software prefetching relies on compile-time information, hardware
-prefetching only has runtime information available.
+Prefetching is commonly subdivided into software- and hardware prefetching.  In
+addition to the obvious distinction of where they are implemented, software
+prefetching relies on compile-time information, hardware prefetching only has
+runtime information available.
 
 The inherit problem for hardware prefetchers is that they lack semantic
 knowledge about the running program, and it is therefore difficult to create a
 prefetcher that performs better for all program variants. The success of a
-prefetcher is often its ability to correctly guess the program's memory
-access patterns. 
+prefetcher is often its ability to correctly guess the program's memory access
+patterns. 
 
 Our motivation for this paper is the mini-project in TDT4260 Computer
 Architecture, where we were tasked with implementing a simulated hardware
@@ -69,14 +69,14 @@ to recognize longer strides or alternating access patterns.
 
 Reference prediction table (RPT), stores an individual stride for each load
 instruction, and can therefore predict strides larger than one block. This
-scheme was proposed by Chen and Baer in 1995. \ref{} A different scheme, PC/DC
-prefetching, was proposed by Nesbit et al. in 2004. \ref{} It uses a Global
-History Buffer to store previous memory accesses, and from these it calculates
-the delta between them. This allows it to recognize patterns of different
-strides, and prefetch accordingly.
+scheme was proposed by Chen and Baer in 1995 \cite{rptpaper}. A different scheme,
+PC/DC prefetching, was proposed by Nesbit et al. in 2004 \cite{pcdcpaper}. It
+uses a Global History Buffer to store previous memory accesses, and from these
+it calculates the delta between them. This allows it to recognize patterns of
+different strides, and prefetch accordingly.
 
 Our proposed implementation is based on the DCPT algorithm, proposed by
-Grannaes, Jahre and Natvig in 2009.  \ref{b}. The algorithm combines two
+Grannaes, Jahre and Natvig in 2009 \cite{dcptpaper}. The algorithm combines two
 powerful ideas of previous schemes: The prediction table from RPT and delta
 correlation from PC-DC.
 
@@ -139,6 +139,7 @@ seemingly constitues an opportunity for large performance gains.
 \section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT is based on the pseudo code from \cite{dcptpaper}.
 The algorithm is related to RPT, but the key difference is that it looks for a pattern instead of one stride.
+
 When the prefetcher gets an access, it saves the program counter (PC) and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
 If it finds a pattern in the list, it saves all the addresses that should be prefetched in another list with candidates for prefetch.
 Then it runs through the list and checks if the addresses is not in the cache, in the mshr or that the address is out of memory. If all the requirements are met, it issues a prefetch for it.
@@ -229,9 +230,17 @@ not fetched, to avoid "double fetching".
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
 The prefetcher was tested with and without the sequential fallback and as seen in figure \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.092, and when sequential fallback was applied the speedup increased to 1.101 which is better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the
-imposed memory limit was reached.
+imposed memory limit was reached. A comparision between the different number of deltas are shown in \ref{fig:deltas}.
 A key observation in these results is the speedup on twolf, where plain DCPT gives a negative speedup. In the DCPT with sequential fallback, all the benchmarks have speedup larger than 1. Even though this is not generally needed for
 an overall performance increase, it is however a very desirable property.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{dcpt_delta_plt}
+\end{center}
+\caption{\label{fig:deltas} Comparision beween number of deltas}
+\end{figure}
+
 
 \begin{figure}
 \begin{center}
@@ -406,6 +415,18 @@ to implement correctly in the available remaining time.
 
 \bibitem{dcptpaper}
 M.~Grann\ae s, M.~Jahre and L.~Natvig, \emph{Storage Efficient Hardware Prefetching using Delta Correlating Prediction Tables}, 2009.
+
+\bibitem{memwallpaper}
+Wm. A.~Wulf and S. A.~McKee, \emph{Hitting the Memory Wall: Implications of the
+Obvious}, 1994.
+
+\bibitem{rptpaper}
+T-F. Chen and J-L. Baer \emph{Effective Hardware-Based Data Prefetching for
+High-Performance Processors}, 1995.
+
+\bibitem{pcdcpaper}
+K. J.~Nesbit and J. E.~Smith, \emph{Data Cache Prefetching Using a Global History
+Buffer}, 2004.
 
 \end{thebibliography}
 
