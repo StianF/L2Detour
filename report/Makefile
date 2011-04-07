@@ -12,6 +12,7 @@ all: main.pdf
 
 main.pdf: $(PICPDFS) $(PLOTPDFS) $(TEXFILES)
 	pdflatex main.tex
+	pdflatex main.tex
 
 %_plt.pdf: %_plt.eps
 	epstopdf $^ > $@
