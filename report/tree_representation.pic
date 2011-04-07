@@ -1,11 +1,23 @@
 .PS
-S: circle "1"
-arrow
-circle "2"
-arrow
-E: circle "3"
-move to S.s
-arrow
-circle "4"
-arrow to E.w
+circlerad = .15
+linewid = .3
+lineht = .15
+
+C1: circle "1"
+line up right ->
+right
+
+C2: circle "2"
+line down right ->
+right
+
+C3: circle "3"
+
+move to C1.e
+line down right ->
+right
+
+C4: circle "4"
+line to C3.w ->
+
 .PE

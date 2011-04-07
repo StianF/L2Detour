@@ -147,28 +147,13 @@ Then it runs through the list and checks if the adresses is not in the cache, in
 
 If it has less than two deltas in the list or if it cant find a pattern, it starts prefetching the next block like a sequential prefetcher.
 
+A pseudocode for the prefetcher is shown in algorithm \ref{pa}, \ref{cp}, \ref{dcpt} and \ref{pre}.
 \subsection{Attempts to tweak this implementation}
 \begin{itemize}
 \item Make a copy of the queue to keep track of which adresses that still aren't fetched, to avoid "double fetching".
 \item Make a lru which prevents the prefetcher from throwing out recently used history from the list.
 \item Adjustments to the size of the list, and size of the delta list
 \end{itemize}
-
-\subsection{Pseudocode}
-
-\begin{algorithm}
-\dontprintsemicolon
-\KwIn{candidates}
-
-\Begin{
- \ForEach{$I \in candidates$}{
-  \If{$canPrefetch(I)$}{
-   $issuePrefetch(I)$\; 
-  }
- }
-}
-\caption{prefetch\label{pre}}
-\end{algorithm}
 
 \begin{algorithm}
 \dontprintsemicolon
@@ -228,7 +213,19 @@ If it has less than two deltas in the list or if it cant find a pattern, it star
 \caption{DCPT\label{dcpt}}
 \end{algorithm}
 
+\begin{algorithm}
+\dontprintsemicolon
+\KwIn{candidates}
 
+\Begin{
+ \ForEach{$I \in candidates$}{
+  \If{$canPrefetch(I)$}{
+   $issuePrefetch(I)$\; 
+  }
+ }
+}
+\caption{prefetch\label{pre}}
+\end{algorithm}
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
@@ -330,14 +327,24 @@ research.
 
 Some aspects of the tree representation is the abilities of access histories
 to branch, e.g. the access history 1, 2, 3, 1, 4, 3, could be represented
-as the directed graph in figure \ref{fig:DG}.
+as the directed graph in figure \ref{fig:DG}a).
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{tree_representation_pic}
+\includegraphics{tree_representation_pic}
+a)
+\end{center}
+\begin{center}
+\includegraphics{tree_representation2_pic}
+b)
 \end{center}
 \caption{\label{fig:DG} Tree-based representation}
 \end{figure}
+
+Aside from possible node space savings, this representation makes it
+possible to easily accumulate new kinds of statistics, e.g. in the
+current case it could be that a pattern in the pattern could be
+detected.
 
 \subsection{Stuff we will look into before delivery (i.e. our plan forward)}
 The tree-generalization of DCPT is outlined somewhat as follows.
