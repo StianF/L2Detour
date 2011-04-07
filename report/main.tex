@@ -328,14 +328,24 @@ research.
 
 Some aspects of the tree representation is the abilities of access histories
 to branch, e.g. the access history 1, 2, 3, 1, 4, 3, could be represented
-as the directed graph in figure \ref{fig:DG}.
+as the directed graph in figure \ref{fig:DG}a).
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.45\textwidth]{tree_representation_pic}
+\includegraphics{tree_representation_pic}
+a)
+\end{center}
+\begin{center}
+\includegraphics{tree_representation2_pic}
+b)
 \end{center}
 \caption{\label{fig:DG} Tree-based representation}
 \end{figure}
+
+Aside from possible node space savings, this representation makes it
+possible to easily accumulate new kinds of statistics, e.g. in the
+current case it could be that a pattern in the pattern could be
+detected.
 
 \subsection{Stuff we will look into before delivery (i.e. our plan forward)}
 The tree-generalization of DCPT is outlined somewhat as follows.
