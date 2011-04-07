@@ -299,7 +299,7 @@ scheme is still recuperating from a previous pattern.
 Also since only one block is prefetched, the risk of evicting a cache line
 that would otherwise be used in the near future is marginalized. Still the
 % RC VAL
-relative speedup from regular DCPT is not impressively large at 1.007, but
+relative speedup from regular DCPT is not impressively large at 1.01, but
 seeing as how sequential prefetching is trivial to implement it is a
 well-worth investment for performance gain.
 
@@ -344,13 +344,13 @@ high priority to memory capacity for getting the sequential parts done quickly.
 In this case, every small increase in performance is valuable
 because of Amdahl's law. Therefore it would be advisable to add
 a fallback mechanism to the super-core for an increased maximal
-speedup for parallelization.
+theoretical speedup for parallelization.
 
 \section{Conclusion}
 In this paper we have presented a modified version of Delta Correlating
 Prediction Tables, originally proposed by Grannaes, Jahre and Natvig in 2009.
-\cite{dcptpaper} By adding a fallback solution of sequential prefetching,
-we achieved a speedup of 1.105.
+\cite{dcptpaper} By tweaking prefetcher parameters and adding a fallback
+solution of sequential prefetching, we achieved a speedup of 1.105.
 % RC VAL
 
 \section{Further Work}
