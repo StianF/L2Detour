@@ -26,6 +26,8 @@ pdfkeywords={dcpt,prefetcher}}
 \begin{abstract}
 By reimplementing DCPT and tweaking its parameters for the ALPHA 21264 processor the prefetcher got a speedup of 9.4\% on a subset of the SPEC CPU2000 running on the M5 simulator. A key observation of DCPT is that it does not do anything when it does not find a match. By adding a sequential prefetch fallback mechanism the speedup was increased to 10.5\% compared to no prefetcher.
 \end{abstract}
+% RC VAL
+
 
 \begin{IEEEkeywords}
 DCPT, sequential, prefetcher
@@ -149,10 +151,13 @@ If it finds a pattern in the list, it saves all the addresses that should be pre
 Then it runs through the list and checks if the addresses is not in the cache, in the MSHR or that the address is outside the memory. If all the requirements are met, it issues a prefetch for it.
 
 The size of these tables needed to be determined specifically for the ALPHA processor. By doing a kind of binary search, these had a optimal value around 120 entries in the table, and 12 entries in the delta list.
+% RC VAL
 
 If it has less than two deltas in the list or if it cannot find a pattern, it starts prefetching the next block like a sequential prefetcher.
 
 A pseudo code for the prefetcher is shown in algorithm \ref{pa}, \ref{cp}, \ref{dcpt} and \ref{pre}.
+
+\begin{comment}
 \subsection{Attempts to tweak this implementation}
 \begin{itemize}
 \item Make a copy of the queue to keep track of which addresses that still are
@@ -160,6 +165,7 @@ not fetched, to avoid "double fetching".
 \item Make a LRU which prevents the prefetcher from throwing out recently used history from the list.
 \item Adjustments to the size of the list, and size of the delta list
 \end{itemize}
+\end{comment}
 
 \begin{algorithm}
 \dontprintsemicolon
@@ -235,7 +241,9 @@ not fetched, to avoid "double fetching".
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
-The prefetcher was tested with and without the sequential fallback and as seen in figure \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.094, and when sequential fallback was applied the speedup increased to 1.101 which is better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 12 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the
+The prefetcher was tested with and without the sequential fallback and as seen in figure \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.094, and when sequential fallback was applied the speedup increased to 1.105 which is better even though some of the programs lose 
+% RC VAL x2
+speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 12 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the
 imposed memory limit was reached. A comparison between the different number of deltas are shown in \ref{fig:deltas}.
 A key observation in these results is the speedup on twolf, where plain DCPT gives a negative speedup. In the DCPT with sequential fallback, all the benchmarks have speedup larger than 1. Even though this is not generally needed for
 an overall performance increase, it is however a very desirable property.
@@ -290,6 +298,7 @@ scheme is still recuperating from a previous pattern.
 
 Also since only one block is prefetched, the risk of evicting a cache line
 that would otherwise be used in the near future is marginalized. Still the
+% RC VAL
 relative speedup from regular DCPT is not impressively large at 1.007, but
 seeing as how sequential prefetching is trivial to implement it is a
 well-worth investment for performance gain.
@@ -341,7 +350,8 @@ speedup for parallelization.
 In this paper we have presented a modified version of Delta Correlating
 Prediction Tables, originally proposed by Grannaes, Jahre and Natvig in 2009.
 \cite{dcptpaper} By adding a fallback solution of sequential prefetching,
-we achieved a speedup of 1.101.
+we achieved a speedup of 1.105.
+% RC VAL
 
 \section{Further Work}
 
@@ -375,9 +385,9 @@ to branch, e.g. the access history 1, 2, 3, 1, 4, 3, could be represented
 as the directed graph in figure \ref{fig:DG}a).
 Aside from possible node space savings, this representation makes it
 possible to easily accumulate new kinds of statistics, e.g. in the
-current case it could be that a pattern in the pattern could be
-detected as shown in figure \ref{fig:DG}b). Other possibilities this
-representation could give is the ability to prefetch from multiple
+current case it could be that a pattern within the pattern could be
+detected as shown in figure \ref{fig:DG}b). Other examples of possibilities
+this representation could give is the ability to prefetch from multiple
 paths on access history branches or the possibility for comparing,
 merging and crossing multiple PCs' trees.
 
@@ -394,11 +404,6 @@ b)
 \end{center}
 \caption{\label{fig:DG} Tree-based representation}
 \end{figure}
-
-The report does not go any more into details and results from the
-exploration of this representation as the realization suffer from
-delays and bugs until only trivial FIFO-like behaviour were realistic 
-to implement correctly in the available remaining time.
 
 \ifCLASSOPTIONcompsoc
   % The Computer Society usually uses the plural form
