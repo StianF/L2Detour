@@ -8,3 +8,4 @@ main.log
 main.out
 main.toc
 sequential_failover_speedup_plt.pdf
+dcpt_speedup_plt.pdf
