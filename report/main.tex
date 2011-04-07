@@ -1,100 +1,363 @@
-
-
-\documentclass[a4paper,11pt]{report}
-
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
+\documentclass[12pt,journal,compsoc]{IEEEtran}
+\providecommand{\PSforPDF}[1]{#1}
 \usepackage{graphicx}
-\usepackage{float}
-\restylefloat{figure} 
-\usepackage{subfig}
-\usepackage{style}
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\usepackage{fancyvrb}
-%\usepackage{pstcol}
-\usepackage{pstricks}
-\usepackage[pdftex]{hyperref}
-\usepackage{alltt}
-\usepackage{listings}
-\usepackage{url}
-\usepackage{SIunits}
-\usepackage{subfig}
-%\usepackage{supertabular}
-\usepackage{color}
-\usepackage{ifthen}
-\usepackage{geometry}
-
-\newboolean{includeSrc}
-\setboolean{includeSrc}{true}
-
-\definecolor{Gray} {rgb}{0.8, 0.8, 0.8}
+\usepackage{algorithm2e}
+\usepackage{verbatim}
+\newcommand\MYhyperrefoptions{bookmarks=true,bookmarksnumbered=true,
+pdfpagemode={UseOutlines},plainpages=false,pdfpagelabels=true,
+colorlinks=true,linkcolor={black},citecolor={black},pagecolor={black},
+urlcolor={black},
+pdftitle={DCPT with fallback},
+pdfsubject={Prefetcher},
+pdfauthor={Leif Tore Rusten, Stian Fredrikstad, Vegar K\aa sli},
+pdfkeywords={dcpt,prefetcher}}
 
 
 \begin{document}
+\title{DCPT with fallback}
+\author{Leif Tore Rusten,
+        Stian Fredrikstad and
+        Vegar K\aa sli}
 
-\hypersetup{
-    pdftitle={L2Detour prefetcher},
-    pdfauthor={L2Detour},
-    pdfsubject={TDT4260 Computer Architecture, Prefetcher project 2011},
-    pdfkeywords={Computer architecture} {NTNU},
-    colorlinks=false,
-    pdfborder={0 0 0 0}
+\markboth{DCPT with fallback}%
+{DCPT with fallback}
+
+\IEEEcompsoctitleabstractindextext{%
+\begin{abstract}
+This paper will explain some tweaks to the DCPT algorithm and compare speedups
+to the original DCPT
+\end{abstract}
+
+\begin{IEEEkeywords}
+DCPT, sequential, prefetcher
+\end{IEEEkeywords}}
+
+\maketitle
+\IEEEdisplaynotcompsoctitleabstractindextext
+\IEEEpeerreviewmaketitle
+
+\section{Introduction}
+Prefetching is one of the aspects of computer architecture that is meant to
+combat the ever-growing gap between execution speed and memory latencies, also
+known as the memory wall. \ref{berkleypaper} The idea is recognize data access
+patterns and store future data closer to central processing unit, such that when
+the data is needed, it can get loaded quicker than if it were stored only in
+main memory.
+
+Our motivation for this paper is the mini-project in TDT42xx Computer
+Architecture, where we were tasked with implementing a simulated prefetcher.
+The performance of this prefetcher would be measured against other participating
+students' submissions.
+
+We implement the prefetcher using Delta Correlating Prediction Tables
+DCPT \ref{02graennes}. 
+
+\section{Previous Works}
+Over the years the schemes has grown to be more and more sophisticated. The
+simple, yet elegant, scheme of predicting sequential access has proved to be
+quite resilient, performance wise, to newcomers. According to \ref{a} tagged
+sequential, RPT and PC-DC was the top performers in 2004.
+
+Reference Prediction Table RPT uses a table, using the instruction address as
+index, to store the value of the predicted access.
+
+Delta Correlation
+
+PC-DC used 
+Over the years more sophisticated prefetching schemes have been developed.
+Tagged Sequential, rpt, pcdc
+We based our implementation of DCPT on Storage Efficient Hardware Prefetching
+using Delta Correlating Prediction Tables paper. \ref{02graennes}
+DCPT It combines the prediction table from RPT with delta
+correlation of PCDC.
+
+cache miss
+
+\section{Methodology}
+The test setup consist of the M5 simulator running on NTNU's computer
+cluster kongull. M5 is setup to simulate the Alpha 21264 microarchitecture
+plus the prefetcher described in this paper. A subset of the SPEC CPU2000
+benchmarks where used for measuring speedup. These SPEC benchmarks are assumed
+to be representative for real world workloads, making the generated speedup
+results relevant for real world applications. This test setup is given
+as part of the project work in the course TDT4260 at NTNU. In addition,
+shell scripts for brute force search for optimal prefetcher parameters
+where created.
+
+The M5 simulator supplied had been modified by the course responsible such
+that the programming interface had been abstracted into a simplified framework
+allowing for an minimal learning curve and fast prefetcher development. The
+framework also contained python scripts to run a lighter version of the
+benchmarks which run on kongull. For tuning the different parameters shell
+scripts where created which iterates over the parameter space and runs the
+heavy version of the benchmarks, i.e. the same as on kongull. The command line
+for an M5 execution looks as follows:
+
+\begin{verbatim}
+M5_CPU2000=lib/cpu2000
+./m5/build/ALPHA_SE/m5.opt
+--remote-gdb-port=0 -re --outdir
+output/${b} m5/configs/example/se.py
+--detailed --checkpoint-dir=lib/cp
+--checkpoint-restore=1000000000
+--at-instruction --caches --l2cache
+--standard-switch --membus-width=8
+--warmup-insts=10000000
+--max-inst=100000000 --l2size=1MB
+--membus-clock=400MHz
+--mem-latency=30ns --bench=${b}
+--prefetcher=on_access=true:policy=proxy
+\end{verbatim}
+
+In the command line above, \${b} is one of the benchmarks in the selected
+subset of CPU2000. This subset was given by the supplied framework and consists
+of the following benchmarks: ammp, art110, art470, wupwise, swim, applu,
+galgel, apsi, bzip2\_source, bzip2\_graphic, bzip2\_program, twolf.
+
+The statistical output from each benchmark is parsed to give the corresponding
+IPC before using this to calculate speedup by comparing to the result
+of no prefetcher. The collective speedup is presented as a harmonic mean of
+the individual results. This is done by the framework, but a similar
+functionality was developed in shell scripts for use as previously mentioned
+and for custom cross-compiled programs. The shell scripts generates
+speedups relative to a given entry, but if this entry is the case of no
+prefetcher then the results are the same as for the framework.
+
+The chosen benchmarks are a subset of CPU2000 with the characteristic that
+they seem to be hard to get good speedup from ``for free'', making
+them especially worthwhile for academic exploration since these workloads
+seemingly constitues an opportunity for large performance gains.
+
+\section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
+The algorithm for DCPT (Delta Correlating Prediction Table) is based on the pseudo code from \cite{dcptpaper}.
+The algorithm is related to RPT, but the difference is that it looks for a pattern instead of one stride.
+When the prefetcher gets an access, it saves the PC, and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
+If it finds a pattern in the list, it saves all the adresses that should be prefetched in another list with candidates for prefetch.
+Then it runs through the list and checks if the adresses is not in the cache, in the mshr or that the adress is out of memory. If all the requirements are met, it issues a prefetch for it.
+
+If it has less than two deltas in the list or if it cant find a pattern, it starts prefetching the next block like a sequential prefetcher.
+
+\subsection{Attempts to tweak this implementation}
+\begin{itemize}
+\item Make a copy of the queue to keep track of which adresses that still aren't fetched, to avoid "double fetching".
+\item Make a lru which prevents the prefetcher from throwing out recently used history from the list.
+\item Adjustments to the size of the list, and size of the delta list
+\end{itemize}
+
+\subsection{Pseudocode}
+
+\begin{algorithm}
+\dontprintsemicolon
+\KwIn{candidates}
+
+\Begin{
+ \ForEach{$I \in candidates$}{
+  \If{$canPrefetch(I)$}{
+   $issuePrefetch(I)$\; 
+  }
+ }
 }
+\caption{prefetch\label{pre}}
+\end{algorithm}
 
-%-----------------------------------------------------------
-\begin{titlepage}
- 
+\begin{algorithm}
+\dontprintsemicolon
+\KwIn{stat}
+
+\Begin{
+ $i \leftarrow TABLE[stat.pc]$\;
+ \If{$i \neq 0$}{
+  $DELTA \leftarrow stat.mem\_addr - i.last\_mem\_addr$\;
+  $i.deltas[ ] \leftarrow DELTA$\;
+ }
+ $i.last\_mem\_addr \leftarrow stat.mem\_addr$\;
+ $TABLE[stat.pc] \leftarrow i$\;
+ $candidates \leftarrow []$\;
+ \If{$size(I.deltas) > 1$}{
+   $candidates \leftarrow DCPT(i)$\;
+   $prefetch(candidates)$\;
+ }
+ \If{$size(candidates) == 0$ {\bf and} $canPrefetch(NEXT\_BLOCK)$}{
+  $issue\_prefetch(NEXT\_BLOCK)$\;
+ }
+}
+\caption{prefetch\_access\label{pa}}
+\end{algorithm}
+
+\begin{algorithm}
+\dontprintsemicolon
+\KwIn{addr}
+
+\Begin{
+ ${\bf return}$ $addr < MAX\_PHYS\_ADDR$ \\
+	{\bf and} $!in\_mshr\_queue(addr)$ \\
+	{\bf and} $!in\_cache(addr)$ \\
+	{\bf and} $!in\_cache\_queue(addr)$\;
+}
+\caption{canPrefetch\label{cp}}
+\end{algorithm}
+
+\begin{algorithm}
+\dontprintsemicolon
+\KwIn{i}
+
+\Begin{
+ $last\_delta\_i \leftarrow i.deltas.last$\;
+ \ForEach{$U, V \in reversed(i.deltas)$}{
+  \If{$U == i.deltas[last\_delta\_i]$ {\bf and} $V == i.deltas[last\_delta\_i - 1]$}{
+   $match\_i \leftarrow indexof(U)$\;	
+   ${\bf break}$\;
+  }
+ }
+ $candidates \leftarrow []$\;
+ \While{$match\_i < size(i.deltas)$}{
+  $candidates \leftarrow i.last\_mem\_addr$ + $i.deltas[++match\_i]$\;
+ }
+ ${\bf return}$ $candidates$\;
+}
+\caption{DCPT\label{dcpt}}
+\end{algorithm}
+
+
+
+\section{Results}
+\subsection{Delta Correlation Prediction Table}
+The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the memory limit is reached.
+
+\begin{figure}
 \begin{center}
-
-%\includegraphics[scale=0.6]{graphics/logo}\\[1cm]
-
-\textsc{\LARGE TDT4260 Computer Architecture, Project Work}\\[1.5cm]
- 
-\HRule \\[0.4cm]
-{ \huge \bfseries \textit{a}Mac}\\a Manchester architecture computer\\[0.4cm]
-\HRule \\[1.5cm] 
-
-Fredrikstad, Stian\\
-K\aa sli, Vegar\\
-Rusten, Leif Tore\\
-
-\vfill
- 
-% Bottom of the page
-{\large \today}
- 
+\includegraphics[width=0.45\textwidth]{dcpt_speedup_plt}
 \end{center}
- 
-\end{titlepage}
+\caption{\label{fig:dcptspeed} DCPT with and without sequential}
+\end{figure}
 
-%-----------------------------------------------------------
-\cleardoublepage
-\pagenumbering{Roman}
-\input{abstract}
-\tableofcontents
-\listoffigures
-\listoftables
-\clearpage
-\pagenumbering{arabic}
-%-----------------------------------------------------------
-% This is the structure suggested by Magnus Jahre.
-\input{introduction}
-\input{background}
-\input{related_work}
-\input{the_scheme}
-\input{methodology}
-\input{results}
-\input{discussion}
-\input{conclusion}
-\input{further_work}
+It was proven that to keep a local queue to stop the prefetcher from prefetching a block two times had no impact to the speedup since the framework does this filtering already, but if the prefetcher should be used in a real world application this would be required.
 
-%-----------------------------------------------------------
-\clearpage
-\bibliographystyle{plain}
-\bibliography{bibl} 
-%-----------------------------------------------------------
-%Appendixes
-\appendix
-\input{appendix}
+Making the table use a lru policy gave decreased performance even though this should give the prefetcher more relevant history.
 
+\subsection{Sequential fallback}
+In an effort to measure the overall impact of the sequential fallback
+mechanism, the relative speedup for different prefetch degrees where
+generated. These values where generated by shell scripts iteratively
+compiling the prefetcher module with increasing degree before running
+the heavy version benchmark (i.e. the same as on kongull) locally. The
+result is presented in figure \ref{fig:fallback}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{sequential_failover_speedup_plt}
+\end{center}
+\caption{\label{fig:fallback} Relative speedup for sequential fallback}
+\end{figure}
+
+As seen from the figure, the speedup is normalized to the case for degree equal
+to zero corresponding to a plain DCPT implementation with no fallback. The
+small positiv effect from the fallback mechanism is seen to be rapidly
+vanishing for increasing degrees. For degrees larger than 2 to be efficient
+they would need to be good prefetches anyhow, creating an access pattern which
+the DCPT scheme in any case would be able to detect and since start
+prefetching. The fallback mechanism is therefore assumed mostly a fallback for
+the cases where sequential parts of data are being read
+(an assumed common case) but the DCPT scheme is still recuperating from a
+previous pattern.
+
+Also since only one block is prefetched, the risk of evicting a cache line
+that would otherwise be used in the near future is marginalized. Still the
+relative speedup from regular DCPT is not impressively large at 1.007, but
+seeing as how sequential prefetching is trivial to implement it is a
+well-worth investment for performance gain.
+
+\section{Discussion}
+\subsection{Using LRU to preserve history}
+Since there are a 8kB memory limit it was looked into modifying the table in DCPT to use LRU. This was implemented by always storing the Tick that was given with the argument to prefetch\_access and use this to determine which pc that should be replaced by a new. Unfortunately this reduced the total speedup, this is possibly because there are more often hits in the table and that could give more hits in the deltas table, and this leads in some cases to more misses and less sequential prefetching, specifically the twolf which uses some have use of sequential prefetch had reduced speedup.
+
+\subsection{Too aggressive prefetching}
+The prefetcher implemented here is very aggressive and gives a lot of identified block, but only issues some percent of these. The reason why a block is identified but not issued is in some cases that the block is already in the queue, because of that a copy of the cache queue was implemented and checked before every prefetch, this helped a little, but there are still too many identified compared to issued. Some of the problem can also be that the prefetcher matches patterns with a large number of deltas between, this leads to that the prefetches identifies too many blocks every time prefetch\_access is called and since the queue is limited, some of the blocks that are actually needed are pushed out of the queue. Attempts to reduce the number of blocks prefetched did only give reduced speedup, but in a real world application this would have to be reduced since this kind of affressive prefetching would reduce the performance on the memory system.
+
+\subsection{Model weakness}
+The model used in this paper is of a single-processor system.
+This means that the current trend of multiprocessors not
+necessarily can take advantage of the results found in
+this paper because the performance gains is made possible
+by utilizing unused memory bandwidth. In a multiprocessor
+setting this might only stress an already congested memory
+system giving rise to longer stall times which can nullify
+the possible performance gains from the fallback.
+
+Another point to make is that bad fallback prefetches in a
+multiprocessor setting would add to the amount of coherency
+misses endured, which would further diminish any positive
+effects gained from the fallback scheme.
+
+Even though the above paragraphs raise some doubt about
+the usefulness of the scheme in contemporary computer systems,
+there is still a possible application in the heterogenous
+multiprocessor area where a super-core is set aside for the
+sequential parts of computation, possibly having a high priority
+to memory capacity for getting the sequential parts done quickly.
+In this case, every small increase in performance is valuable
+because of Amdahl's law. Therefore it would be advicable to add
+a fallback mechanism to the super-core for an increased maximal
+speedup for parallelization.
+
+\section{Conclusion}
+
+\section{Further Work}
+This section is optional, but might become large.
+
+\subsection{Stuff we will look into before delivery (i.e. our plan forward)}
+Continuing to tweak and implement the modified regular DCPT. The plan is
+to work with this in March and cut off the gathering of results 1. April
+and start focusing on writing the report and presentation.
+
+Look into the generalization of DCPT as a tree-structure. If this gives
+ok speedup then we will change the focus of the report into comparing this
+approach with our version of DCPT. If performance is low, only mention the
+design and do not analyse it further, instead focus on analysing our
+DCPT version.
+
+The tree-generalization of DCPT is outlined somewhat as follows. Each new PC
+causing an access gets a tree-root-node and two tree-pointers allocated.
+As this access is the first access for the PC, no history is available.
+Therefore add a child node to the PC's root and associate the stride 1 with it.
+Move one of the tree-pointers, cur\_prefetch to this child, and leave the other
+pointer, true\_access, alone. At next access for this PC verify if this access
+has been correctly prefetched by traversing from cur\_prefetch and up to the
+root, checking if any node correspond to the access. If this is the case,
+move true\_access to that node. If no such node is found, search the children
+of true\_access and check for a stride giving this access. If child found, move
+true\_access to this and start prefetching from this nodes subtree and move
+cur\_prefetch accordingly. If no child found create a new child node and set
+its stride to 1 as in the starting case. These starting or learning cases
+are such that if the stride 1 is guessed wrong, correct the stride in the node
+instead of creating a new child node, but after this set the node as no longer
+learning.
+
+\ifCLASSOPTIONcompsoc
+  % The Computer Society usually uses the plural form
+%  \section*{Acknowledgments}
+\else
+  % regular IEEE prefers the singular form
+%  \section*{Acknowledgment}
+\fi
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+\begin{thebibliography}{1}
+
+\bibitem{dcptpaper}
+M.~Grann\ae s, M.~Jahre and L.~Natvig, \emph{Storage Efficient Hardware Prefetching using Delta Correlating Prediction Tables}, 2009.
+
+\end{thebibliography}
+
+
+
+% that's all folks
 \end{document}
