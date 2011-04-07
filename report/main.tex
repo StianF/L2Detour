@@ -24,7 +24,7 @@ pdfkeywords={dcpt,prefetcher}}
 
 \IEEEcompsoctitleabstractindextext{%
 \begin{abstract}
-By repimplementing DCPT and tweaking its parameters for the ALPHA 21264 processor the prefetcher got a speedup of 9.2\% on a subset of the SPEC CPU2000 running on the M5 simulator. A key observation of DCPT is that it does not do anything when it does not find a match. By adding a sequential prefetch fallback mechanism the speedup was increased to 10.1\% compared to no prefetcher.
+By reimplementing DCPT and tweaking its parameters for the ALPHA 21264 processor the prefetcher got a speedup of 9.2\% on a subset of the SPEC CPU2000 running on the M5 simulator. A key observation of DCPT is that it does not do anything when it does not find a match. By adding a sequential prefetch fallback mechanism the speedup was increased to 10.5\% compared to no prefetcher.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -82,7 +82,7 @@ correlation from PC-DC.
 
 \section{Methodology}
 The test setup consist of the M5 simulator running on NTNU's computer
-cluster kongull. M5 is setup to simulate the Alpha 21264 microarchitecture
+cluster Kongull. M5 is setup to simulate the Alpha 21264 micro architecture
 plus the prefetcher described in this paper. A subset of the SPEC CPU2000
 benchmarks were used for measuring speedup. These SPEC benchmarks are assumed
 to be representative of real world workloads, making the generated speedup
@@ -95,9 +95,9 @@ The M5 simulator supplied had been modified by the course responsible. The
 programming interface had been abstracted into a simplified framework
 allowing for an minimal learning curve and fast prefetcher development. The
 framework also contained python scripts to run a lighter version of the
-benchmarks which run on kongull. For tuning the different parameters shell
+benchmarks which run on Kongull. For tuning the different parameters shell
 scripts were created which iterates over the parameter space and runs the
-heavy version of the benchmarks, i.e. the same as on kongull. The command line
+heavy version of the benchmarks, i.e. the same as on Kongull. The command line
 for an M5 execution looks as follows:
 
 \begin{verbatim}
@@ -134,7 +134,7 @@ prefetcher gives the same results as the framework.
 The chosen benchmarks are a subset of CPU2000 with the characteristic that
 they seem to be hard to get good speedup from ``for free'', making
 them especially worthwhile for academic exploration since these workloads
-seemingly constitues an opportunity for large performance gains.
+seemingly constitutes an opportunity for large performance gains.
 
 \section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT is based on the pseudo code from \cite{dcptpaper}.
@@ -142,16 +142,18 @@ The algorithm is related to RPT, but the key difference is that it looks for a p
 
 When the prefetcher gets an access, it saves the program counter (PC) and the stride in a table connected to each PC. When it has more than two elements in the list with strides, it starts looking for patterns.
 If it finds a pattern in the list, it saves all the addresses that should be prefetched in another list with candidates for prefetch.
-Then it runs through the list and checks if the addresses is not in the cache, in the mshr or that the address is out of memory. If all the requirements are met, it issues a prefetch for it.
+Then it runs through the list and checks if the addresses is not in the cache, in the MSHR or that the address is outside the memory. If all the requirements are met, it issues a prefetch for it.
+
+The size of these tables needed to be determined specifically for the ALPHA processor. By doing a kind of binary search, these had a optimal value around 120 entries in the table, and 12 entries in the delta list.
 
 If it has less than two deltas in the list or if it cannot find a pattern, it starts prefetching the next block like a sequential prefetcher.
 
-A pseudocode for the prefetcher is shown in algorithm \ref{pa}, \ref{cp}, \ref{dcpt} and \ref{pre}.
+A pseudo code for the prefetcher is shown in algorithm \ref{pa}, \ref{cp}, \ref{dcpt} and \ref{pre}.
 \subsection{Attempts to tweak this implementation}
 \begin{itemize}
 \item Make a copy of the queue to keep track of which addresses that still are
 not fetched, to avoid "double fetching".
-\item Make a lru which prevents the prefetcher from throwing out recently used history from the list.
+\item Make a LRU which prevents the prefetcher from throwing out recently used history from the list.
 \item Adjustments to the size of the list, and size of the delta list
 \end{itemize}
 
@@ -229,17 +231,17 @@ not fetched, to avoid "double fetching".
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
-The prefetcher was tested with and without the sequential fallback and as seen in figure \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.092, and when sequential fallback was applied the speedup increased to 1.101 which is better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the
-imposed memory limit was reached. A comparision between the different number of deltas are shown in \ref{fig:deltas}.
+The prefetcher was tested with and without the sequential fallback and as seen in figure \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.092, and when sequential fallback was applied the speedup increased to 1.101 which is better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 12 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the
+imposed memory limit was reached. %A comparison between the different number of deltas are shown in \ref{fig:deltas}.
 A key observation in these results is the speedup on twolf, where plain DCPT gives a negative speedup. In the DCPT with sequential fallback, all the benchmarks have speedup larger than 1. Even though this is not generally needed for
 an overall performance increase, it is however a very desirable property.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.45\textwidth]{dcpt_delta_plt}
-\end{center}
-\caption{\label{fig:deltas} Comparision beween number of deltas}
-\end{figure}
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=0.45\textwidth]{dcpt_delta_plt}
+%\end{center}
+%\caption{\label{fig:deltas} Comparison between number of deltas}
+%\end{figure}
 
 
 \begin{figure}
@@ -264,7 +266,7 @@ In an effort to measure the overall impact of the sequential fallback
 mechanism, the relative speedup for different prefetch degrees where
 generated. These values where generated by shell scripts iteratively
 compiling the prefetcher module with increasing degree before running
-the heavy version benchmark (i.e. the same as on kongull) locally. The
+the heavy version benchmark (i.e. the same as on Kongull) locally. The
 result is presented in figure \ref{fig:fallback}.
 
 \begin{figure}
@@ -276,7 +278,7 @@ result is presented in figure \ref{fig:fallback}.
 
 As seen from the figure, the speedup is normalized to the case for degree equal
 to zero corresponding to a plain DCPT implementation with no fallback. The
-small positiv effect from the fallback mechanism is seen to be rapidly
+small positive effect from the fallback mechanism is seen to be rapidly
 vanishing for increasing degrees. The fallback mechanism is therefore assumed
 mostly helpful for the transitional cases (e.g. when sequential parts of data
 are first being read after a strided or patterned accesses) when the DCPT
@@ -298,7 +300,7 @@ in the queue, because of that a copy of the cache queue was implemented
 and checked before every prefetch. This helped a little, but there are still
 too many identified compared to issued prefetches. Some of the problem can
 also be that the prefetcher matches patterns with a large number of deltas
-inbetween them, this leads to the prefetcher identifing too many blocks every
+in between them, this leads to the prefetcher identifying too many blocks every
 time prefetch\_access is called. Since the queue is limited some of the
 blocks that are actually needed are pushed out of the queue. Attempts to
 reduce the number of blocks prefetched did only give reduced speedup, but
@@ -322,12 +324,12 @@ effects gained from the fallback scheme.
 
 Even though the above paragraphs raise some doubt about
 the usefulness of the scheme in contemporary computer systems,
-there is still a possible application in the heterogenous
+there is still a possible application in the heterogeneous
 multiprocessor area. Consider a multiprocessor where a single super-core
 is dedicated to the sequential parts of computation, possibly having a
 high priority to memory capacity for getting the sequential parts done quickly.
 In this case, every small increase in performance is valuable
-because of Amdahl's law. Therefore it would be advicable to add
+because of Amdahl's law. Therefore it would be advisable to add
 a fallback mechanism to the super-core for an increased maximal
 speedup for parallelization.
 
@@ -343,7 +345,7 @@ we achieved a speedup of 1.101.
 The currently implemented fallback mechanism is as passive
 as it can possibly be with a prefetch distance and degree both equal
 to one. In this paper different prefetch degrees where profiled, but
-the increased aggresivness of the amount prefetched only caused a
+the increased aggressiveness of the amount prefetched only caused a
 decrease in performance (figure \ref{fig:fallback}). Changing the prefetch
 distance
 was on the other hand not explored and is a good candidate for further
