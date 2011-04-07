@@ -1,12 +1,13 @@
-ammp 1.425
-applu 1.086
-apsi 1.106
-art110 1.053
-art470 1.053
-bzip2\\_graphic 1.090
-bzip2\\_program 1.080
-bzip2\\_source 1.019
-galgel 1.080
-swim 1.045
-twolf 1.036
-wupwise 1.248
+fu	With	Without
+ammp	1.425	1.427
+applu 	1.086 	1.074
+apsi 	1.106 	1.076
+art110 	1.053 	1.059
+art470 	1.053 	1.059
+bzip2\\_graphic	1.090 	1.138
+bzip2\\_program	1.080	1.034
+bzip2\\_source	1.019	0.997
+galgel	1.080	1.078
+swim	1.045	1.044
+twolf	1.036	0.999
+wupwise	1.248	1.248
