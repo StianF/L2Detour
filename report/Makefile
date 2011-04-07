@@ -1,4 +1,4 @@
-PICFILES=$(wildcard graphics/*.pic)
+PICFILES=$(wildcard *.pic)
 PICPDFS=$(PICFILES:.pic=_pic.pdf)
 
 PLOTFILES=$(wildcard *.plt)
@@ -10,6 +10,10 @@ TEXFILES=$(shell find . -type f -name '*.tex')
 
 all: main.pdf
 
+.PHONY: debug
+debug:
+	echo ${PICFILES}
+
 main.pdf: $(PICPDFS) $(PLOTPDFS) $(TEXFILES)
 	pdflatex main.tex
 	pdflatex main.tex
@@ -20,7 +24,7 @@ main.pdf: $(PICPDFS) $(PLOTPDFS) $(TEXFILES)
 %_plt.eps: %.plt
 	gnuplot $^
 
-graphics/%_pic.pdf: graphics/%.pic
+%_pic.pdf: %.pic
 	pic $< | groff | ps2eps -c -n -P | epstopdf --filter > $@
 
 .PHONY: clean
