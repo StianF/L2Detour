@@ -11,7 +11,6 @@ pdftitle={DCPT with fallback},
 pdfsubject={Prefetcher},
 pdfauthor={Leif Tore Rusten, Stian Fredrikstad, Vegar K\aa sli},
 pdfkeywords={dcpt,prefetcher}}
-\hyphenation{op-tical net-works semi-conduc-tor}
 
 
 \begin{document}
@@ -102,7 +101,7 @@ When the prefetcher gets an access, it saves the PC, and the stride in a table c
 If it finds a pattern in the list, it saves all the adresses that should be prefetched in another list with candidates for prefetch.
 Then it runs through the list and checks if the adresses is not in the cache, in the mshr or that the adress is out of memory. If all the requirements are met, it issues a prefetch for it.
 
-If it has less than two deltas in the list or if it cant find a pattern, it starts prefetching the next block.
+If it has less than two deltas in the list or if it cant find a pattern, it starts prefetching the next block like a sequential prefetcher.
 
 Attempts to tweak this implementation:
 \begin{itemize}
@@ -189,7 +188,7 @@ Attempts to tweak this implementation:
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
-The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching.
+The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the memory limit is reached.
 
 \begin{figure}
 \begin{center}
@@ -197,6 +196,10 @@ The prefetcher was tested with and without the sequential fallback and as seen i
 \end{center}
 \caption{\label{fig:dcptspeed} DCPT with and without sequential}
 \end{figure}
+
+It was proven that to keep a local queue to stop the prefetcher from prefetching a block two times had no impact to the speedup since the framework does this filtering already, but if the prefetcher should be used in a real world application this would be required.
+
+Making the table use a lru policy gave decreased performance even though this should give the prefetcher more relevant history.
 
 \subsection{Sequential fallback}
 In an effort to measure the overall impact of the sequential fallback
