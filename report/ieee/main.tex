@@ -53,7 +53,8 @@ DCPT, RPT, prefetcher
 \IEEEdisplaynotcompsoctitleabstractindextext
 % \IEEEdisplaynotcompsoctitleabstractindextext has no effect when using
 % compsoc under a non-conference mode.
-
+In the abstract we will introduce this paper, what we have done, why we have
+done it, what we achieved and what we thought of it.
 
 % For peer review papers, you can put extra information on the cover
 % page as needed:
@@ -68,7 +69,47 @@ DCPT, RPT, prefetcher
 
 
 \section{Introduction}
-Prefetcher has been a hot topic the last years since the memory gap has become so big.
+Principal, locality, cache, memory hierarchy, , 
+Trend, memory wall, schemes
+Project, benchmarks, competition, 
+Delta Correlating Prediction Tables 
+
+Prefetching is one of the aspects of computer architecture that is meant to
+combat the ever-growing gap between execution speed and memory latencies, also
+known as the memory wall. \ref{berkleypaper} The idea is recognize data access
+patterns and store future data closer to central processing unit, such that when
+the data is needed, it can get loaded quicker than if it were stored only in
+main memory.
+
+Our motivation for this paper is the mini-project in TDT42xx Computer
+Architecture, where we were tasked with implementing a simulated prefetcher.
+The performance of this prefetcher would be measured against other participating
+students' submissions.
+
+We implement the prefetcher using Delta Correlating Prediction Tables
+DCPT \ref{02graennes}. 
+
+\section{Previous Works}
+Over the years the schemes has grown to be more and more sophisticated. The
+simple, yet elegant, scheme of predicting sequential access has proved to be
+quite resilient, performance wise, to newcomers. According to \ref{a} tagged
+sequential, RPT and PC-DC was the top performers in 2004.
+
+Reference Prediction Table RPT uses a table, using the instruction address as
+index, to store the value of the predicted access.
+
+Delta Correlation
+
+PC-DC used 
+Over the years more sophisticated prefetching schemes have been developed.
+Tagged Sequential, rpt, pcdc
+We based our implementation of DCPT on Storage Efficient Hardware Prefetching
+using Delta Correlating Prediction Tables paper. \ref{02graennes}
+DCPT It combines the prediction table from RPT with delta
+correlation of PCDC.
+
+cache miss
+
 \section{Methodology}
 %This section should describe how we attempt to solve our problems.
 
