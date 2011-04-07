@@ -41,37 +41,38 @@ Prefetching is one of the aspects of computer architecture that is meant to
 combat the ever-growing gap between execution speed and memory latencies, also
 known as the memory wall. \ref{berkleypaper} The idea is recognize data access
 patterns and store future data closer to central processing unit, such that when
-the data is needed, it can get loaded quicker than if it were stored only in
-main memory.
+the data is needed, it can be found in the cache instead of in main memory.
 
-Our motivation for this paper is the mini-project in TDT42xx Computer
-Architecture, where we were tasked with implementing a simulated prefetcher.
-The performance of this prefetcher would be measured against other participating
-students' submissions.
+Prefetching is commonly subdivided into software- and hardware prefetching.
+In addition to the obvious distinction of where they are implemented,
+software prefetching relies on compile-time information, hardware
+prefetching only has runtime information available.
 
-We implement the prefetcher using Delta Correlating Prediction Tables
-DCPT \ref{02graennes}. 
+Our motivation for this paper is the mini-project in TDT4260 Computer
+Architecture, where we were tasked with implementing a simulated hardware
+prefetcher.  The performance of this prefetcher would be measured against other
+participating students' submissions, in an internal competition. Although no
+prize where promised, our goal was to optimize our prefetcher against the
+benchmarks, so that we would end up with the best performing prefetcher.
 
 \section{Previous Works}
 Over the years the schemes has grown to be more and more sophisticated. The
 simple, yet elegant, scheme of predicting sequential access has proved to be
-quite resilient, performance wise, to newcomers. According to \ref{a} tagged
-sequential, RPT and PC-DC was the top performers in 2004.
+quite resilient, performance wise, to newcomers. By simply exploiting the
+principle of spatial locality, when a new block is accessed it also fetches 
+the next block in memory.
 
-Reference Prediction Table RPT uses a table, using the instruction address as
-index, to store the value of the predicted access.
+RPT intro
 
-Delta Correlation
+PCDC intro
 
-PC-DC used 
-Over the years more sophisticated prefetching schemes have been developed.
-Tagged Sequential, rpt, pcdc
-We based our implementation of DCPT on Storage Efficient Hardware Prefetching
-using Delta Correlating Prediction Tables paper. \ref{02graennes}
-DCPT It combines the prediction table from RPT with delta
-correlation of PCDC.
+According to \ref{a} tagged sequential, RPT and PC-DC was the top performers in
+2004.
 
-cache miss
+Our proposed implementation is based on the DCPT algorithm, introduced in
+\ref{b}. The algorithm combines two powerful ideas of previous schemes: The
+prediction table from RPT and delta correlation from PC-DC. Thus allowing it to
+individual patterns
 
 \section{Methodology}
 The test setup consist of the M5 simulator running on NTNU's computer
