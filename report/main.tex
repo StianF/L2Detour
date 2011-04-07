@@ -136,6 +136,10 @@ they seem to be hard to get good speedup from ``for free'', making
 them especially worthwhile for academic exploration since these workloads
 seemingly constitues an opportunity for large performance gains.
 
+To more accurately model restrictions imposed by hardware design and
+critical path with regard to cycle time, the simulated prefetcher is limited
+to use a maximum of 8 kB of memory at runtime.
+
 \section{Delta Correlating Prediction Table (DCPT) with sequential fallback}
 The algorithm for DCPT is based on the pseudo code from \cite{dcptpaper}.
 The algorithm is related to RPT, but the key difference is that it looks for a pattern instead of one stride.
