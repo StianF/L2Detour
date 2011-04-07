@@ -333,10 +333,12 @@ as the directed graph in figure \ref{fig:DG}a).
 \begin{figure}
 \begin{center}
 \includegraphics{tree_representation_pic}
+
 a)
 \end{center}
 \begin{center}
 \includegraphics{tree_representation2_pic}
+
 b)
 \end{center}
 \caption{\label{fig:DG} Tree-based representation}
@@ -345,7 +347,15 @@ b)
 Aside from possible node space savings, this representation makes it
 possible to easily accumulate new kinds of statistics, e.g. in the
 current case it could be that a pattern in the pattern could be
-detected.
+detected as shown in figure \ref{fig:DG}b). Other possibilities this
+representation could give is the ability to prefetch from multiple
+paths on node forks or the possibility for comparing/merging/crossing
+multiple PCs trees.
+
+The report does not go any more into details and results from the
+exploration of this representation as the realization suffer from
+delays and bugs until only trivial FIFO-like behaviour were realistic 
+to implement correctly in the available remaining time.
 
 \subsection{Stuff we will look into before delivery (i.e. our plan forward)}
 The tree-generalization of DCPT is outlined somewhat as follows.
