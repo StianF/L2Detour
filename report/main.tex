@@ -36,23 +36,23 @@ DCPT, sequential, prefetcher
 \IEEEdisplaynotcompsoctitleabstractindextext
 \IEEEpeerreviewmaketitle
 
-\section{Introduction}
-Prefetching is one of the aspects of computer architecture that is meant to
-combat the ever-growing gap between execution speed and memory latencies, also
-known as the memory wall. \ref{berkleypaper} The idea is recognize data access
-patterns and store future data closer to central processing unit, such that when
-the data is needed, it can be found in the cache instead of in main memory.
+\section{Introduction} Prefetching is one of the aspects of computer
+architecture that is meant to combat the ever-growing gap between execution
+speed and memory latencies, also known as the memory wall \cite{memwallpaper}.
+The idea is recognize data access patterns and store future data closer to
+central processing unit, such that when the data is needed, it can be found in
+the cache instead of in main memory.
 
-Prefetching is commonly subdivided into software- and hardware prefetching.
-In addition to the obvious distinction of where they are implemented,
-software prefetching relies on compile-time information, hardware
-prefetching only has runtime information available.
+Prefetching is commonly subdivided into software- and hardware prefetching.  In
+addition to the obvious distinction of where they are implemented, software
+prefetching relies on compile-time information, hardware prefetching only has
+runtime information available.
 
 The inherited problem for hardware prefetchers, is that they lack semantic
 knowledge about the running program, and it is therefore difficult to create a
 prefetcher that performs better for all program variants. The success of a
-prefetcher is often its ability to correctly guess the program's memory
-access patterns. 
+prefetcher is often its ability to correctly guess the program's memory access
+patterns. 
 
 Our motivation for this paper is the mini-project in TDT4260 Computer
 Architecture, where we were tasked with implementing a simulated hardware
@@ -61,24 +61,23 @@ participating students' submissions, in an internal competition. Although no
 prize where promised, our goal was to optimize our prefetcher against the
 benchmarks, so that we would end up with the best performing prefetcher.
 
-\section{Previous Works}
-Over the years the schemes has grown to be more and more sophisticated. The
-simple, yet elegant, scheme of predicting sequential access has proved to be
-quite resilient, performance wise, to newcomers. By simply exploiting the
-principle of spatial locality, whenever a new block is accessed it also fetches 
-the next block in memory. This naive approach works well, but fails to recognize
-longer strides or alternating access patterns.
+\section{Previous Works} Over the years the schemes has grown to be more and
+more sophisticated. The simple, yet elegant, scheme of predicting sequential
+access has proved to be quite resilient, performance wise, to newcomers. By
+simply exploiting the principle of spatial locality, whenever a new block is
+accessed it also fetches the next block in memory. This naive approach works
+well, but fails to recognize longer strides or alternating access patterns.
 
 Reference prediction table (RPT), stores an individual stride for each load
 instruction, and can therefore predict strides larger than one block. This
-scheme was proposed by Chen and Baer in 1995. \ref{} A different scheme, PC/DC
-prefetching, was proposed by Nesbit et al. in 2004. \ref{} It uses a Global
-History Buffer to store previous memory accesses, and from these it calculates
-the delta between them. This allows it to recognize patterns of different
-strides, and prefetch accordingly.
+scheme was proposed by Chen and Baer in 1995 \cite{rptpaper}. A different scheme,
+PC/DC prefetching, was proposed by Nesbit et al. in 2004 \cite{pcdcpaper}. It
+uses a Global History Buffer to store previous memory accesses, and from these
+it calculates the delta between them. This allows it to recognize patterns of
+different strides, and prefetch accordingly.
 
 Our proposed implementation is based on the DCPT algorithm, proposed by
-Grannaes, Jahre and Natvig in 2009.  \ref{b}. The algorithm combines two
+Grannaes, Jahre and Natvig in 2009 \cite{dcptpaper}. The algorithm combines two
 powerful ideas of previous schemes: The prediction table from RPT and delta
 correlation from PC-DC.
 
@@ -381,6 +380,18 @@ to implement correctly in the available remaining time.
 
 \bibitem{dcptpaper}
 M.~Grann\ae s, M.~Jahre and L.~Natvig, \emph{Storage Efficient Hardware Prefetching using Delta Correlating Prediction Tables}, 2009.
+
+\bibitem{memwallpaper}
+Wm. A.~Wulf and S. A.~McKee, \emph{Hitting the Memory Wall: Implications of the
+Obvious}, 1994.
+
+\bibitem{rptpaper}
+T-F. Chen and J-L. Baer \emph{Effective Hardware-Based Data Prefetching for
+High-Performance Processors}, 1995.
+
+\bibitem{pcdcpaper}
+K. J.~Nesbit and J. E.~Smith, \emph{Data Cache Prefetching Using a Global History
+Buffer}, 2004.
 
 \end{thebibliography}
 
