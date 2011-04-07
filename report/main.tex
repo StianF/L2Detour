@@ -228,8 +228,16 @@ A pseudocode for the prefetcher is shown in algorithm \ref{pa}, \ref{cp}, \ref{d
 
 \section{Results}
 \subsection{Delta Correlation Prediction Table}
-The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the memory limit is reached.
+The prefetcher was tested with and without the sequential fallback and as seen in \ref{fig:dcptspeed}. The harmonic mean for the prefetcher without the sequential fallback was 1.085, and when sequential fallback was applied the speedup increased to 1.101 which is significally better even though some of the programs lose speedup because of the sequential prefetching. These results was gotten when running the prefetcher with 120 entries in the table and 16 deltas for each entry. This was the optimal sizes that gives an overall best speedup before the memory limit is reached, a comparision between the different number of deltas are shown in \ref{fig:deltas}.
 A key observation in these results is the speedup on twolf, where plain dcpt gives a negative speedup. In the dcpt with sequential fallback, all the benchmarks have positive speedup. This is important since it would work against its purpose if the prefetcher made the system run slower than without a prefetcher.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.45\textwidth]{dcpt_delta_plt}
+\end{center}
+\caption{\label{fig:deltas} Comparision beween number of deltas}
+\end{figure}
+
 
 \begin{figure}
 \begin{center}
