@@ -56,7 +56,7 @@ access patterns.
 
 Our motivation for this paper is the mini-project in TDT4260 Computer
 Architecture, where we were tasked with implementing a simulated hardware
-prefetcher.  The performance of this prefetcher would be measured against other
+prefetcher. The performance of this prefetcher would be measured against other
 participating students' submissions, in an internal competition. Although no
 prize where promised, our goal was to optimize our prefetcher against the
 benchmarks, so that we would end up with the best performing prefetcher.
@@ -65,20 +65,22 @@ benchmarks, so that we would end up with the best performing prefetcher.
 Over the years the schemes has grown to be more and more sophisticated. The
 simple, yet elegant, scheme of predicting sequential access has proved to be
 quite resilient, performance wise, to newcomers. By simply exploiting the
-principle of spatial locality, when a new block is accessed it also fetches 
-the next block in memory.
+principle of spatial locality, whenever a new block is accessed it also fetches 
+the next block in memory. This naive approach works well, but fails to recognize
+longer strides or alternating access patterns.
 
-RPT intro
+Reference prediction table (RPT), stores an individual stride for each load
+instruction, and can therefore predict strides larger than one block. This
+scheme was proposed by Chen and Baer in 1995. \ref{} A different scheme, PC/DC
+prefetching, was proposed by Nesbit et al. in 2004. \ref{} It uses a Global
+History Buffer to store previous memory accesses, and from these it calculates
+the delta between them. This allows it to recognize patterns of different
+strides, and prefetch accordingly.
 
-PCDC intro
-
-According to \ref{a} tagged sequential, RPT and PC-DC was the top performers in
-2004.
-
-Our proposed implementation is based on the DCPT algorithm, introduced in
-\ref{b}. The algorithm combines two powerful ideas of previous schemes: The
-prediction table from RPT and delta correlation from PC-DC. Thus allowing it to
-individual patterns
+Our proposed implementation is based on the DCPT algorithm, proposed by
+Grannaes, Jahre and Natvig in 2009.  \ref{b}. The algorithm combines two
+powerful ideas of previous schemes: The prediction table from RPT and delta
+correlation from PC-DC.
 
 \section{Methodology}
 The test setup consist of the M5 simulator running on NTNU's computer
