@@ -11,4 +11,4 @@ set output "dcpt_speedup_plt.eps"
 
 set style data histogram
 
-plot "dcpt_speedup.dat" using 3:xtic(1) ti col fs solid 0.00, '' u 2 ti col fs solid 0.50
+plot "dcpt_speedup.dat" using 3:xtic(1) ti col fs solid 0.00, '' u 2 ti col fs solid 0.50 lt 1

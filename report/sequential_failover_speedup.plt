@@ -11,4 +11,4 @@ set output "sequential_failover_speedup_plt.eps"
 
 set style data histogram
 
-plot "sequential_failover_speedup.dat" using 2:xtic(1)
+plot "sequential_failover_speedup.dat" using 2:xtic(1), using 2

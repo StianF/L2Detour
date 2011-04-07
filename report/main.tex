@@ -239,6 +239,33 @@ Since there are a 8kB memory limit it was looked into modifying the table in DCP
 
 \subsection{Too aggressive prefetching}
 The prefetcher implemented here is very aggressive and gives a lot of identified block, but only issues some percent of these. The reason why a block is identified but not issued is in some cases that the block is already in the queue, because of that a copy of the cache queue was implemented and checked before every prefetch, this helped a little, but there are still too many identified compared to issued. Some of the problem can also be that the prefetcher matches patterns with a large number of deltas between, this leads to that the prefetches identifies too many blocks every time prefetch\_access is called and since the queue is limited, some of the blocks that are actually needed are pushed out of the queue. %\TODO add discussion with results from pfjudge whats up? with real limit
+
+\subsection{Model weakness}
+The model used in this paper is of a single-processor system.
+This means that the current trend of multiprocessors not
+necessarily can take advantage of the results found in
+this paper because the performance gains is made possible
+by utilizing unused memory bandwidth. In a multiprocessor
+setting this might only stress an already congested memory
+system giving rise to longer stall times which can nullify
+the possible performance gains from the fallback.
+
+Another point to make is that bad fallback prefetches in a
+multiprocessor setting would add to the amount of coherency
+misses endured, which would further diminish any positive
+effects gained from the fallback scheme.
+
+Even though the above paragraphs raises some doubt about
+the usefulness of the scheme in contemporary computer systems,
+there is still a possible application in the heterogenous
+multiprocessor area where a super-core is set aside for the
+sequential parts of computation, possibly having a high priority
+to memory capacity for getting the sequential parts done quickly.
+In this case, every small increase in performance is valuable
+because of Amdahl's law. Therefore it would be advicable to add
+a fallback mechanism to the super-core for an increased maximal
+speedup for parallelization.
+
 \section{Conclusion}
 
 \section{Further Work}
@@ -272,19 +299,6 @@ are such that if the stride 1 is guessed wrong, correct the stride in the node
 instead of creating a new child node, but after this set the node as no longer
 learning.
 
-\subsection{Stuff we won't have time to, but that might be good ideas}
-
-%\appendices
-%\section{}
-%Appendix one text goes here.
-
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-%\section{}
-%Appendix two text goes here.
-
-
-% use section* for acknowledgement
 \ifCLASSOPTIONcompsoc
   % The Computer Society usually uses the plural form
 %  \section*{Acknowledgments}
@@ -313,5 +327,3 @@ M.~Grann\ae s, M.~Jahre and L.~Natvig, \emph{Storage Efficient Hardware Prefetch
 
 % that's all folks
 \end{document}
-
-
