@@ -1,4 +1,3 @@
-set xr [0:5.5]
 set xtic 1 nomirror
 set ytic nomirror
 set xlabel "Prefetch degree"
@@ -12,4 +11,4 @@ set output "sequential_failover_speedup_plt.eps"
 
 set style data histogram
 
-plot "sequential_failover_speedup.dat" using 2
+plot "sequential_failover_speedup.dat" using 2:xtic(1)
