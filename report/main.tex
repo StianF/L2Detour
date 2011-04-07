@@ -311,6 +311,16 @@ speedup for parallelization.
 
 \section{Further Work}
 
+\subsection{Sequential fallback distance}
+The currently implemented fallback mechanism is as minimal aggressive
+as it can possibly be with a prefetch distance and degree both equal
+to one. In this paper different prefetch degrees where profiled, but
+the increased aggresivity from the amount prefetched only caused a
+decrease in performance \ref{fig:fallback}. Changing the prefetch distance
+was on the other hand not explored and is a good candidate for further
+profiling. It could also be worthwhile to try and determine a relation
+between available delta history and the best distance to use.
+
 \subsection{Tree structure representation}
 During development a new approach to the representation of deltas
 and corresponding method for pattern matching was tried. By associating
