@@ -1,4 +1,5 @@
 set auto x
+set yrange [0.9:1.5]
 set xlabel "Program"
 set ylabel "Speedup"
 set xtic 1 nomirror

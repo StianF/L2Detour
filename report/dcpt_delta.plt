@@ -1,4 +1,5 @@
 set xtic scale 0 offset 1
+set yrange [1.08:1.105]
 set ytic nomirror
 set xlabel "Number of deltas"
 set ylabel "Speedup"
