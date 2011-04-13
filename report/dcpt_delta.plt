@@ -1,5 +1,6 @@
-set xtic scale 0 offset 1
+set xtic scale 0 offset 0
 set yrange [1.08:1.105]
+set xrange [5:21]
 set ytic nomirror
 set xlabel "Number of deltas"
 set ylabel "Speedup"
@@ -12,4 +13,5 @@ set output "dcpt_delta_plt.eps"
 
 set style data histogram
 
-plot "dcpt_delta.dat" using 2:xtic(1) ti col
+plot "dcpt_delta.dat" using 2
+
