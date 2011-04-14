@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass beamer
+\begin_preamble
+\setbeamertemplate{navigation symbols}{} 
+\end_preamble
 \use_default_options true
 \language english
 \inputencoding auto
@@ -43,6 +46,19 @@
 \begin_body
 
 \begin_layout Title
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 0.5 min
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
 DCPT with sequential fallback
 \begin_inset Newline newline
 \end_inset
@@ -67,14 +83,49 @@ Leif Tore Rusten, Stian Fredrikstad and Vegar Kåsli
 
 \begin_layout BeginFrame
 Progress
-\end_layout
-
-\begin_layout Itemize
-DCPT
 \begin_inset Newline newline
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 2 min
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ei kjapp setning om at vi leika rundt med sequential og RPT i byrjinga.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Implementing DCPT
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Based on the algorithm from the paper 
+\emph on
+Storage Efficient Hardware Prefetching using Delta-Correlating Prediction
+ Tables
+\end_layout
+
+\end_deeper
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -88,7 +139,7 @@ status open
 \end_layout
 
 \begin_layout Itemize
-Fallback
+Implementing fallback
 \begin_inset Newline newline
 \end_inset
 
@@ -97,7 +148,11 @@ Fallback
 status open
 
 \begin_layout Plain Layout
-Hello
+- To always create candidates for prefetch.
+\end_layout
+
+\begin_layout Plain Layout
+- Now only idles when all identified are in cache or in bound
 \end_layout
 
 \end_inset
@@ -106,7 +161,7 @@ Hello
 \end_layout
 
 \begin_layout Itemize
-Tweak
+Tweaking
 \begin_inset Newline newline
 \end_inset
 
@@ -117,7 +172,7 @@ status open
 \begin_layout Plain Layout
 Ta med korleis vi har brukt Kongull og sidan laga shellscripts som operarar
  opp mot det utleverte rammeverket for å køyre igjennom forskjellige parameter
- for å finne beste for det simulerte systemet.
+ for å finne beste oppsett for det simulerte systemet.
 \end_layout
 
 \end_inset
@@ -131,6 +186,20 @@ Ta med korleis vi har brukt Kongull og sidan laga shellscripts som operarar
 
 \begin_layout BeginFrame
 Results
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 2 min
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -150,20 +219,21 @@ Results
 status open
 
 \begin_layout Plain Layout
-Dette er kva vi fekk.
+- Dette er kva vi fekk, forklar kva without og with betyr.
 \end_layout
 
 \begin_layout Plain Layout
-Er ikkje mykje om å gjere, men dei fleste er vanskelege å få speedup på,
+- Er ikkje mykje om å gjere, men dei fleste er vanskelege å få speedup på,
  virkar det som.
 \end_layout
 
 \begin_layout Plain Layout
-Alle er over 1 i speedup.
+- Alle er over 1 i speedup -- poeng angåande spesialiserte bruksområder
+ som berre vil sjå negativ effekt av å kjøpe din nye prosessor.
 \end_layout
 
 \begin_layout Plain Layout
-Harmonic mean på 1.105.
+- Harmonic mean på 1.105.
 \end_layout
 
 \end_inset
@@ -177,6 +247,20 @@ Harmonic mean på 1.105.
 
 \begin_layout BeginFrame
 Delta results
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 2 min
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -196,7 +280,28 @@ Delta results
 status open
 
 \begin_layout Plain Layout
-Schpæ
+- Ved at peaken ligg på 12 så gjer det at vi ikkje brukar opp 
+\begin_inset Quotes eld
+\end_inset
+
+ressursane
+\begin_inset Quotes erd
+\end_inset
+
+ (minnet) vi har tilgjengeleg
+\end_layout
+
+\begin_layout Plain Layout
+- Vi spekulerar i at 12 er betre enn høgre delta count fordi dette begrensar
+ kor mykje kvar pattern match vil fylle på ein kanskje alt stressa prefetch
+ queue.
+\end_layout
+
+\begin_layout Plain Layout
+- Vi prøvde med større delta, men begrense antal kandidatar kvar match kan
+ generere, men vi fekk ikkje noko utbytte av dette, men er litt usikre på
+ om vi har implementert dette riktig.
+ Vi brukte i alle fall ikkje mykje tid på dette i denne omgong.
 \end_layout
 
 \end_inset
@@ -210,6 +315,20 @@ Schpæ
 
 \begin_layout BeginFrame
 Six degrees of ...
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 1 min
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -229,6 +348,20 @@ Six degrees of ...
 
 \begin_layout BeginFrame
 Discussion
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tid: 2.5 min
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -413,6 +546,30 @@ twolf
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+Distinction between candidates and fetches
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We tried to force to always fetch on every access, but that gives a poor
+ result (i.e.
+ this gave a very large prefetch distance for the fallback).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Using multiple matching patterns
 \end_layout
 
 \begin_layout EndFrame
