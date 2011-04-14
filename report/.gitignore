@@ -1,0 +1,9 @@
+*.pdf
+main.aux
+main.bbl
+main.blg
+main.lof
+main.lot
+main.out
+main.toc
+*.log
