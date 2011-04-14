@@ -17,6 +17,7 @@ const int l = 110;
 const int deltal = 10;
 RPT rpttable[l];
 
+<<<<<<< HEAD
 Addr* DC(int i);
 void PF(int i, Addr* cand);
 
@@ -30,9 +31,17 @@ void prefetch_init(void)
 	/* Called before any calls to prefetch_access. */
 	/* This is the place to initialize data structures. */
 	DPRINTF(HWPrefetch, "Initialized sequential-on-access prefetcher\n");
+=======
+#include "nval.h"
+
+void prefetch_init(void)
+{
+  DPRINTF(Leif, "Initialized sequential-on-happy-%i prefetcher\n", N_VAL);
+>>>>>>> f20f35fb3719dcc9ac419747b3176f22ea76a87a
 }
 void prefetch_access(AccessStat stat)
 {
+<<<<<<< HEAD
 	bool found = false;
 	int foundi = 0;
 	int i = 0;
@@ -167,6 +176,17 @@ void PF(int i, Addr* cand){
 			rpttable[i].last_prefetch = cand[j];
 		}
 	}
+=======
+  Addr pf_addr = stat.mem_addr;
+
+  int i;
+  for (i = 0; i < N_VAL; i++) {
+    pf_addr += BLOCK_SIZE;
+  
+    if (!in_cache(pf_addr) && !in_mshr_queue(pf_addr))
+      issue_prefetch(pf_addr);
+  }
+>>>>>>> f20f35fb3719dcc9ac419747b3176f22ea76a87a
 }
 
 void prefetch_complete(Addr addr) {
