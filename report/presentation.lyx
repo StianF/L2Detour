@@ -37,11 +37,234 @@
 \tracking_changes false
 \output_changes false
 \author "" 
+\author "" 
 \end_header
 
 \begin_body
 
+\begin_layout Title
+DCPT with sequential fallback
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename r2d2-droid.jpg
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+L2Detour
+\end_layout
+
+\begin_layout Author
+Leif Tore Rusten, Stian Fredrikstad and Vegar Kåsli
+\end_layout
+
+\begin_layout BeginFrame
+Progress
+\end_layout
+
+\begin_layout Itemize
+DCPT
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Fallback
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Hello
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Tweak
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Ta med korleis vi har brukt Kongull og sidan laga shellscripts som operarar
+ opp mot det utleverte rammeverket for å køyre igjennom forskjellige parameter
+ for å finne beste for det simulerte systemet.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Results
+\end_layout
+
 \begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename dcpt_speedup_plt.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Dette er kva vi fekk.
+\end_layout
+
+\begin_layout Plain Layout
+Er ikkje mykje om å gjere, men dei fleste er vanskelege å få speedup på,
+ virkar det som.
+\end_layout
+
+\begin_layout Plain Layout
+Alle er over 1 i speedup.
+\end_layout
+
+\begin_layout Plain Layout
+Harmonic mean på 1.105.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Delta results
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename dcpt_delta_plt.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Schpæ
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Six degrees of ...
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename sequential_failover_speedup_plt.pdf
+	width 100text%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Forvirrande tittel.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Discussion
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Questions?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename c-3po.jpg
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
 
 \end_layout
 
