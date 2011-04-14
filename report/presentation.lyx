@@ -329,6 +329,19 @@ ressursane
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Leif tar frå her
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout BeginFrame
 Six degrees of ...
 \begin_inset Newline newline
@@ -345,20 +358,6 @@ Tid: 1 min
 \end_inset
 
 
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Leif tar frå her
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -367,10 +366,6 @@ Leif tar frå her
 	filename sequential_failover_speedup_plt.pdf
 	width 100text%
 
-\end_inset
-
-
-\begin_inset Newline newline
 \end_inset
 
 
@@ -383,8 +378,8 @@ status open
 
 \begin_layout Plain Layout
 - Degree of 1 gives the best performance, might be because such a large
- count would mean that the probabilty of an available caught by DCPT if
- available is increasing for larger degrees.
+ count would mean that the probabilty of a pattern caught by DCPT if available
+ is increasing for larger degrees.
  This means that a fallback prefetch with a large degree are more likely
  to only fetch large stretches with unlikely potential for good prefetches.
 \end_layout
